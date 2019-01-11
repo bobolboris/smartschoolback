@@ -2,16 +2,15 @@
 
 namespace App\AuthComponent\Http\Controllers;
 
-use App\MainComponent\Http\Controllers\Controller;
+use App\AuthComponent\Http\Controllers\BaseController as Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
-use PhoenixSmsSender\PhoenixSmsSender;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
 
     public function loginAction(Request $request)
@@ -30,8 +29,7 @@ class LoginController extends Controller
         $user->save();
 
         $text = 'Код для входа: ' . $request->get('sms_token');
-        $smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
-        $smsSender->createMailing(new MailingRequest('', $text, [$request->get('phone')]));
+//        SmsSender::createMailing(new MailingRequest('', $text, [$request->get('phone')]));
         return response()->json(['ok' => true]);
     }
 
@@ -46,32 +44,18 @@ class LoginController extends Controller
         try {
             $token = JWTAuth::attempt($credentials);
             if ($token == false) {
-                return response()->json(['ok' => false, 'errors' => ['Неверный логин/пароль']]);
+                return response()->json(['ok' => false, 'errors' => ['Неверный код из смс']]);
             }
         } catch (JWTException $e) {
             return response()->json(['ok' => false, 'errors' => ['Не удалось создать токен']]);
         }
-        return response()->json(['ok' => true, 'data' => ['token' => $token]]);
+        return response()->json(['ok' => true, 'data' => ['token' => $token, 'expire' => JWTAuth::getPayload($token)->get('exp')]]);
     }
 
-    private function validateLoginParameters(array $request)
+    public function refreshAction()
     {
-        $validator = Validator::make($request, [
-            $this->username() => 'required|exists:users',
-            'password' => 'required',
-            'sms_token' => 'required'
-        ]);
-        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+        $token = JWTAuth::parseToken()->refresh();
+        return response()->json(['ok' => true, 'data' => ['token' => $token, 'expire' => JWTAuth::getPayload($token)->get('exp')]]);
     }
 
-    private function username()
-    {
-        return 'phone';
-    }
-
-
-    public function testAction()
-    {
-        return response()->json(['ok' => true, 'date' => ['alright']]);
-    }
 }
