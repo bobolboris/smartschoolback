@@ -34,16 +34,25 @@ class AuthController extends Controller
         $user = Auth::user();
         $code = $this->generateCode();
 
-        $session = new Session();
+        $info = $this->getCustomerInfo($request);
+
+        $session = $this->getSessionByInfo($info);
+        if ($session == null) {
+            $session = new Session();
+        }
+
         $session->sms_code = $code;
         $session->token = $token;
         $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
         $session->user_id = $user->id;
+
+        $session->os = $info['os'];
+        $session->browser = $info['browser'];
+        $session->ip = $info['ip'];
         $session->save();
 
-        $text = "Код для входа: $code";
         if (env('SMS_AUTH_ENABLE', false)) {
-            SmsSender::createMailing(new MailingRequest('', $text, [$request->get('phone')]));
+            SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$request->get('phone')]));
         }
 
 //        return response()->json(['ok' => true, 'identifier' => $session->id]);
@@ -65,34 +74,40 @@ class AuthController extends Controller
             return response()->json(['ok' => false, 'errors' => ['Неверный идентификатор сессии']]);
         }
 
-        if ($session->sms_code == $smsCode) {
+        if ($session->sms_code != $smsCode) {
             return response()->json(['ok' => false, 'errors' => ['Неверный код из смс']]);
         }
 
-        if ($session->expire_sms_code >= time()) {
+        if ($session->expire_sms_code <= time()) {
             return response()->json(['ok' => false, 'errors' => ['Срок действия смс кода истек']]);
         }
 
         $token = $session->token;
-
-
-        $data = ['token' => $token, 'expire' => JWTAuth::getPayload($token)->get('exp')];
+        JWTAuth::setToken($token);
+        $data = ['token' => $token, 'expire' => JWTAuth::getPayload()->get('exp')];
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
-    public function refreshTokenAction()
+    public function refreshTokenAction(Request $request)
     {
-        $token = JWTAuth::parseToken();
+        $auth = JWTAuth::parseToken();
+        $token = $auth->getToken();
         $session = Session::where('token', $token)->first();
         if ($session == null) {
             return response()->json(['ok' => false, 'errors' => ['Неизвестный token']]);
         }
-        $token = $token->refresh();
+        $token = $auth->refresh();
+
+        $info = $this->getCustomerInfo($request);
 
         $session->token = $token;
+        $session->os = $info['os'];
+        $session->browser = $info['browser'];
+        $session->ip = $info['ip'];
         $session->save();
 
-        $data = ['token' => $token, 'expire' => JWTAuth::getPayload($token)->get('exp')];
+        JWTAuth::setToken($token);
+        $data = ['token' => $token, 'expire' => JWTAuth::getPayload()->get('exp')];
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
@@ -119,8 +134,9 @@ class AuthController extends Controller
         $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
         $session->save();
 
-        $text = "Код для входа: $code";
-        SmsSender::createMailing(new MailingRequest('', $text, [$session->user->id->phone]));
+        if (env('SMS_AUTH_ENABLE', false)) {
+            SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$session->user->phone]));
+        }
 
 //        return response()->json(['ok' => true]);
         return response()->json(['ok' => true, 'sms_code' => $code]);

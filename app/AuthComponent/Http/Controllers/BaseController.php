@@ -3,7 +3,10 @@
 namespace App\AuthComponent\Http\Controllers;
 
 use App\MainComponent\Http\Controllers\Controller;
+use App\MainComponent\Session;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Jenssegers\Agent\Facades\Agent;
 
 class BaseController extends Controller
 {
@@ -42,4 +45,22 @@ class BaseController extends Controller
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
+
+    protected function getCustomerInfo(Request $request)
+    {
+        Agent::setUserAgent($request->header('Customer-User-Agent', ' '));
+        $browser = Agent::browser();
+        $browser .= " " . Agent::version($browser);
+        return [
+            'browser' => $browser,
+            'os' => Agent::platform(),
+            'ip' => $request->header('Customer-IP', ' ')
+        ];
+    }
+
+    protected function getSessionByInfo(array $info)
+    {
+        return Session::where('os', $info['os'])->where('ip', $info['ip'])->where('browser', $info['browser'])->first();
+    }
+
 }

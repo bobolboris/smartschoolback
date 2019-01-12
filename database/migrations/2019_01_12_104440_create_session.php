@@ -16,12 +16,12 @@ class CreateSession extends Migration
         Schema::create('session', function (Blueprint $table) {
             $table->increments('id');
             $table->string('sms_code');
-            $table->string('token');
+            $table->string('token', 512);
             $table->integer('expire_sms_code', false, true);
             $table->timestamps();
-            $table->string('ip', 17);
-            $table->string('os');
-            $table->string('browser');
+            $table->string('ip', 17)->nullable();
+            $table->string('os')->nullable();
+            $table->string('browser')->nullable();
 
             $table->integer('user_id', false, true)->nullable();
             $table->foreign('user_id')->references('id')->on('users');

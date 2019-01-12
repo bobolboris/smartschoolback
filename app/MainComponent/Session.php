@@ -16,7 +16,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Session extends Model
 {
-    public $timestamps = false;
     protected $table = 'session';
     protected $fillable = ['sms_code', 'token', 'expire', 'user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo('App\MainComponent\User', 'user_id', 'id');
+    }
 }
