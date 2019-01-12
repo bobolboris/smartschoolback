@@ -19,6 +19,8 @@ class Kernel extends HttpKernel
         \App\MainComponent\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\MainComponent\Http\Middleware\TrustProxies::class,
+        \App\MainComponent\Http\Middleware\CheckCustomerAgent::class,
+        \App\MainComponent\Http\Middleware\CheckCustomerIP::class,
     ];
 
     /**
@@ -31,7 +33,7 @@ class Kernel extends HttpKernel
             \App\MainComponent\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-             \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\MainComponent\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -40,6 +42,10 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+        ],
+
+        'jwt.verify' => [
+            \App\AuthComponent\Http\Middleware\JwtMiddleware::class,
         ],
     ];
 
@@ -56,7 +62,6 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'jwt.verify' => \App\AuthComponent\Http\Middleware\JwtMiddleware::class,
         'guest' => \App\MainComponent\Http\Middleware\RedirectIfAuthenticated::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
@@ -73,7 +78,6 @@ class Kernel extends HttpKernel
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
-        \App\MainComponent\Http\Middleware\Authenticate::class,
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,

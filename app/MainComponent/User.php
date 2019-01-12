@@ -2,10 +2,6 @@
 
 namespace App\MainComponent;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
-
 /**
  * @property mixed id
  * @property mixed roles
@@ -15,10 +11,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property mixed enabled
  * @property mixed type
  */
-
-class User extends Authenticatable implements JWTSubject
+class User extends UserJWT
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,14 +42,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\MainComponent\Setting', 'user_id', 'id');
     }
 
-
-    public function getJWTIdentifier()
+    public function smsCodes()
     {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
+        return $this->hasMany('App\MainComponent\Session', 'user_id', 'id');
     }
 }

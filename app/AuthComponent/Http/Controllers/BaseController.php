@@ -7,18 +7,39 @@ use Illuminate\Support\Facades\Validator;
 
 class BaseController extends Controller
 {
-    protected function validateLoginParameters(array $request)
+    protected function username()
+    {
+        return 'phone';
+    }
+
+    protected function generateCode()
+    {
+        return rand(10000, 99999);
+    }
+
+    protected function validateLoginFirstStage(array $request)
     {
         $validator = Validator::make($request, [
             $this->username() => 'required|exists:users',
-            'password' => 'required',
-            'sms_token' => 'required'
+            'password' => 'required'
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 
-    protected function username()
+    protected function validateLoginSecondStage(array $request)
     {
-        return 'phone';
+        $validator = Validator::make($request, [
+            'sms_code' => 'required',
+            'identifier' => 'required'
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+    }
+
+    protected function validateRefreshSmsCode(array $request)
+    {
+        $validator = Validator::make($request, [
+            'identifier' => 'required|integer'
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 }
