@@ -4,7 +4,7 @@ Route::prefix('login')->group(function () {
     Route::post('second-stage', 'AuthComponent\Http\Controllers\AuthController@loginSecondStageAction');
 });
 
-Route::prefix('token')->middleware('jwt.verify')->group(function () {
+Route::prefix('token')->group(function () {
     Route::post('refresh', 'AuthComponent\Http\Controllers\AuthController@refreshTokenAction');
 });
 
