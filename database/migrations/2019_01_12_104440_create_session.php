@@ -13,7 +13,7 @@ class CreateSession extends Migration
      */
     public function up()
     {
-        Schema::create('session', function (Blueprint $table) {
+        Schema::create('sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('sms_code');
             $table->string('token', 512);

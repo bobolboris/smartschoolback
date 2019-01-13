@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Session extends Model
 {
-    protected $table = 'session';
+    protected $table = 'sessions';
     protected $fillable = ['sms_code', 'token', 'expire', 'user_id'];
 
     public function user()

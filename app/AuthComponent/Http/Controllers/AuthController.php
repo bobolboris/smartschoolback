@@ -25,10 +25,10 @@ class AuthController extends Controller
             $credentials = $request->only($this->username(), 'password');
             $token = JWTAuth::attempt($credentials);
             if ($token == false) {
-                return response()->json(['ok' => false, 'errors' => ['Неверный код из смс']]);
+                return response()->json(['ok' => false, 'errors' => ['error' => 'Неверный номер/пароль']]);
             }
         } catch (JWTException $e) {
-            return response()->json(['ok' => false, 'errors' => ['Не удалось создать токен']]);
+            return response()->json(['ok' => false, 'errors' => ['error' => 'Не удалось создать токен']]);
         }
 
         $user = Auth::user();
@@ -75,11 +75,11 @@ class AuthController extends Controller
         }
 
         if ($session->sms_code != $smsCode) {
-            return response()->json(['ok' => false, 'errors' => ['Неверный код из смс']]);
+            return response()->json(['ok' => false, 'errors' => ['sms_code' => 'Неверный код из смс']]);
         }
 
         if ($session->expire_sms_code <= time()) {
-            return response()->json(['ok' => false, 'errors' => ['Срок действия смс кода истек']]);
+            return response()->json(['ok' => false, 'errors' => ['sms_code' => 'Срок действия смс кода истек']]);
         }
 
         $token = $session->token;
@@ -144,7 +144,7 @@ class AuthController extends Controller
 
     public function logoutAction()
     {
-        $token = JWTAuth::parseToken();
+        $token = JWTAuth::parseToken()->getToken();
 
         $session = Session::where('token', $token)->first();
         if ($session == null) {
@@ -152,7 +152,6 @@ class AuthController extends Controller
         }
 
         $session->delete();
-
         return response()->json(['ok' => true]);
     }
 }
