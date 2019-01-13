@@ -24,16 +24,16 @@ class JwtMiddleware
         try {
             $auth = JWTAuth::parseToken();
         } catch (TokenInvalidException $e) {
-            return response()->json(['ok' => false, 'status' => 300, 'errors' => ['Неверный токен']]);
+            return response()->json(['ok' => false, 'errors' => ['Неверный токен']])->header('Error-Status', 300);
         } catch (TokenExpiredException $e) {
-            return response()->json(['ok' => false, 'status' => 301, 'errors' => ['Срок действия токена истек']]);
+            return response()->json(['ok' => false, 'errors' => ['Срок действия токена истек']])->header('Error-Status', 301);
         } catch (Exception $e) {
-            return response()->json(['ok' => false, 'status' => 304, 'errors' => ['Токен не найден']]);
+            return response()->json(['ok' => false, 'errors' => ['Токен не найден']])->header('Error-Status', 304);
         }
 
         $session = Session::where('token', $auth->getToken())->first();
         if ($session == null) {
-            return response()->json(['ok' => false, 'status' => 302, 'errors' => ['Неизвестный токен']]);
+            return response()->json(['ok' => false, 'errors' => ['Неизвестный токен']])->header('Error-Status', 302);
         }
         Agent::setUserAgent($request->header('Customer-User-Agent', ' '));
 
