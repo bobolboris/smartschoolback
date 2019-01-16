@@ -55,6 +55,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapFrontRoutes()
     {
         Route::prefix('front')
+            ->middleware('identification')
             ->namespace($this->namespace)
             ->group(base_path('routes/front.php'));
     }
@@ -62,6 +63,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapAuthRoutes()
     {
         Route::prefix('auth')
+            ->middleware('identification')
             ->namespace($this->namespace)
             ->group(base_path('routes/auth.php'));
     }

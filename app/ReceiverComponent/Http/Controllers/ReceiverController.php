@@ -9,9 +9,8 @@ use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
-//use PhoenixSmsSender\MailingRequest;
-//use PhoenixSmsSender\PhoenixSmsSender;
+use PhoenixSmsSender\MailingRequest;
+use PhoenixSmsSender\PhoenixSmsSender;
 
 class ReceiverController extends Controller
 {
@@ -43,7 +42,6 @@ class ReceiverController extends Controller
     //"713333316"
     public function passDetectedAction(Request $request)
     {
-        Log::info('hello');
         if (!$request->has('json')) {
             return response('error');
         }
@@ -72,8 +70,8 @@ class ReceiverController extends Controller
         $access->system_id = $data['log']['ID'];
         $access->save();
 
-        //$smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
-        $fio = $child->surname . " " . $child->name . " " . $child->patronymic;
+        $smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
+        $fio = "$child->surname $child->name $child->patronymic";
 
         $phones = [];
 
@@ -85,7 +83,7 @@ class ReceiverController extends Controller
 
         $text_sms = ($access->direction == 1) ? 'Вход в УЗ: ' : 'Выход из УЗ: ';
 
-        //$smsSender->createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
+        $smsSender->createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
         return response('ok');
     }
 }
