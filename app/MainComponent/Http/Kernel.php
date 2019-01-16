@@ -45,6 +45,7 @@ class Kernel extends HttpKernel
         'jwt.verify' => [
             \App\AuthComponent\Http\Middleware\JwtMiddleware::class,
         ],
+
         'identification' => [
             \App\MainComponent\Http\Middleware\CheckCustomerAgent::class,
             \App\MainComponent\Http\Middleware\CheckCustomerIP::class,
