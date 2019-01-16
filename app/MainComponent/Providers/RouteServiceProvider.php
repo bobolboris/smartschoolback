@@ -33,23 +33,25 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-        $this->mapFrontRoutes();
-        $this->mapAuthRoutes();
         $this->mapApiRoutes();
+        $this->mapAuthRoutes();
+        $this->mapFrontRoutes();
+        $this->mapReceiverRoutes();
     }
 
-    /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
-     *
-     * @return void
-     */
     protected function mapApiRoutes()
     {
         Route::prefix('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function mapAuthRoutes()
+    {
+        Route::prefix('auth')
+            ->middleware('identification')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/auth.php'));
     }
 
     protected function mapFrontRoutes()
@@ -60,11 +62,11 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/front.php'));
     }
 
-    protected function mapAuthRoutes()
+    protected function mapReceiverRoutes()
     {
-        Route::prefix('auth')
-            ->middleware('identification')
+        Route::prefix('receiver')
             ->namespace($this->namespace)
-            ->group(base_path('routes/auth.php'));
+            ->group(base_path('routes/receiver.php'));
     }
+
 }
