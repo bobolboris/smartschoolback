@@ -9,6 +9,7 @@ use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 //use PhoenixSmsSender\MailingRequest;
 //use PhoenixSmsSender\PhoenixSmsSender;
 
@@ -22,8 +23,8 @@ class ReceiverController extends Controller
         $data = json_decode($request->get('json'), true);
 
         $accessDenial = new AccessDenials();
-        $access->time = $data['info']['time'];
-        $access->date = $data['info']['date'];
+        $accessDenial->time = $data['info']['time'];
+        $accessDenial->date = $data['info']['date'];
         $accessDenial->direction = 0;
         $accessDenial->cause = 0;
 
