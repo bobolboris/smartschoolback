@@ -19,8 +19,8 @@ class Kernel extends HttpKernel
         \App\MainComponent\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\MainComponent\Http\Middleware\TrustProxies::class,
-        \App\MainComponent\Http\Middleware\CheckCustomerAgent::class,
-        \App\MainComponent\Http\Middleware\CheckCustomerIP::class,
+//        \App\MainComponent\Http\Middleware\CheckCustomerAgent::class,
+//        \App\MainComponent\Http\Middleware\CheckCustomerIP::class,
     ];
 
     /**
