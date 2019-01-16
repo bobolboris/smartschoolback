@@ -9,8 +9,8 @@ use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use PhoenixSmsSender\MailingRequest;
-use PhoenixSmsSender\PhoenixSmsSender;
+//use PhoenixSmsSender\MailingRequest;
+//use PhoenixSmsSender\PhoenixSmsSender;
 
 class ReceiverController extends Controller
 {
@@ -83,7 +83,7 @@ class ReceiverController extends Controller
 
         $text_sms = ($access->direction == 1) ? 'Вход в УЗ: ' : 'Выход из УЗ: ';
 
-        $smsSender->createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
+        //$smsSender->createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
         return response('ok');
     }
 }
