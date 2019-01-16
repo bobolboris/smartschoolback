@@ -31,7 +31,7 @@ class ReceiverController extends Controller
         $accessPoint = AccessPoint::findBySystemId($data['info']['apid']);
         if (!isset($accessPoint)) {
             Log::error('Ошибка доступа. Неизвестный турникет');
-            return;
+            return response('error');
         }
 
         $accessDenial->access_point_id = $accessPoint->id;
@@ -43,7 +43,7 @@ class ReceiverController extends Controller
     //"713333316"
     public function passDetectedAction(Request $request)
     {
-        //hhh
+        Log::info('hello');
         if (!$request->has('json')) {
             return response('error');
         }
