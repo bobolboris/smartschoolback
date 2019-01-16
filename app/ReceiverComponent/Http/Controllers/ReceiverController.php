@@ -70,7 +70,7 @@ class ReceiverController extends Controller
         $access->system_id = $data['log']['ID'];
         $access->save();
 
-        $smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
+        //$smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
         $fio = $child->surname . " " . $child->name . " " . $child->patronymic;
 
         $phones = [];
