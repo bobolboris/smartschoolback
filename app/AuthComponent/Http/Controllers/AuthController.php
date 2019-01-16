@@ -52,8 +52,11 @@ class AuthController extends Controller
         $session->save();
 
         if (env('SMS_AUTH_ENABLE', false)) {
-            SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$request->get('phone')]));
+			SmsSender::setToken(env('SMS_TOKEN'));
+			SmsSender::setAddress(env('SMS_SERVER'));
+			SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$request->get('phone')]));
         }
+
 
 //        return response()->json(['ok' => true, 'identifier' => $session->id]);
         return response()->json(['ok' => true, 'data' => ['sms_code' => $code, 'identifier' => $session->id]]);
@@ -135,6 +138,8 @@ class AuthController extends Controller
         $session->save();
 
         if (env('SMS_AUTH_ENABLE', false)) {
+            SmsSender::setToken(env('SMS_TOKEN'));
+			SmsSender::setAddress(env('SMS_SERVER'));
             SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$session->user->phone]));
         }
 
