@@ -67,7 +67,9 @@ class ReceiverController extends Controller
         }
 
         $access->access_point_id = $accessPoint->id;
-        $access->system_id = $data['log']['ID'];
+        if (isset($data['log']['ID'])) {
+            $access->system_id = $data['log']['ID'];
+        }
         $access->save();
 
         $smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
