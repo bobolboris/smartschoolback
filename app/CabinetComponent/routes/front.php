@@ -9,3 +9,7 @@ Route::prefix('settings')->group(function () {
     Route::post('index', 'CabinetComponent\Http\Controllers\SettingsController@indexAction')->name('settings');
     Route::post('save', 'CabinetComponent\Http\Controllers\SettingsController@saveAction');
 });
+
+Route::prefix('report')->group(function () {
+    Route::post('child', 'CabinetComponent\Http\Controllers\ChildrenController@reportParentAction');
+});

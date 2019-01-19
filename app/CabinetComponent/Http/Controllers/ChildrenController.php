@@ -2,6 +2,7 @@
 
 namespace App\CabinetComponent\Http\Controllers;
 
+use App\CabinetComponent\Tools\ReportGenerator;
 use App\MainComponent\Access;
 use App\MainComponent\Child;
 use Illuminate\Http\Request;
@@ -36,6 +37,24 @@ class ChildrenController extends BaseController
         return $this->childLoad($child_id, $date, $this->baseLoad());
     }
 
+    public function reportParentAction(Request $request)
+    {
+        $result = $this->validateReportParent($request->all());
+        if (!$result['ok']) {
+            return response()->json($result);
+        }
+        $rp = new ReportGenerator();
+
+        $parentId = $request->get('parentId');
+        $childId = $request->get('childId');
+        $startDate = $request->get('startDate');
+        $finishDate = $request->get('finishDate');
+
+        $report = $rp->generateReport($parentId, $childId, $startDate, $finishDate);
+        $result['data'] = base64_encode($report);
+
+        return response()->json($result);
+    }
 
     /*no entry points*/
     private function childLoad($id, $date, $data)
@@ -68,7 +87,7 @@ class ChildrenController extends BaseController
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
-    private function validateIndex(array $request)
+    protected function validateIndex(array $request)
     {
         $validator = Validator::make($request, [
             'date' => 'required|date'
@@ -76,11 +95,22 @@ class ChildrenController extends BaseController
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 
-    private function validateChild(array $request)
+    protected function validateChild(array $request)
     {
         $validator = Validator::make($request, [
             'date' => 'required|date',
             'child_id' => 'required|exists:children,id'
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+    }
+
+    protected function validateReportParent(array $request)
+    {
+        $validator = Validator::make($request, [
+            'parentId' => 'required|exists:parents,id',
+            'childId' => 'required|exists:children,id',
+            'startDate' => 'required',
+            'finishDate' => 'required'
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
