@@ -7,6 +7,7 @@ use App\MainComponent\Access;
 use App\MainComponent\Child;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ChildrenController extends BaseController
 {
@@ -45,8 +46,10 @@ class ChildrenController extends BaseController
         }
         $rp = new ReportGenerator();
 
-        $parentId = $request->get('parentId');
-        $childId = $request->get('childId');
+        $user = JWTAuth::parseToken()->authenticate();
+        $parentId = $user->entity->id;
+
+        $childId = $request->get('child_id');
         $startDate = $request->get('startDate');
         $finishDate = $request->get('finishDate');
 
@@ -107,8 +110,7 @@ class ChildrenController extends BaseController
     protected function validateReportParent(array $request)
     {
         $validator = Validator::make($request, [
-            'parentId' => 'required|exists:parents,id',
-            'childId' => 'required|exists:children,id',
+            'child_id' => 'required|exists:children,id',
             'startDate' => 'required',
             'finishDate' => 'required'
         ]);
