@@ -46,6 +46,9 @@ class ReceiverController extends Controller
             return response('error');
         }
         $data = json_decode($request->get('json'), true);
+
+        Log::info('INFO '. json_encode($data));
+
         $access = new Access();
         $access->time = $data['info']['time'];
         $access->date = $data['info']['date'];
