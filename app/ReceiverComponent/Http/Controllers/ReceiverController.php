@@ -42,7 +42,6 @@ class ReceiverController extends Controller
     //"713333316"
     public function passDetectedAction(Request $request)
     {
-        Log::info('yes');
         if (!$request->has('json')) {
             return response('error');
         }
