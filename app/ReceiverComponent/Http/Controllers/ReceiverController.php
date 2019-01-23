@@ -52,8 +52,6 @@ class ReceiverController extends Controller
         $access->direction = $data['info']['direction'];
         $access->cause = 1;
 
-        Log::info('INFO: ' . json_encode($data['info']));
-
         $child = Child::findBySystemId($data['info']['objid']);
         if (!isset($child)) {
             Log::error('Ошибка доступа. Неизвестный ребенок');
