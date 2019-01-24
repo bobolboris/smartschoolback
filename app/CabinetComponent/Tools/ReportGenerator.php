@@ -14,8 +14,8 @@ class ReportGenerator
 
     public function __construct()
     {
-        $this->monthName = [1 => 'Январь' , 'Февраль' , 'Март' , 'Апрель' , 'Май' , 'Июнь' , 'Июль' , 'Август' ,
-            'Сентябрь' , 'Октябрь' , 'Ноябрь' , 'Декабрь'];
+        $this->monthName = [1 => 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август',
+            'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     }
 
     protected function getDataForParent($parentId, $childId, $startDate, $finishDate)
@@ -33,7 +33,7 @@ class ReportGenerator
         $previousDate = null;
 
         foreach ($accesses as $access) {
-            if ($previousDate != $access->date){
+            if ($previousDate != $access->date) {
                 $temp = explode('-', $access->date);
 
                 $day = $temp[2];
@@ -93,7 +93,7 @@ class ReportGenerator
     {
         $data = $this->getDataForParent($parentId, $childId, $startDate, $finishDate);
         $html = view('other.reportForParent', $data);
-        return $this->renderPdf($html);
+        return ['title' => $data['title'], 'report' => $this->renderPdf($html)];
     }
 
     public function testAction()

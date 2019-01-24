@@ -53,8 +53,9 @@ class ChildrenController extends BaseController
         $startDate = $request->get('startDate');
         $finishDate = $request->get('finishDate');
 
-        $report = $rp->generateReport($parentId, $childId, $startDate, $finishDate);
-        $result['data'] = base64_encode($report);
+        $reportAndTitle = $rp->generateReport($parentId, $childId, $startDate, $finishDate);
+        $reportAndTitle['report'] = base64_encode($reportAndTitle['report']);
+        $result['data'] = $reportAndTitle;
 
         return response()->json($result);
     }
