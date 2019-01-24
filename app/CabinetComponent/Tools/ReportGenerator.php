@@ -2,33 +2,75 @@
 
 namespace App\CabinetComponent\Tools;
 
+use Alexusmai\Ruslug\RuslugFacade;
 use App\MainComponent\Access;
+use App\MainComponent\Child;
 use App\MainComponent\Parents;
 use Dompdf\Dompdf;
 
 class ReportGenerator
 {
+    protected $monthName;
+
+    public function __construct()
+    {
+        $this->monthName = [1 => 'Январь' , 'Февраль' , 'Март' , 'Апрель' , 'Май' , 'Июнь' , 'Июль' , 'Август' ,
+            'Сентябрь' , 'Октябрь' , 'Ноябрь' , 'Декабрь'];
+    }
+
     protected function getDataForParent($parentId, $childId, $startDate, $finishDate)
     {
         $accesses = Access::where('child_id', $childId)
             ->where('date', '>=', $startDate)
-            ->where('date', '<=', $finishDate)->get();
+            ->where('date', '<=', $finishDate)
+            ->get();
+
+        $child = Child::find($childId);
+        $parent = Parents::find($parentId);
+
         $dates = [];
 
+        $previousDate = null;
+
         foreach ($accesses as $access) {
+            if ($previousDate != $access->date){
+                $temp = explode('-', $access->date);
+
+                $day = $temp[2];
+                $month = $this->monthName[$temp[1]];
+                $year = $temp[0];
+
+                $previousDate = $access->date;
+            }
+
             $tmp = [
                 'number' => @count($dates[$access->date]) + 1,
-                'time' => $access->time,
+                'time' => substr($access->time, 0, 5),
+                'access_point' => $access->accessPoint->name,
                 'direction' => ($access->direction == 2) ? 'Выход' : 'Вход'
             ];
-            $dates[$access->date][] = $tmp;
+
+            $date = "$day $month $year";
+
+            $dates[$date][] = $tmp;
         }
-        $parent = Parents::find($parentId);
+
+        $firstSymbolNameChild = substr($child->name, 0, 2);
+        $firstSymbolPatronymicChild = substr($child->name, 0, 2);
+
+        $schoolName = $child->school->name;
+        $title = "report $child->surname $firstSymbolNameChild$firstSymbolPatronymicChild $schoolName";
+        $title = str_replace(' ', '_', $title);
+        $title = RuslugFacade::make($title);
+
         return [
+            'title' => $title,
             'startDate' => $startDate,
             'finishDate' => $finishDate,
             'dateFormation' => date("Y-m-d"),
-            'fullName' => "$parent->surname $parent->name $parent->patronymic",
+            'school' => $child->school->name,
+            'fullNameChild' => "$child->surname $child->name $child->patronymic",
+            'fullNameParent' => "$parent->surname $parent->name $parent->patronymic",
             'dates' => $dates
         ];
     }
@@ -40,11 +82,11 @@ class ReportGenerator
 
     protected function renderPdf($html)
     {
-        $dompdf = new Dompdf();
-        $dompdf->loadHtml($html);
-        $dompdf->setPaper('A4');
-        $dompdf->render();
-        return $dompdf->output();
+        $domPdf = new Dompdf();
+        $domPdf->loadHtml($html);
+        $domPdf->setPaper('A4');
+        $domPdf->render();
+        return $domPdf->output();
     }
 
     public function generateReport($parentId, $childId, $startDate, $finishDate)
@@ -52,7 +94,11 @@ class ReportGenerator
         $data = $this->getDataForParent($parentId, $childId, $startDate, $finishDate);
         $html = view('other.reportForParent', $data);
         return $this->renderPdf($html);
-        //        $data = $this->getDataForParent(1,1, "2018-12-07", "2018-12-19");
-//        return response($this->renderPdf($html))->header('Content-type', 'application/pdf');
+    }
+
+    public function testAction()
+    {
+        return response($this->generateReport(1, 1, "2018-12-01", "2018-12-30"))
+            ->header('Content-type', 'application/pdf');
     }
 }

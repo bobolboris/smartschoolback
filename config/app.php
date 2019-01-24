@@ -169,6 +169,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         PhoenixSmsSender\Providers\SmsSenderServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Alexusmai\Ruslug\RuslugServiceProvider::class,
 
 
         /*
@@ -229,6 +230,7 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'SmsSender' => PhoenixSmsSender\Facade\SmsSender::class,
+        'RuslugFacade' => Alexusmai\Ruslug\RuslugFacade::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,

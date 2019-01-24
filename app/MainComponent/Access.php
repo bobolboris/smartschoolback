@@ -24,6 +24,6 @@ class Access extends Model
 
     public function accessPoint()
     {
-
+        return $this->hasOne('App\MainComponent\AccessPoint', 'id', 'access_point_id');
     }
 }

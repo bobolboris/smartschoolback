@@ -1,2 +1,2 @@
 <?php
-Route::get('aaa', 'MainComponent\Http\Controllers\TestController@testAction');
+Route::get('aaa', 'CabinetComponent\Tools\ReportGenerator@testAction');

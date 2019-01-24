@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0f75fe99f489c044fa189331d8d39ce",
+    "content-hash": "a4244aa2c26301485e516ff8b2b33383",
     "packages": [
+        {
+            "name": "alexusmai/ruslug",
+            "version": "0.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alexusmai/ruslug.git",
+                "reference": "04fd246891dc1a51051881c7d8e33075d82a7459"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alexusmai/ruslug/zipball/04fd246891dc1a51051881c7d8e33075d82a7459",
+                "reference": "04fd246891dc1a51051881c7d8e33075d82a7459",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*|5.7.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Alexusmai\\Ruslug\\RuslugServiceProvider"
+                    ],
+                    "aliases": {
+                        "Slug": "Alexusmai\\Ruslug\\RuslugFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Alexusmai\\Ruslug\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "alexusmai",
+                    "email": "alexusmai@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravel 5 RuSlug, Transliteration RU -> ENG",
+            "homepage": "https://github.com/alexusami/ruslug",
+            "keywords": [
+                "laravel 5",
+                "ru",
+                "slug"
+            ],
+            "time": "2018-08-23T14:39:00+00:00"
+        },
         {
             "name": "bvb28/phoenix-sms-sender",
             "version": "dev-master",
