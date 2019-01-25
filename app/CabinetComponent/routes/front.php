@@ -3,6 +3,7 @@
 Route::prefix('children')->group(function () {
     Route::post('index', 'CabinetComponent\Http\Controllers\ChildrenController@indexAction');
     Route::post('child', 'CabinetComponent\Http\Controllers\ChildrenController@childAction');
+    Route::post('access-by-date', 'CabinetComponent\Http\Controllers\ChildrenController@getAccessByDateAction');
 });
 
 Route::prefix('settings')->group(function () {

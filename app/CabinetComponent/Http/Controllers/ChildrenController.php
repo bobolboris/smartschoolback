@@ -60,6 +60,30 @@ class ChildrenController extends BaseController
         return response()->json($result);
     }
 
+    public function getAccessByDateAction(Request $request)
+    {
+        $result = $this->validateChild($request->all());
+        if (!$result['ok']) {
+            return response()->json($result);
+        }
+
+        $date = $request->get('date');
+        $id = $request->get('child_id');
+
+        $access = Access::where('child_id', $id)->where('date', $date)->orderBy('id', 'desc')->get();
+
+        $count = count($access);
+        foreach ($access as $value) {
+            $value->number = $count;
+            $value->direction_word = ($value->direction == 1) ? 'вход' : 'выход';
+            $count--;
+        }
+
+        $result['data'] = $access;
+
+        return response()->json($result);
+    }
+
     /*no entry points*/
     private function childLoad($id, $date, $data)
     {
@@ -71,9 +95,7 @@ class ChildrenController extends BaseController
         $child->status = ($last->direction == 1) ? 'В учебном заведении с: ' : 'Не в учебном заведении с ';
         $child->status .= "$last->date $last->time";
 
-        $child->access = Access::where('child_id', $id)
-            ->where('date', $date)
-            ->orderBy('id', 'desc')->get();
+        $child->access = Access::where('child_id', $id)->where('date', $date)->orderBy('id', 'desc')->get();
 
 
         $count = count($child->access);
