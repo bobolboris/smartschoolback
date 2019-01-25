@@ -81,6 +81,7 @@ class ReportGenerator
             'finishDate' => $finishDate,
             'dateFormation' => date("Y-m-d"),
             'school' => $child->school->name,
+            'address' => explode(',', $child->school->address),
             'fullNameChild' => "$child->surname $child->name $child->patronymic",
             'fullNameParent' => "$parent->surname $parent->name $parent->patronymic",
             'dates' => $dates
@@ -110,7 +111,7 @@ class ReportGenerator
 
     public function testAction()
     {
-        return response($this->generateReport(1, 1, "2018-12-01", "2018-12-30"))
+        return response($this->generateReport(1, 1, "2018-12-01", "2018-12-30")['report'])
             ->header('Content-type', 'application/pdf');
     }
 }
