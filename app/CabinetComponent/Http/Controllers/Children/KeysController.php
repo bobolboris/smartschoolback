@@ -2,17 +2,20 @@
 
 namespace App\CabinetComponent\Http\Controllers\Children;
 
+use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Kozz\Laravel\Facades\Guzzle;
+use PhoenixSmsSender\Facade\SmsSender;
+use PhoenixSmsSender\MailingRequest;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class KeysController extends BaseChildrenController
 {
     public function blockKeyAction(Request $request)
     {
-        $result = $this->validate($request->all());
+        $result = $this->validateKey($request->all());
         if (!$result['ok']) {
             return response()->json($result);
         }
@@ -46,12 +49,22 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
+        $child = Child::find($childId);
+        $child->key->expires = date('Y-m-d H:i:s', time() + 60);
+        $child->save();
+
+        $shortCodeKey = $child->key->short_codekey;
+
+        SmsSender::setToken(env('SMS_TOKEN'));
+        SmsSender::setAddress(env('SMS_SERVER'));
+        SmsSender::createMailing(new MailingRequest('', "Ключ: $shortCodeKey успешно заблокирован", [$user->phone]));
+
         return response()->json($result);
     }
 
     public function unblockKeyAction(Request $request)
     {
-        $result = $this->validate($request->all());
+        $result = $this->validateKey($request->all());
         if (!$result['ok']) {
             return response()->json($result);
         }
@@ -85,10 +98,20 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
+        $child = Child::find($childId);
+        $child->key->expires = null;
+        $child->save();
+
+        $shortCodeKey = $child->key->short_codekey;
+
+        SmsSender::setToken(env('SMS_TOKEN'));
+        SmsSender::setAddress(env('SMS_SERVER'));
+        SmsSender::createMailing(new MailingRequest('', "Ключ: $shortCodeKey успешно разаблокирован", [$user->phone]));
+
         return response()->json($result);
     }
 
-    protected function validate(array $request)
+    protected function validateKey(array $request)
     {
         $validator = Validator::make($request, [
             'child_id' => 'required|exists:children,id'
