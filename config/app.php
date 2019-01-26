@@ -170,6 +170,7 @@ return [
         PhoenixSmsSender\Providers\SmsSenderServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Alexusmai\Ruslug\RuslugServiceProvider::class,
+        Kozz\Laravel\Providers\Guzzle::class,
 
 
         /*
@@ -214,6 +215,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
+        'Guzzle' => Kozz\Laravel\Facades\Guzzle::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,

@@ -1,9 +1,9 @@
 <?php
 
 Route::prefix('children')->group(function () {
-    Route::post('index', 'CabinetComponent\Http\Controllers\ChildrenController@indexAction');
-    Route::post('child', 'CabinetComponent\Http\Controllers\ChildrenController@childAction');
-    Route::post('access-by-date', 'CabinetComponent\Http\Controllers\ChildrenController@getAccessByDateAction');
+    Route::post('index', 'CabinetComponent\Http\Controllers\Children\IndexController@indexAction');
+    Route::post('child', 'CabinetComponent\Http\Controllers\Children\ChildController@childAction');
+    Route::post('access-by-date', 'CabinetComponent\Http\Controllers\Children\ChildController@getAccessByDateAction');
 });
 
 Route::prefix('settings')->group(function () {
@@ -12,5 +12,11 @@ Route::prefix('settings')->group(function () {
 });
 
 Route::prefix('report')->group(function () {
-    Route::post('child', 'CabinetComponent\Http\Controllers\ChildrenController@reportParentAction');
+    Route::post('child', 'CabinetComponent\Http\Controllers\Children\ReportController@reportParentAction');
 });
+
+Route::prefix('key')->group(function () {
+    Route::post('lock', 'CabinetComponent\Http\Controllers\Children\KeysController@blockKeyAction');
+    Route::post('unlock', 'CabinetComponent\Http\Controllers\Children\KeysController@unblockKeyAction');
+});
+
