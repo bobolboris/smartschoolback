@@ -15,9 +15,8 @@ class BaseChildrenController extends BaseController
         $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
         if ($child->key->expires == null) {
-            $child->key->state = 'активен';
+            $child->key->state = 1;
         } else {
-
             $expires = strtotime($child->key->expires);
             $now = time();
 
