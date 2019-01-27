@@ -14,6 +14,12 @@ class BaseChildrenController extends BaseController
         $child->school;
         $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
+        if ($child->key->expires == null) {
+            $child->key->state = 'активен';
+        } else {
+            $expires = date("Y-m-d H:i:s", strtotime($child->key->expires));
+            $child->key->state = ($expires < date("Y-m-d H:i:s")) ? 'не активен' : 'активен';
+        }
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
 
