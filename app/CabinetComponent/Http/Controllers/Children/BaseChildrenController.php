@@ -28,11 +28,9 @@ class BaseChildrenController extends BaseController
                     $child->key->state = 1;
                 } else {
                     $child->key->state = 2;
-                    $child->key->diff = $diff;
+                    $child->key->diff = -$diff;
                 }
             }
-
-            $child->key->state = ($expires < date("Y-m-d H:i:s")) ? 0 : 1;
         }
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
