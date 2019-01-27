@@ -49,7 +49,7 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
-        $state = json_decode(strval($response->getBody()));
+        $state = json_decode(strval($response->getBody()), true);
         if (!isset($state['ok']) || !$state['ok']) {
             $result['ok'] = false;
             $result['errors'] = $state['errors'];
@@ -105,7 +105,7 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
-        $state = json_decode(strval($response->getBody()));
+        $state = json_decode(strval($response->getBody()), true);
         if (!isset($state['ok']) || !$state['ok']) {
             $result['ok'] = false;
             $result['errors'] = $state['errors'];
