@@ -14,6 +14,8 @@ class BaseChildrenController extends BaseController
         $child->school;
         $child->key;
 
+        $child->key->codekey = 13;
+
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
 
         $child->status = ($last->direction == 1) ? 'В учебном заведении с: ' : 'Не в учебном заведении с ';
