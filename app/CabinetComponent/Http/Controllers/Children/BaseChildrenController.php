@@ -13,8 +13,7 @@ class BaseChildrenController extends BaseController
         $child = Child::find($id);
         $child->school;
         $child->key;
-
-        $child->key->codekey = 13;
+        $child->key->codekey = base64_encode($child->key->codekey);
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
 

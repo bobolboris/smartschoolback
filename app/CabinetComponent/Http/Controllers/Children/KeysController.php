@@ -30,9 +30,16 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
+        $child = Child::find($childId);
+        if ($child == null) {
+            $result['ok'] = false;
+            $result['errors'] = ['Такого ребенка не существует'];
+            return response()->json($result);
+        }
+
         $response = Guzzle::post(env('WINDOWS_SERVER') . '/api/personal-keys/lock', [
             'form_params' => [
-                'ID' => $childId
+                'ID' => $child->system_id
             ]
         ]);
 
@@ -79,9 +86,16 @@ class KeysController extends BaseChildrenController
             return response()->json($result);
         }
 
+        $child = Child::find($childId);
+        if ($child == null) {
+            $result['ok'] = false;
+            $result['errors'] = ['Такого ребенка не существует'];
+            return response()->json($result);
+        }
+
         $response = Guzzle::post(env('WINDOWS_SERVER') . '/api/personal-keys/unlock', [
             'form_params' => [
-                'ID' => $childId
+                'ID' => $child->system_id
             ]
         ]);
 
