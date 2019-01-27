@@ -12,6 +12,7 @@ class BaseChildrenController extends BaseController
     {
         $child = Child::find($id);
         $child->school;
+        $child->key;
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
 
@@ -31,6 +32,7 @@ class BaseChildrenController extends BaseController
         if (!isset($child)) {
             return response()->json(['ok' => false, 'errors' => ['Child not found']]);
         }
+
         $data['child'] = $child;
         $data['currentDate'] = $date;
         return response()->json(['ok' => true, 'data' => $data]);
