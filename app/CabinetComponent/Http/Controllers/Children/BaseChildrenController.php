@@ -17,8 +17,23 @@ class BaseChildrenController extends BaseController
         if ($child->key->expires == null) {
             $child->key->state = 'активен';
         } else {
-            $expires = date("Y-m-d H:i:s", strtotime($child->key->expires));
-            $child->key->state = ($expires < date("Y-m-d H:i:s")) ? 'не активен' : 'активен';
+
+            $expires = strtotime($child->key->expires);
+            $now = time();
+
+            if ($expires < $now) {
+                $child->key->state = 0;
+            } else {
+                $diff = $now - $expires;
+                if ($diff > 60) {
+                    $child->key->state = 1;
+                } else {
+                    $child->key->state = 2;
+                    $child->key->diff = $diff;
+                }
+            }
+
+            $child->key->state = ($expires < date("Y-m-d H:i:s")) ? 0 : 1;
         }
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
