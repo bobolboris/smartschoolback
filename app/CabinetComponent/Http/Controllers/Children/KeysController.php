@@ -58,7 +58,7 @@ class KeysController extends BaseChildrenController
 
         $child = Child::find($childId);
         $child->key->expires = date('Y-m-d H:i:s', time() + 60);
-        $child->save();
+        $child->key->save();
 
         $shortCodeKey = $child->key->short_codekey;
 
@@ -114,7 +114,7 @@ class KeysController extends BaseChildrenController
 
         $child = Child::find($childId);
         $child->key->expires = null;
-        $child->save();
+        $child->key->save();
 
         $shortCodeKey = $child->key->short_codekey;
 
