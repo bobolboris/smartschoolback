@@ -68,7 +68,7 @@ class KeysController extends BaseChildrenController
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
         $school = $child->school->name;
-        $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН учащийся: $fullName УЗ: $school Класс 5-А";
+        $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
 
         SmsSender::setToken(env('SMS_TOKEN'));
         SmsSender::setAddress(env('SMS_SERVER'));
@@ -132,7 +132,7 @@ class KeysController extends BaseChildrenController
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
         $school = $child->school->name;
-        $text = "Номер пропуска: $shortCodeKey, РАЗАБЛОКИРОВАН учащийся: $fullName УЗ: $school Класс 5-А";
+        $text = "Номер пропуска: $shortCodeKey, РАЗБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
 
         SmsSender::setToken(env('SMS_TOKEN'));
         SmsSender::setAddress(env('SMS_SERVER'));
