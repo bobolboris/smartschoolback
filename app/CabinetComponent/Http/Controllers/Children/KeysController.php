@@ -62,9 +62,17 @@ class KeysController extends BaseChildrenController
 
         $shortCodeKey = $child->key->short_codekey;
 
+        $surname = $child['surname'];
+        $name = $child['name'];
+        $patronymic = $child['patronymic'];
+
+        $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
+        $school = $child->school->name;
+        $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН учащийся: $fullName УЗ: $school Класс 5-А";
+
         SmsSender::setToken(env('SMS_TOKEN'));
         SmsSender::setAddress(env('SMS_SERVER'));
-        SmsSender::createMailing(new MailingRequest('', "Ключ: $shortCodeKey успешно заблокирован", [$user->phone]));
+        SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
     }
@@ -118,9 +126,17 @@ class KeysController extends BaseChildrenController
 
         $shortCodeKey = $child->key->short_codekey;
 
+        $surname = $child['surname'];
+        $name = $child['name'];
+        $patronymic = $child['patronymic'];
+
+        $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
+        $school = $child->school->name;
+        $text = "Номер пропуска: $shortCodeKey, РАЗАБЛОКИРОВАН учащийся: $fullName УЗ: $school Класс 5-А";
+
         SmsSender::setToken(env('SMS_TOKEN'));
         SmsSender::setAddress(env('SMS_SERVER'));
-        SmsSender::createMailing(new MailingRequest('', "Ключ: $shortCodeKey успешно разаблокирован", [$user->phone]));
+        SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
     }
