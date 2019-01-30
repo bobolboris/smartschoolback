@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Access extends Model
 {
-    public $timestamps = false;
+    public $timestamps = false;//test comment
     protected $table = 'access';
     protected $fillable = ['direction', 'time', 'date', 'cause', 'child_id', 'access_point_id', 'system_id'];
 
