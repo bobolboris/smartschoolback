@@ -36,20 +36,11 @@ class AuthController extends Controller
 
         $info = $this->getCustomerInfo($request);
 
-        $session = $this->getSessionByInfo($info);
-        if ($session == null) {
-            $session = new Session();
-        }
+//        $session->sms_code = $code;
+//        $session->token = $token;
+//        $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
+//        $session->user_id = $user->id;
 
-        $session->sms_code = $code;
-        $session->token = $token;
-        $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
-        $session->user_id = $user->id;
-
-        $session->os = $info['os'];
-        $session->browser = $info['browser'];
-        $session->ip = $info['ip'];
-        $session->save();
 
         if (env('SMS_AUTH_ENABLE', false)) {
 			SmsSender::setToken(env('SMS_TOKEN'));
