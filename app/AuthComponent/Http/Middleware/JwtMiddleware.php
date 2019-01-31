@@ -22,7 +22,7 @@ class JwtMiddleware
     public function handle($request, Closure $next)
     {
         try {
-            $auth = JWTAuth::parseToken();
+            JWTAuth::parseToken();
         } catch (TokenInvalidException $e) {
             return response()->json(['ok' => false, 'status' => 300, 'errors' => ['Неверный токен']]);
         } catch (TokenExpiredException $e) {
@@ -30,10 +30,6 @@ class JwtMiddleware
         } catch (Exception $e) {
             return response()->json(['ok' => false, 'status' => 304, 'errors' => ['Токен не найден']]);
         }
-
-//        if ($session == null) {
-//            return response()->json(['ok' => false, 'status' => 302, 'errors' => ['Неизвестный токен']]);
-//        }
 
         return $next($request);
     }

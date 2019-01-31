@@ -3,9 +3,9 @@
 namespace App\AuthComponent\Http\Controllers;
 
 use App\AuthComponent\Http\Controllers\BaseController as Controller;
-use App\MainComponent\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -31,26 +31,20 @@ class AuthController extends Controller
             return response()->json(['ok' => false, 'errors' => ['error' => 'Не удалось создать токен']]);
         }
 
-        $user = Auth::user();
-        $code = $this->generateCode();
+        $sms_code = $this->generateCode();
 
-        $info = $this->getCustomerInfo($request);
-
-//        $session->sms_code = $code;
-//        $session->token = $token;
-//        $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
-//        $session->user_id = $user->id;
-
+        $identifier = $this->generateRandomWord(16);
+        Redis::setex($identifier, 3600 * 2, json_encode(['sms_code' => $sms_code, 'token' => $token]));
 
         if (env('SMS_AUTH_ENABLE', false)) {
-			SmsSender::setToken(env('SMS_TOKEN'));
-			SmsSender::setAddress(env('SMS_SERVER'));
-			SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$request->get('phone')]));
+            SmsSender::setToken(env('SMS_TOKEN'));
+            SmsSender::setAddress(env('SMS_SERVER'));
+            SmsSender::createMailing(new MailingRequest('', "Код для входа: $sms_code", [$request->get('phone')]));
         }
 
 
-//        return response()->json(['ok' => true, 'identifier' => $session->id]);
-        return response()->json(['ok' => true, 'data' => ['sms_code' => $code, 'identifier' => $session->id]]);
+//        return response()->json(['ok' => true, 'identifier' => $identifier]);
+        return response()->json(['ok' => true, 'data' => ['sms_code' => $sms_code, 'identifier' => $identifier]]);
     }
 
     public function loginSecondStageAction(Request $request)
@@ -61,22 +55,21 @@ class AuthController extends Controller
         }
 
         $smsCode = $request->get('sms_code');
-        $session_id = $request->get('identifier');
+        $identifier = $request->get('identifier');
 
-        $session = Session::find($session_id);
-        if ($session == null) {
+        $value = Redis::get($identifier);
+
+        if ($value == null) {
             return response()->json(['ok' => false, 'errors' => ['Неверный идентификатор сессии']]);
         }
 
-        if ($session->sms_code != $smsCode) {
+        $array = json_decode(Redis::get($identifier), true);
+
+        if ($array['sms_code'] != $smsCode) {
             return response()->json(['ok' => false, 'errors' => ['sms_code' => 'Неверный код из смс']]);
         }
 
-        if ($session->expire_sms_code <= time()) {
-            return response()->json(['ok' => false, 'errors' => ['sms_code' => 'Срок действия смс кода истек']]);
-        }
-
-        $token = $session->token;
+        $token = $array['token'];
         JWTAuth::setToken($token);
         $data = ['token' => $token, 'expire' => JWTAuth::getPayload()->get('exp')];
         return response()->json(['ok' => true, 'data' => $data]);
@@ -85,20 +78,7 @@ class AuthController extends Controller
     public function refreshTokenAction(Request $request)
     {
         $auth = JWTAuth::parseToken();
-        $token = $auth->getToken();
-        $session = Session::where('token', $token)->first();
-        if ($session == null) {
-            return response()->json(['ok' => false, 'errors' => ['Неизвестный token']]);
-        }
-        $token = $auth->refresh();
-
-        $info = $this->getCustomerInfo($request);
-
-        $session->token = $token;
-        $session->os = $info['os'];
-        $session->browser = $info['browser'];
-        $session->ip = $info['ip'];
-        $session->save();
+        $token = $auth->getToken()->refresh();
 
         JWTAuth::setToken($token);
         $data = ['token' => $token, 'expire' => JWTAuth::getPayload()->get('exp')];
@@ -112,42 +92,36 @@ class AuthController extends Controller
         if (!$result['ok']) {
             return response()->json($result);
         }
-        $session_id = $request->get('identifier');
+        $identifier = $request->get('identifier');
 
-        $session = Session::find($session_id);
-        if ($session == null) {
+        $value = Redis::get($identifier);
+
+        if ($value == null) {
             return response()->json(['ok' => false, 'errors' => ['Неверный идентификатор сессии']]);
         }
 
-        $code = $this->generateCode();
-        while ($code == $session->sms_code) {
-            $code = $this->generateCode();
-        }
+        $array = json_decode(Redis::get($identifier), true);
 
-        $session->sms_code = $code;
-        $session->expire_sms_code = time() + env('SMS_CODE_VALID_TIME', 120) * 60;
-        $session->save();
+        do {
+            $sms_code = $this->generateCode();
+        } while ($sms_code == $array['sms_code']);
+        $array['sms_code'] = $sms_code;
+
+        Redis::setex($identifier, 3600 * 2, json_encode($array));
 
         if (env('SMS_AUTH_ENABLE', false)) {
+            $user = JWTAuth::toUser($array['token']);
             SmsSender::setToken(env('SMS_TOKEN'));
-			SmsSender::setAddress(env('SMS_SERVER'));
-            SmsSender::createMailing(new MailingRequest('', "Код для входа: $code", [$session->user->phone]));
+            SmsSender::setAddress(env('SMS_SERVER'));
+            SmsSender::createMailing(new MailingRequest('', "Код для входа: $sms_code", [$user->phone]));
         }
 
 //        return response()->json(['ok' => true]);
-        return response()->json(['ok' => true, 'sms_code' => $code]);
+        return response()->json(['ok' => true, 'sms_code' => $sms_code]);
     }
 
     public function logoutAction()
     {
-        $token = JWTAuth::parseToken()->getToken();
-
-        $session = Session::where('token', $token)->first();
-        if ($session == null) {
-            return response()->json(['ok' => false, 'errors' => ['Неизвестный token']]);
-        }
-
-        $session->delete();
         return response()->json(['ok' => true]);
     }
 }
