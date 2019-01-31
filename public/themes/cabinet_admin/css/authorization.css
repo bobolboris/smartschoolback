@@ -1,0 +1,35 @@
+body {
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: auto;
+}
+
+.container {
+	width: 40%;
+	border: 1px solid blue;
+	background-color: white;
+
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -20% 0 0 -20%;
+    padding: 50px;
+}
+
+img {
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+}
+
+@media screen and (max-width: 880px) {
+	.container{
+		width: 80%;
+		margin: -10% 0 0 -10%;
+		top: 20%;
+		left: 20%;
+	}
+}

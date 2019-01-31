@@ -1,0 +1,42 @@
+body {
+	font-size: 16px;
+	background-color: white;
+	width: 100%;
+	background-image: url(../img/headerBack.png);
+}
+
+p {
+	margin-bottom: 0;
+}
+
+.curMenuSelect {
+	border: 1px solid rgba(65, 134, 143, 0.8);
+	border-radius: 1em;
+}
+
+#toTop {
+
+	min-width: 41px;
+	min-height: 41px;
+
+	/*border:1px solid #ccc;
+	border-radius: 20px;
+	background:#f7f7f7;*/
+
+	text-align:center;
+	/*padding:5px;*/
+
+	position:fixed;
+
+	bottom:10px; /* отступ кнопки от нижнего края страницы*/
+	right:10px;
+
+	cursor:pointer;
+	display:none;
+
+	/* 	color:#333;
+	font-family:verdana;
+	font-size:14px; */
+
+	background-image: url(../img/topArrow.png);
+}

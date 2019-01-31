@@ -1,0 +1,45 @@
+/*POPUP*/
+
+.overlay_popup {
+	display:none;
+	position:fixed;
+	z-index: 999;
+	top:0;
+	right:0; 
+	left:0;
+	bottom:0;
+	background:#000; 
+	opacity:0.5;
+}
+
+.popup {
+	display: none;
+	position: absolute;
+	width: 100%;
+	z-index: 1000;
+/*	margin:0 25% 0 25%;*/
+}
+
+/*END POPUP*/
+
+.object{
+	border: 1px solid blue;
+	width: 280px;
+	text-align: center;
+	background-color: #eee;
+	padding: 1em 2em;
+	margin: 100px auto;
+}
+
+/*чтобы меню было снизу*/
+.sticky-top {
+	z-index: 998;
+}
+
+.object > form > .btn {
+	width: 40%;
+}
+
+.messageRow {
+	display: none;
+}

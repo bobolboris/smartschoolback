@@ -1,2 +1,2 @@
 <?php
-require_once app_path("CabinetComponent/routes/front.php");
+require_once app_path("CabinetParentsComponent/routes/front.php");

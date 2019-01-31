@@ -1,0 +1,363 @@
+body {
+	width: 100%;
+	font-size: 16px;
+}
+
+@media screen and (max-width: 1275px) {
+/* 	.mainWrapper > .cl1{
+	background-color: rgba(255,255,255,0.3);
+}
+.mainWrapper > .cl2 {
+	background-color: rgba(0,0,0,0.3);
+} */
+
+	li > .form-group > label {
+	    width: 30%;
+	}
+
+	li > .form-group > input {
+    	width: 60%;
+	}
+}
+
+@media screen and (max-width: 1090px) {
+	.accordion {
+		/*font-size: 0.7em;*/
+		font-size: .8em;
+	}
+}
+
+@media screen and (max-width: 820px) {
+	.accordion {
+		/*font-size: 0.7em;*/
+		font-size: .7em;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.accordion {
+		/*font-size: 0.7em;*/
+		font-size: 1em;
+	}
+}
+
+@media screen and (max-width: 955px) {
+	.navbar-brand > p {
+		font-size: .9em;
+	}
+
+	.nav-item > a {
+	    font-size: .9em;
+	}
+}
+
+@media screen and (max-width: 819px) {
+	.navbar-brand > p {
+		font-size: .8em;
+	}
+
+	.nav-item > a {
+	    font-size: .8em;
+	}
+}
+
+@media screen and (max-width: 764px) {
+	.navbar-brand > p {
+		font-size: 1em;
+	}
+
+	.nav-item > a {
+	    font-size: 1em;
+	}
+
+	.cl1,.cl2{
+		width: 100%;
+	}
+}
+
+ form >.jcS {
+	justify-content: start;
+}
+
+.nav-item {
+	margin-right: 5%;
+}
+
+.separator {
+	width: 2em;
+}
+
+/* .cl1{
+	background-color: rgba(0,255,100,0.3);
+	min-height: 50px;
+	width: 25%;
+}
+
+.cl2{
+	background-color: rgba(255,100,0,0.3);
+	min-height: 50px;
+	width: 75%;
+} */
+
+.mainWrapper {
+	display: flex;
+	justify-content: center;
+	padding: 0 0;
+	flex-wrap: wrap;
+}
+
+
+.col-flex {
+	justify-content: flex-end;
+}
+
+
+.container-fluid {
+	margin: 0 0;
+}
+
+.noM {
+	margin: 0 0;
+}
+
+.childPhoto{
+	width: 200px;
+	height: 200px;
+  	border: 1px solid black;
+  	border-radius: 50%;
+}
+
+
+.logMLeft {
+	margin-left: 5%;
+}
+
+/* a {
+  color: white;
+}
+
+a:hover {
+  color: white;
+} */
+
+
+.exitWhite {
+	color: white;
+}
+
+.exitWhite:hover {
+	text-decoration:underline; 
+	color:white
+}
+
+.cfCenter {
+	display: flex;
+	justify-content: center;
+}
+
+/*Для меню*/ 
+ul { list-style-type: none; }
+
+
+/** =======================
+ * Contenedor Principal
+ ===========================*/
+
+
+/* h1 {
+  color: #FFF;
+  font-size: 5em; 24px
+  font-weight: 400;
+  text-align: center;
+  margin-top: 10px;
+}
+ */
+
+/* h1 a {
+  color: #c12c42;
+  font-size: 16px;
+}
+ */
+
+.accordion {
+  width: 100%;
+  margin: .6em auto .3em;
+  background: #FFF;
+  -webkit-border-radius: .25em;
+  -moz-border-radius: .25em;
+  border-radius: .25em;
+
+  border: 1px solid black;
+
+  padding: 0;
+}
+
+.accordion .link {
+  cursor: pointer;
+  display: block;
+  padding: .9em .9em .9em 2em;
+  color: #4D4D4D;
+
+  font-size: 1.2em;
+
+  font-weight: 700;
+
+  border-bottom: 1px solid #CCC;
+
+  position: relative;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+
+}
+
+.accordion li:last-child .link {
+ border-bottom: 0; 
+}
+
+/* 
+.accordion li i {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  font-size: 18px;
+  color: #595959;
+  -webkit-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.accordion li i.fa-chevron-down {
+  right: 12px;
+  left: auto;
+  font-size: 16px;
+}
+ */
+
+.accordion li.open .link {
+ color: #007bff;
+}
+
+.accordion li.open i {
+ color: #b63b4d;
+}
+
+.accordion li.open i.fa-chevron-down {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/**
+ * Submenu
+ -----------------------------*/
+
+
+.submenu {
+  display: none;
+  background: white;
+  font-size: 1em;
+  padding: 0;
+}
+
+/* .submenu li {
+ border-bottom: 5px solid black;
+} */
+
+.submenu a {
+  display: block;
+  text-decoration: none;
+  /*   color: #d9d9d9; */
+  padding: .9em;
+  padding-left: 3em;
+  /*   padding-left: 42px; */
+  -webkit-transition: all 0.25s ease;
+  -o-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+}
+
+.submenu a:hover {
+  background: #007bff;
+}
+
+/*Дополнение*/
+.link > ul {
+  list-style: none; убираем маркеры списка
+  margin: 0; убираем верхнее и нижнее поле, равное 1em
+  padding-left: 0; убираем левый отступ, равный 40px
+}
+
+.submenu > li > a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.submenu > li > a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+
+.submenu > li {
+	display: inline;
+/* 	margin-right: 10px;
+margin-left: 20px; */
+}
+
+
+
+/* .child {
+	border: 1px solid black;
+	padding: 5px;
+	margin-top: 2px;
+} */
+
+
+/* .statusLogo {
+	width: 20px;
+	height: 20px;
+} */
+
+.labelNorm {
+  text-align: center;
+  width: 100%;
+  color: black;
+}
+
+/* 
+.statusRow {
+  display: flex;
+  align-items: center;
+} */
+
+/* .statusRow > img,a {
+  margin-left: 10px;
+}
+ */
+
+.form-group {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin: 0;
+  font-size: .8em;
+}
+
+.form-group > .btn {
+	font-size: 1em;
+}
+
+.form-group > .form-control {
+	font-size: 1em;
+}
+
+.form-group > label {
+  width: 45%;
+}
+
+.form-group > input {
+  width: 50%;
+} 

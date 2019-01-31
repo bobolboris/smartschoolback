@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CabinetComponent\Http\Controllers\Children;
+namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CabinetComponent\Http\Controllers;
+namespace App\CabinetParentsComponent\Http\Controllers;
 
 use App\MainComponent\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;

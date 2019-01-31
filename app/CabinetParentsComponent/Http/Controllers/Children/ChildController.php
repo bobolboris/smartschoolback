@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CabinetComponent\Http\Controllers\Children;
+namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
 use App\MainComponent\Access;
 use Illuminate\Http\Request;

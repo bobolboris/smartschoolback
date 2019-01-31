@@ -1,8 +1,8 @@
 <?php
 
-namespace App\CabinetComponent\Http\Controllers\Children;
+namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
-use App\CabinetComponent\Http\Controllers\BaseController;
+use App\CabinetParentsComponent\Http\Controllers\BaseController;
 use App\MainComponent\Access;
 use App\MainComponent\Child;
 

@@ -1,0 +1,141 @@
+header {
+	height: 70px;
+	background-image: url(../img/headerBack.png);
+}
+
+.row-header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(65, 134, 143, 0.8);
+}
+
+.logo {
+	height: 20%;
+}
+
+.wrapperPhoneMail,.wrapperLK {
+	font-size: 1.4em;
+ 	display: flex;
+	height: 100%;
+ 	align-items: center;
+	color: white;
+}
+
+.wrapperPhoneMail {
+	width: 100%;
+	margin-left: 10%;
+}
+
+.col-WithLogo {
+	display: flex;
+	align-items: center;
+}
+
+.logMLeft {
+	margin-left: 20%;
+}
+
+.col-flex {
+	display: flex;
+	justify-content: center;
+}
+
+@media only screen and (max-width: 767px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: 570px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.1em;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1em;
+	}
+	.logMLeft {
+		margin-left: 10%;
+	}
+}
+
+@media only screen and (max-width: 450px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 0.9em;
+	}
+	.logMLeft {
+		margin-left: 5%;
+	}
+}
+
+@media only screen and (max-width: 410px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 0.9em;
+	}
+	.logMLeft {
+		width: 80%;
+	}
+}
+
+/* @media only screen and (max-width: 880px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.3em;
+	}
+}
+
+@media only screen and (max-width: 745px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.1em;
+	}
+}
+
+@media only screen and (max-width: 652px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: 1.0em;
+	}
+}
+
+@media only screen and (max-width: 606px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .8em;
+	}
+}
+
+@media only screen and (max-width: 510px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .7em;
+	}
+}
+
+@media only screen and (max-width: 464px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .6em;
+	}
+}
+
+@media only screen and (max-width: 416px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .5em;
+	}
+}
+
+@media only screen and (max-width: 368px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .4em;
+	}
+}
+
+@media only screen and (max-width: 320px) {
+	.wrapperPhoneMail,.wrapperLK {
+		font-size: .3em;
+	}
+} */

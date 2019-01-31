@@ -1,0 +1,240 @@
+/* .carousel-control-prev-icon,.carousel-control-next-icon {
+	background-color: #f3f5f6;
+	border-radius: 50%;
+	width: 40px;
+	height: 40px;
+} */
+
+.carousel-control-prev-icon {
+	background-image: url("../img/back.png");
+}
+
+.carousel-control-next-icon {
+	background-image: url("../img/next.png");
+}
+
+.wrapperMessage {
+	position: absolute;
+	width: 45%;
+	height: 40%;
+	/*border: 1px solid black;*/
+	top: 20%;
+	left: 15%;	
+}
+
+.wrapperMessage > .container-fluid > .row > p,h3 {
+	color: white;
+}
+
+.wrapperMessage {
+	font-size: 3em;
+}
+
+.wrapperMessage > .container-fluid > .row > h3 {
+	font-size: 1em;
+}
+
+.wrapperMessage > .container-fluid > .row > p {
+	font-size: 0.55em;
+	padding: 1% 4%;
+	text-indent: 1%;
+}
+
+.wrapperMessage > .container-fluid > .row > .col-6 > a {
+	font-size: 0.5em;
+}
+
+.wrapperMessage > .container-fluid > .row > .col-6 > a > button{
+	border-radius: .8em;
+}
+
+@media only screen and (max-width: 1300px) {
+	.wrapperMessage {
+		font-size: 2.5em;
+	}
+}
+
+@media only screen and (max-width: 1102px) {
+	.wrapperMessage {
+		font-size: 2.3em;
+	}
+}
+
+@media only screen and (max-width: 1029px) {
+	.wrapperMessage {
+		font-size: 2.1em;
+	}
+}
+
+@media only screen and (max-width: 968px) {
+	.wrapperMessage > .container-fluid > .row > .col-6 > a {
+		font-size: .45em;
+	}
+}
+
+@media only screen and (max-width: 884px) {
+	.wrapperMessage {
+		font-size: 1.9em;
+	}
+}
+
+@media only screen and (max-width: 884px) {
+	.wrapperMessage {
+		font-size: 1.7em;
+	}
+}
+
+@media only screen and (max-width: 756px) {
+	.wrapperMessage > .container-fluid > .row > .col-6 > a {
+		font-size: .35em;
+	}
+
+	.wrapperMessage {
+		top: 10%;
+	}
+}
+
+@media only screen and (max-width: 630px) {
+	.wrapperMessage {
+		font-size: 1.6em;
+	}
+
+	.wrapperMessage {
+		height: 60%;
+	}
+}
+
+@media only screen and (max-width: 606px) {
+	.wrapperMessage {
+		font-size: 1.5em;
+	}
+}
+
+@media only screen and (max-width: 580px) {
+	.wrapperMessage {
+		font-size: 1.3em;
+	}
+}
+
+@media only screen and (max-width: 430px) {
+	.wrapperMessage {
+		font-size: 1.1em;
+	}
+}
+
+/* @media only screen and (max-width: 1200px) {
+	.wrapperMessage {
+		font-size: 2.2em;
+	}
+}
+
+@media only screen and (max-width: 1115px) {
+	.wrapperMessage {
+		font-size: 2.1em;
+	}
+}
+
+@media only screen and (max-width: 1075px) {
+	.wrapperMessage {
+		font-size: 1.9em;
+	}
+}
+
+@media only screen and (max-width: 990px) {
+	.wrapperMessage {
+		font-size: 1.8em;
+	}
+}
+
+
+@media only screen and (max-width: 946px) {
+	.wrapperMessage {
+		font-size: 1.7em;
+	}
+}
+
+@media only screen and (max-width: 906px) {
+	.wrapperMessage {
+		font-size: 1.6em;
+	}
+}
+
+@media only screen and (max-width: 864px) {
+	.wrapperMessage {
+		font-size: 1.5em;
+	}
+}
+
+@media only screen and (max-width: 823px) {
+	.wrapperMessage {
+		font-size: 1.4em;
+	}
+}
+
+@media only screen and (max-width: 781px) {
+	.wrapperMessage {
+		font-size: 1.3em;
+	}
+}
+
+@media only screen and (max-width: 739px) {
+	.wrapperMessage {
+		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: 699px) {
+	.wrapperMessage {
+		font-size: 1.1em;
+	}
+}
+
+@media only screen and (max-width: 657px) {
+	.wrapperMessage {
+		font-size: 1.05em;
+	}
+}
+
+@media only screen and (max-width: 615px) {
+	.wrapperMessage {
+		font-size: .9em;
+	}
+}
+
+@media only screen and (max-width: 550px) {
+	.wrapperMessage {
+		font-size: .6em;
+	}
+} */
+
+/*
+@media only screen and (max-width: 823px) {
+	.wrapperMessage {
+		font-size: 1.3em;
+	}
+}
+
+@media only screen and (max-width: 743px) {
+	.wrapperMessage {
+		font-size: 1.2em;
+	}
+}
+
+@media only screen and (max-width: 699px) {
+	.wrapperMessage {
+		font-size: 1.0em;
+	}
+}
+
+@media only screen and (max-width: 617px) {
+	.wrapperMessage {
+		font-size: .9em;
+	}
+}
+
+@media only screen and (max-width: 575px) {
+	.wrapperMessage {
+		font-size: .7em;
+	}
+}
+*/

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\CabinetComponent\Http\Controllers\Children;
+namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
-use App\CabinetComponent\Tools\ReportGenerator;
+use App\CabinetParentsComponent\Tools\ReportGenerator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;

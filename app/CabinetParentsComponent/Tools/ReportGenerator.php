@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CabinetComponent\Tools;
+namespace App\CabinetParentsComponent\Tools;
 
 use Alexusmai\Ruslug\RuslugFacade;
 use App\MainComponent\Access;
