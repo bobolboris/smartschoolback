@@ -67,8 +67,9 @@ class KeysController extends BaseChildrenController
         $patronymic = $child['patronymic'];
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
-        $school = $child->school->name;
-        $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
+        $class = $child->schoolClass->name;
+        $school = $child->schoolClass->school->name;
+        $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс $class";
 
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
@@ -129,8 +130,9 @@ class KeysController extends BaseChildrenController
         $patronymic = $child['patronymic'];
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
-        $school = $child->school->name;
-        $text = "Номер пропуска: $shortCodeKey, РАЗБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
+        $class = $child->schoolClass->name;
+        $school = $child->schoolClass->school->name;
+        $text = "Номер пропуска: $shortCodeKey, РАЗБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс $class";
 
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 

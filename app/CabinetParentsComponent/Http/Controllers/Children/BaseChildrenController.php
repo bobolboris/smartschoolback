@@ -11,16 +11,16 @@ class BaseChildrenController extends BaseController
     protected function childLoad($id, $date, $data)
     {
         $child = Child::find($id);
-        $child->school;
+        $child->schoolClass->school;
         $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
 
-        if ($child->key->expires == null) {
-            $child->key->state = 1;
-        } else {
+        if ($child->key->expires != null) {
             $expires = strtotime($child->key->expires);
             $now = time();
             $child->key->state = ($expires < $now) ? 0 : 1;
+        } else {
+            $child->key->state = 1;
         }
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
