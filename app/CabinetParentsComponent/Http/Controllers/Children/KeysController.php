@@ -70,8 +70,6 @@ class KeysController extends BaseChildrenController
         $school = $child->school->name;
         $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
 
-        SmsSender::setToken(env('SMS_TOKEN'));
-        SmsSender::setAddress(env('SMS_SERVER'));
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
@@ -134,8 +132,6 @@ class KeysController extends BaseChildrenController
         $school = $child->school->name;
         $text = "Номер пропуска: $shortCodeKey, РАЗБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс 5-А";
 
-        SmsSender::setToken(env('SMS_TOKEN'));
-        SmsSender::setAddress(env('SMS_SERVER'));
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
