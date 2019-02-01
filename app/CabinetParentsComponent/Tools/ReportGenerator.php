@@ -70,7 +70,7 @@ class ReportGenerator
         $firstSymbolNameChild = substr($child->name, 0, 2);
         $firstSymbolPatronymicChild = substr($child->name, 0, 2);
 
-        $schoolName = $child->school->name;
+        $schoolName = $child->schoolClass->school->name;
         $title = "report $child->surname $firstSymbolNameChild$firstSymbolPatronymicChild $schoolName";
         $title = str_replace(' ', '_', $title);
         $title = RuslugFacade::make($title);
@@ -82,7 +82,7 @@ class ReportGenerator
             'dateFormation' => date("Y-m-d"),
             'class' => $child->schoolClass->name,
             'school' => $child->schoolClass->school->name,
-            'address' => explode(',', $child->school->address),
+            'address' => explode(',', $child->schoolClass->school->address),
             'fullNameChild' => "$child->surname $child->name $child->patronymic",
             'fullNameParent' => "$parent->surname $parent->name $parent->patronymic",
             'dates' => $dates
