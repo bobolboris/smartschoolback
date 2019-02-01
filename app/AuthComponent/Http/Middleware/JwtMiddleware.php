@@ -22,7 +22,7 @@ class JwtMiddleware
     public function handle($request, Closure $next)
     {
         try {
-            $auth = JWTAuth::parseToken();
+            JWTAuth::parseToken();
         } catch (TokenInvalidException $e) {
             return response()->json(['ok' => false, 'status' => 300, 'errors' => ['Неверный токен']]);
         } catch (TokenExpiredException $e) {
@@ -30,22 +30,6 @@ class JwtMiddleware
         } catch (Exception $e) {
             return response()->json(['ok' => false, 'status' => 304, 'errors' => ['Токен не найден']]);
         }
-
-        $session = Session::where('token', $auth->getToken())->first();
-        if ($session == null) {
-            return response()->json(['ok' => false, 'status' => 302, 'errors' => ['Неизвестный токен']]);
-        }
-        Agent::setUserAgent($request->header('Customer-User-Agent', ' '));
-
-        $session->os = Agent::platform();
-        $browser = Agent::browser();
-        $browser .= " " . Agent::version($browser);
-        $session->browser = $browser;
-
-        $session->ip = $request->header('Customer-IP', ' ');
-
-        $session->touch();
-        $auth->authenticate();
 
         return $next($request);
     }
