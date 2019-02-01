@@ -4,7 +4,6 @@ namespace App\AuthComponent\Http\Controllers;
 
 use App\AuthComponent\Http\Controllers\BaseController as Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
@@ -37,11 +36,9 @@ class AuthController extends Controller
         Redis::setex($identifier, 3600 * 2, json_encode(['sms_code' => $sms_code, 'token' => $token]));
 
         if (env('SMS_AUTH_ENABLE', false)) {
-            SmsSender::setToken(env('SMS_TOKEN'));
-            SmsSender::setAddress(env('SMS_SERVER'));
-            SmsSender::createMailing(new MailingRequest('', "Код для входа: $sms_code", [$request->get('phone')]));
+            $text = "Код для входа: $sms_code";
+            SmsSender::createMailing(new MailingRequest('', $text, [$request->get('phone')]));
         }
-
 
 //        return response()->json(['ok' => true, 'identifier' => $identifier]);
         return response()->json(['ok' => true, 'data' => ['sms_code' => $sms_code, 'identifier' => $identifier]]);
@@ -111,9 +108,8 @@ class AuthController extends Controller
 
         if (env('SMS_AUTH_ENABLE', false)) {
             $user = JWTAuth::toUser($array['token']);
-            SmsSender::setToken(env('SMS_TOKEN'));
-            SmsSender::setAddress(env('SMS_SERVER'));
-            SmsSender::createMailing(new MailingRequest('', "Код для входа: $sms_code", [$user->phone]));
+            $text = "Код для входа: $sms_code";
+            SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
         }
 
 //        return response()->json(['ok' => true]);

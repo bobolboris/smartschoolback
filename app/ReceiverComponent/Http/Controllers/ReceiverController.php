@@ -9,6 +9,7 @@ use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
 use PhoenixSmsSender\PhoenixSmsSender;
 
@@ -36,7 +37,7 @@ class ReceiverController extends Controller
         $accessDenial->access_point_id = $accessPoint->id;
         $accessDenial->system_id = $data['log']['ID'];
         $accessDenial->save();
-        return response('ok');
+        return response()->json(['ok' => true]);
     }
 
     //"713333316"
@@ -73,7 +74,6 @@ class ReceiverController extends Controller
         }
         $access->save();
 
-        $smsSender = new PhoenixSmsSender(env('SMS_SERVER'), env('SMS_TOKEN'));
         $fio = "$child->surname $child->name $child->patronymic";
 
         $phones = [];
@@ -86,7 +86,7 @@ class ReceiverController extends Controller
 
         $text_sms = ($access->direction == 1) ? 'Вход в УЗ: ' : 'Выход из УЗ: ';
 
-        $smsSender->createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
-        return response('ok');
+        SmsSender::createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
+        return response()->json(['ok' => true]);
     }
 }
