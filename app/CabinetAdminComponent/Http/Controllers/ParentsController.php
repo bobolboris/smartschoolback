@@ -31,7 +31,7 @@ class ParentsController extends Controller
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'required',
-            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
         ]);
 
         Parents::create($request->all());
@@ -46,7 +46,7 @@ class ParentsController extends Controller
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'required',
-            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
         ]);
 
         $id = $request->get('id');

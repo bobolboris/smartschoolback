@@ -38,7 +38,7 @@ class ChildrenController extends Controller
             'name' => 'required',
             'patronymic' => 'required',
             'class_id' => 'nullable|exists:classes,id',
-            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
             'system_id' => 'nullable|integer',
         ]);
 
@@ -55,7 +55,7 @@ class ChildrenController extends Controller
             'name' => 'required',
             'patronymic' => 'required',
             'class_id' => 'nullable|exists:classes,id',
-            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
             'system_id' => 'nullable|integer',
         ]);
 
