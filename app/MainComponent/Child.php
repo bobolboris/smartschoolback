@@ -8,7 +8,7 @@ class Child extends Model
 {
     public $timestamps = false;
     protected $table = 'children';
-    protected $fillable = ['surname', 'name', 'patronymic', 'photo_id', 'school_id', 'user_id', 'system_id'];
+    protected $fillable = ['surname', 'name', 'patronymic', 'photo_id', 'class_id', 'user_id', 'system_id'];
 
     public static function findBySystemId($id)
     {
@@ -20,9 +20,9 @@ class Child extends Model
         return $this->belongsToMany('App\MainComponent\Parents', 'children_parents', 'child_id', 'parent_id');
     }
 
-    public function school()
+    public function schoolClass()
     {
-        return $this->belongsTo('App\MainComponent\School', 'school_id', 'id');
+        return $this->belongsTo('App\MainComponent\SchoolClass', 'class_id', 'id');
     }
 
     public function key()
@@ -35,15 +35,16 @@ class Child extends Model
         return $this->belongsTo('App\MainComponent\User', 'user_id', 'id');
     }
 
+    public function photo()
+    {
+        return $this->hasOne('App\MainComponent\Photos', 'photo_id', 'id');
+    }
+
 //    public function access()
 //    {
 //        return $this->hasMany('App\MainComponent\Access', 'child_id', 'id');
 //    }
 //
-//    public function photo()
-//    {
-//
-//    }
 //
 //    public function keys()
 //    {

@@ -19,9 +19,10 @@ class CreateChildren extends Migration
             $table->string('name');
             $table->string('patronymic');
             $table->integer('photo_id', false, true)->nullable();
+            $table->foreign('photo_id')->references('id')->on('photos');
 
-            $table->integer('school_id', false, true)->nullable();
-            $table->foreign('school_id')->references('id')->on('schools');
+            $table->integer('class_id', false, true)->nullable();
+            $table->foreign('class_id')->references('id')->on('classes');
 
             $table->integer('user_id', false, true)->nullable()->unique();
             $table->foreign('user_id')->references('id')->on('users');
