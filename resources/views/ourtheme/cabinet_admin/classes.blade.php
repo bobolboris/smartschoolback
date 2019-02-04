@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid content">
         <div class="row justify-content-center">
-            <h1>Точки доступа</h1>
+            <h1>Классы</h1>
         </div>
         <div class="row justify-content-end">
             <form class="form-search" action="{{ url()->full() }}">
@@ -30,25 +30,6 @@
                             </span>
                         @endif
                     </th>
-
-                    <th scope="col">
-                        ZoneA
-                        @if ($errors->has('zonea'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('zonea') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        ZoneB
-                        @if ($errors->has('zoneb'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('zoneb') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
                     <th scope="col">
                         Школа
                         @if ($errors->has('school_id'))
@@ -57,21 +38,12 @@
                             </span>
                         @endif
                     </th>
-
-                    <th scope="col">
-                        System ID
-                        @if ($errors->has('system_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('system_id') }}</strong>
-                            </span>
-                        @endif
-                    </th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                <form method="POST" action="{{route('admin.access_points.add')}}">
+                <form method="POST" action="{{route('admin.classes.add')}}">
                     @csrf
                     <tr>
                         <td>
@@ -80,22 +52,12 @@
                         <td class="name">
                             <input type="text" name="name" value="">
                         </td>
-                        <td class="zonea">
-                            <input type="number" name="zonea" value="" style="width: 50px">
-                        </td>
-                        <td class="zoneb">
-                            <input type="number" name="zoneb" value="" style="width: 50px">
-                        </td>
                         <td>
                             <select name="school_id">
                                 @foreach($schools as $school)
-                                    <option
-                                        value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
+                                    <option value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
                                 @endforeach
                             </select>
-                        </td>
-                        <td class="system_id">
-                            <input type="number" name="system_id" value="" style="width: 80px">
                         </td>
                         <td>
                             <div class="icons">
@@ -107,39 +69,27 @@
                     </tr>
                 </form>
 
-                @foreach($access_points as $access_point)
-                    <form method="POST" action="{{route('admin.access_points.save')}}">
+                @foreach($classes as $class)
+                    <form method="POST" action="{{route('admin.classes.save')}}">
                         @csrf
                         <tr>
                             <td>
-                                <input type="hidden" name="id" value="{{$access_point->id}}">
-                                {{$access_point->id}}
+                                <input type="hidden" name="id" value="{{$class->id}}">
+                                {{$class->id}}
                             </td>
                             <td class="name">
-                                <input type="text" name="name" value="{{$access_point->name}}">
-                            </td>
-                            <td class="zonea">
-                                <input type="number" name="zonea" value="{{$access_point->zonea}}" style="width: 50px">
-                            </td>
-                            <td class="zoneb">
-                                <input type="number" name="zoneb" value="{{$access_point->zoneb}}" style="width: 50px">
+                                <input type="text" name="name" value="{{$class->name}}">
                             </td>
                             <td>
                                 <select name="school_id">
                                     @foreach($schools as $school)
-                                        @if($school->id == $access_point->school_id)
-                                            <option value="{{$school->id}}"
-                                                    selected>{{$school->address . " - " . $school->name}}</option>
+                                        @if($school->id == $class->school_id)
+                                            <option value="{{$school->id}}" selected>{{$school->address . " - " . $school->name}}</option>
                                         @else
-                                            <option
-                                                value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
+                                            <option value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
                                         @endif
                                     @endforeach
                                 </select>
-                            </td>
-                            <td>
-                                <input name="system_id" type="number" value="{{$access_point->system_id}}"
-                                       style="width: 80px">
                             </td>
                             <td>
                                 <div class="icons">

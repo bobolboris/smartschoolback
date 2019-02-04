@@ -118,8 +118,8 @@
             <h1>Родитель</h1>
         </div>
         <div class="row justify-content-end">
-            <form class="form-search">
-                <input type="text" class="input-medium search-query">
+            <form class="form-search" action="{{ url()->full() }}">
+                <input type="text" name="search" class="input-medium search-query" value="{{request('search')}}">
                 <button type="submit" class="btn text-white bg-dark">Найти</button>
             </form>
         </div>
@@ -189,7 +189,7 @@
                         <td>
                             <div class="icons">
                                 <button type="submit">
-                                    <i class="fas fa-user-edit show_popup" rel="popupEditPar"></i>
+                                    <i class="fas fa-user-edit"></i>
                                 </button>
                             </div>
                         </td>
@@ -231,7 +231,7 @@
                             <td>
                                 <div class="icons">
                                     <button>
-                                        <i class="fas fa-user-edit show_popup" rel="popupEditPar"></i>
+                                        <i class="fas fa-user-edit"></i>
                                     </button>
                                     <button>
                                         <i class="fas fa-trash-alt show_popup" rel="popupDelPar"></i>

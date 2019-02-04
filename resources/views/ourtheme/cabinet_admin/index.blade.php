@@ -28,7 +28,15 @@
         </li>
 
         <li>
+            <a href="{{ route('admin.children') }}"><span>Ученики</span></a>
+        </li>
+
+        <li>
             <a href="{{ route('admin.schools') }}"><span>Школы</span></a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.classes') }}"><span>Классы</span></a>
         </li>
 
         <li>
@@ -39,9 +47,7 @@
             <a href="{{ route('admin.parents') }}"><span>Родители</span></a>
         </li>
 
-        <li>
-            <a href="{{ route('admin.children') }}"><span>Ученики</span></a>
-        </li>
+
     </ul>
 </nav>
 

@@ -6,8 +6,8 @@
             <h1>Ученики</h1>
         </div>
         <div class="row justify-content-end">
-            <form class="form-search">
-                <input type="text" class="input-medium search-query">
+            <form class="form-search" action="{{ url()->full() }}">
+                <input type="text" name="search" class="input-medium search-query" value="{{request('search')}}">
                 <button type="submit" class="btn text-white bg-dark">Найти</button>
             </form>
         </div>

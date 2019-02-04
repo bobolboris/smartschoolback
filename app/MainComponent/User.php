@@ -20,7 +20,7 @@ class User extends UserJWT
      * @var array
      */
     protected $fillable = [
-        'roles', 'email', 'phone', 'password', 'enabled', 'type'
+        'roles', 'email', 'phone', 'password', 'enabled', 'type', 'password', 'remember_token'
     ];
 
     /**
@@ -29,7 +29,7 @@ class User extends UserJWT
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+
     ];
 
     public function entity()

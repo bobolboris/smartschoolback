@@ -7,14 +7,22 @@ use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\SchoolClass;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class ChildrenController extends Controller
 {
 
-    public function childrenAction()
+    public function childrenAction(Request $request)
     {
-        $children = Child::all();
+        if ($request->exists('search')) {
+            $pattern = "%" . $request->get('search') . "%";
+            $children = Child::Orwhere('name', 'LIKE', $pattern)
+                ->OrWhere('surname', 'LIKE', $pattern)
+                ->OrWhere('patronymic', 'LIKE', $pattern)
+                ->get();
+        } else {
+            $children = Child::all();
+        }
+
 
         $classes = collect([new SchoolClass(['name' => 'NULL'])]);
         $classes = $classes->concat(SchoolClass::all())->all();

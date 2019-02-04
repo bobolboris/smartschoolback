@@ -10,9 +10,18 @@ use Illuminate\Http\Request;
 
 class ParentsController extends Controller
 {
-    public function parentsAction()
+    public function parentsAction(Request $request)
     {
-        $parents = Parents::all();
+        if ($request->exists('search')) {
+            $pattern = "%" . $request->get('search') . "%";
+            $parents = Parents::Orwhere('name', 'LIKE', $pattern)
+                ->OrWhere('surname', 'LIKE', $pattern)
+                ->OrWhere('patronymic', 'LIKE', $pattern)
+                ->get();
+        } else {
+            $parents = Parents::all();
+        }
+
 
         $users = collect([new User(['email' => 'NULL'])]);
         $users = $users->concat(User::all())->all();
