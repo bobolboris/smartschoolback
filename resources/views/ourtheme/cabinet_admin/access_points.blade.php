@@ -50,7 +50,7 @@
                     </th>
 
                     <th scope="col">
-                        Школа
+                        Адрес - Школа
                         @if ($errors->has('school_id'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('school_id') }}</strong>

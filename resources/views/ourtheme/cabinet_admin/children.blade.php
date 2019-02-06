@@ -49,7 +49,7 @@
                         @endif
                     </th>
                     <th scope="col">
-                        Пользователь (id - email)
+                        Пользователь<br>(id - email)
                         @if ($errors->has('user_id'))
                             <br><strong class="text-danger">{{ $errors->first('user_id') }}</strong>
                         @endif

@@ -13,6 +13,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/', 'CabinetAdminComponent\Http\Controllers\ParentsController@parentsAction')->name('admin.parents');
         Route::post('save', 'CabinetAdminComponent\Http\Controllers\ParentsController@parentsSaveAction')->name('admin.parents.save');
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\ParentsController@parentsAddAction')->name('admin.parents.add');
+        Route::post('getChildren', 'CabinetAdminComponent\Http\Controllers\ParentsController@getChildrenAction');
+        Route::post('removeChild', 'CabinetAdminComponent\Http\Controllers\ParentsController@removeChildAction');
     });
 
     Route::prefix('schools')->group(function () {

@@ -13,101 +13,54 @@
         </div>
     </div>
 
-    <!--изменить родителя -->
-    <div class="popup" id="popupEditPar">
-        <div class="object-editPer">
-            <form action="" method="">
-                <p>Изменить профиль родителя</p>
-                <table class="table table-hover table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Поле</th>
-                        <th scope="col">Значение</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ФИО</td>
-                        <td>
-                            <input type="text" id="fioPlaceEditPar" class="text-dark">
-                            <!-- <p id="fioPlace" class="text-info"></p> -->
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Телефон</td>
-                        <td>
-                            <input type="text" id="phonePlaceEditPar" class="text-dark" value="071-322-12-15">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <input type="submit" id="okEditPer" class="btn btn-primary" value="Да">
-                <input type="button" class="closePP btn btn-primary" value="Отмена">
-            </form>
-        </div>
-    </div>
-
-    <!--создать родителя -->
-    <div class="popup" id="popupCreatePar">
-        <div class="object-createPer">
-            <form action="" method="">
-                <p>Создать профиль родителя</p>
-                <table class="table table-hover table-striped">
-                    <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Поле</th>
-                        <th scope="col">Значение</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>ФИО</td>
-                        <td>
-                            <input type="text" id="fioPlaceСreatePar" class="text-dark">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Телефон</td>
-                        <td>
-                            <input type="text" id="phonePlaceCreatePar" class="text-dark">
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <input type="submit" id="okCreatePer" class="btn btn-primary" value="Да">
-                <input type="button" class="closePP btn btn-primary" value="Отмена">
-            </form>
-        </div>
-    </div>
-
     <!--просмотреть детей родителя -->
     <div class="popup" id="popupShowParChild">
         <div class="object-showParChild">
             <form action="" method="">
-                <p>Дети <span id="fioPlaceShowChildPar" class="text-dark"></span></p>
+                <strong>Дети <span id="fioPlaceShowChildPar" class="text-dark"></span></strong>
                 <table class="table table-hover table-striped">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">№</th>
+                        <th scope="col">ID</th>
                         <th scope="col">ФИО</th>
+                        <th scope="col">Класс</th>
                         <th scope="col">Школа</th>
+                        <th scope="col">Действия</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select id="childIdSelect">
+                                @foreach($children_ids as $id)
+                                    <option>{{$id->id}}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Действия</td>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="childBody">
                     <tr>
                         <td>1</td>
                         <td>tmp Name</td>
+                        <td>tmp Name</td>
+                        <td>57</td>
                         <td>57</td>
                     </tr>
                     <tr>
                         <td>2</td>
                         <td>tmp Name</td>
+                        <td>tmp Name</td>
+                        <td>112</td>
                         <td>112</td>
                     </tr>
                     </tbody>
                 </table>
-                <input type="submit" id="okShowChildPer" class="btn btn-primary" value="Да">
-                <input type="button" class="closePP btn btn-primary" value="Отмена">
+                {{--<input type="submit" id="okShowChildPer" class="btn btn-primary" value="Да">--}}
+                {{--<input type="button" class="closePP btn btn-primary" value="Отмена">--}}
+                <input type="button" class="closePP btn btn-primary" value="Закрыть">
             </form>
         </div>
     </div>
@@ -155,7 +108,7 @@
                         @endif
                     </th>
                     <th scope="col">
-                        Пользователь (id - email)
+                        Пользователь<br>(id - email)
                         @if ($errors->has('user_id'))
                             <br><strong class="text-danger">{{ $errors->first('user_id') }}</strong>
                         @endif
@@ -189,7 +142,7 @@
                         <td>
                             <div class="icons">
                                 <button type="submit">
-                                    <i class="fas fa-user-edit"></i>
+                                    <i class="fas fa-save"></i>
                                 </button>
                             </div>
                         </td>
@@ -231,7 +184,7 @@
                             <td>
                                 <div class="icons">
                                     <button>
-                                        <i class="fas fa-user-edit"></i>
+                                        <i class="fas fa-save"></i>
                                     </button>
                                     <button>
                                         <i class="fas fa-trash-alt show_popup" rel="popupDelPar"></i>
@@ -241,12 +194,12 @@
 
                         </form>
                         <td>
-                            <button class="btn btn-primary show_popup" rel="popupShowParChild">Просмотр</button>
+                            <button class="btn btn-primary show_popup" parentId="{{ $parent->id }}"
+                                    rel="popupShowParChild">Просмотр
+                            </button>
                         </td>
                     </tr>
-
                 @endforeach
-
 
                 </tbody>
             </table>
