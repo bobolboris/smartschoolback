@@ -115,70 +115,11 @@ class ParentsController extends Controller
     public function childrenRemoveAction(Request $request)
     {
         $id = $request->get('id');
+
+        ChildParent::where('parent_id', $id)->delete();
+
         Parents::destroy($id);
         return redirect(route('admin.parents'));
     }
 
-
-
-
-
-    public function getChildrenAction(Request $request)
-    {
-        $id = $request->get('id');
-        $parent = Parents::find($id);
-        if ($parent == null) {
-            return response()->json(['ok' => false, 'errors' => ['Родитель с таким id не найден']]);
-        }
-
-        foreach ($parent->children as $child) {
-            $child->schoolClass->school;
-        }
-
-        return response()->json(['ok' => true, 'data' => ['children' => $parent->children]]);
-    }
-
-    public function removeChildAction(Request $request)
-    {
-        if (!$request->has('child_id')) {
-            return response()->json(['ok' => 'false', 'errors' => ['id ребенка не найден']]);
-        }
-
-        if (!$request->has('parent_id')) {
-            return response()->json(['ok' => 'false', 'errors' => ['id родителя не найден']]);
-        }
-
-        $child_id = $request->get('child_id');
-        $parent_id = $request->get('parent_id');
-
-        $result = ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->delete();
-
-        return response()->json(['ok' => $result]);
-    }
-
-    public function saveRelationsChildParentAction(Request $request)
-    {
-        $child_id = $request->get('child_id');
-        $parent_id = $request->get('parent_id');
-
-        $child = Child::find($child_id);
-        if ($child == null) {
-            return response()->json(['ok' => false, 'errors' => ['Ребенок с таким id не был найден']]);
-        }
-
-        if (Parents::find($parent_id) == null) {
-            return response()->json(['ok' => false, 'errors' => ['Родитель с таким id не был найден']]);
-        }
-
-        $count = ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->count();
-        if ($count != 0) {
-            return response()->json(['ok' => false, 'errors' => ['Такой ребенок уже добавлен']]);
-        }
-
-        ChildParent::create(['child_id' => $child_id, 'parent_id' => $parent_id]);
-
-        $child->schoolClass->school;
-
-        return response()->json(['ok' => true, 'data' => ['child' => $child]]);
-    }
 }

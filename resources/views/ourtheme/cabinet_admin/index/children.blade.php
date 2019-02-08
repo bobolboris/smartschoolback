@@ -77,10 +77,10 @@
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children.editForm') . "?id=" . $child['id'] }}">
+                                <a href="{{ route('admin.children.editForm', ['id' => $child['id']]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.children.removeForm') . "?id=" . $child['id'] }}">
+                                <a href="{{ route('admin.children.removeForm', ['id' => $child['id']]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

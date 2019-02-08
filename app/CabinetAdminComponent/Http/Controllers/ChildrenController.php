@@ -129,24 +129,4 @@ class ChildrenController extends Controller
         return redirect(route('admin.children'));
     }
 
-    public function getByIdAction(Request $request)
-    {
-        $id = $request->get('id');
-
-        if ($id == -1) {
-            $child = $this->createEmptyChild();
-            return response()->json(['ok' => true, 'data' => ['child' => $child]]);
-        }
-
-        $child = Child::find($id);
-
-        if ($child == null) {
-            return response()->json(['ok' => false, 'errors' => ['Ребенок с таким id не был найден']]);
-        }
-
-        $child->schoolClass->school;
-
-        return response()->json(['ok' => true, 'data' => ['child' => $child]]);
-    }
-
 }

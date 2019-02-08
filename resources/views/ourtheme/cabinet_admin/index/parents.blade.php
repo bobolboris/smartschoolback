@@ -75,9 +75,6 @@
                         </td>
 
                         <td>
-                            {{--<button class="btn btn-primary show_popup" parentId="{{ $parent['id'] }}"--}}
-                                    {{--rel="popupShowParChild">Просмотр--}}
-                            {{--</button>--}}
                             <a href="{{route('admin.parent_children', ['id' => $parent['id']])}}" class="btn btn-primary">Просмотр</a>
                         </td>
                     </tr>

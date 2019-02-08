@@ -13,7 +13,8 @@
         </div>
 
         <div class="row justify-content-center">
-            <a href="{{ route('admin.access_points.addForm') }}" class="btn text-white bg-dark addBtn">Добавить <i class="fas fa-plus"></i></a>
+            <a href="{{ route('admin.access_points.addForm') }}" class="btn text-white bg-dark addBtn">Добавить <i
+                    class="fas fa-plus"></i></a>
         </div>
 
         <div class="row justify-content-center">
@@ -77,38 +78,39 @@
 
 
                 @foreach($access_points as $access_point)
-                        <tr>
-                            <td>
-                                {{ $access_point->id }}
-                            </td>
-                            <td class="name">
-                                {{ $access_point->name }}
-                            </td>
-                            <td class="zonea">
-                                {{ $access_point->zonea }}
-                            </td>
-                            <td class="zoneb">
-                                {{ $access_point->zoneb }}
-                            </td>
-                            <td>
-                                {{ $access_point->school->address . " - " . $access_point->school->name }}
-                            </td>
-                            <td>
-                                {{ $access_point->system_id }}
-                            </td>
-                            <td>
-                                <div class="icons">
+                    <tr>
+                        <td>
+                            {{ $access_point->id }}
+                        </td>
+                        <td class="name">
+                            {{ $access_point->name }}
+                        </td>
+                        <td class="zonea">
+                            {{ $access_point->zonea }}
+                        </td>
+                        <td class="zoneb">
+                            {{ $access_point->zoneb }}
+                        </td>
+                        <td>
+                            {{ $access_point->school->address . " - " . $access_point->school->name }}
+                        </td>
+                        <td>
+                            {{ $access_point->system_id }}
+                        </td>
+                        <td>
+                            <div class="icons">
 
-                                    <a href="{{ route('admin.access_points.editForm') . "?id=" . $access_point['id'] }}">
-                                        <i class="fas fa-user-edit"></i>
-                                    </a>
-                                    <a href="{{ route('admin.access_points.removeForm') . "?id=" . $access_point['id'] }}">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
 
-                                </div>
-                            </td>
-                        </tr>
+                                <a href="{{ route('admin.access_points.editForm', ['id' => @$access_point['id']]) }}">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                                <a href="{{ route('admin.access_points.removeForm', ['id' => @$access_point['id']]) }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+
+                            </div>
+                        </td>
+                    </tr>
                 @endforeach
                 </tbody>
             </table>

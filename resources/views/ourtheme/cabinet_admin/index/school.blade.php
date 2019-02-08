@@ -60,10 +60,10 @@
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.schools.editForm') . "?id=" . $school['id'] }}">
+                                <a href="{{ route('admin.schools.editForm', ['id' => $school['id']]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.schools.removeForm') . "?id=" . $school['id'] }}">
+                                <a href="{{ route('admin.schools.removeForm', ['id' => $school['id']]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

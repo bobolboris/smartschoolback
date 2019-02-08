@@ -22,10 +22,47 @@ class UsersController extends Controller
         }
 
         $data = [
-            'users' => $users
+            'users' => $users->toArray()
         ];
 
         return view('cabinet_admin.index.users', $data);
+    }
+
+    public function showEditFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $user = User::find($id);
+
+        $data = [
+            'user' => $user->toArray(),
+            'action' => route('admin.users.save')
+        ];
+
+        return view('cabinet_admin.edit.users', $data);
+    }
+
+    public function showAddFormAction()
+    {
+        $user = new User();
+
+        $data = [
+            'user' => $user->toArray(),
+            'action' => route('admin.users.add')
+        ];
+
+        return view('cabinet_admin.edit.users', $data);
+    }
+
+    public function showRemoveFormAction(Request $request)
+    {
+        $data = [
+            'action' => route('admin.users.remove'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'id' => $request->get('id')
+        ];
+
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function usersAddAction(Request $request)
@@ -34,12 +71,12 @@ class UsersController extends Controller
             'roles' => 'required|regex:/^[0-9]+(,[0-9]+)?,?$/i',
             'email' => 'required',
             'phone' => 'required|regex:/^38071[0-9]{7}$/i',
-            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
             'enabled' => 'required|in:0,1',
-            'type' => 'required|integer',
-            'remember_token' => 'nullable',
-            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
-            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'type' => 'required|integer',
+//            'remember_token' => 'nullable',
+//            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
         ];
 
         if ($request->get('password') != "") {
@@ -52,17 +89,17 @@ class UsersController extends Controller
 
         $attributes = $request->only($only);
 
-        if (isset($attributes['email_verified_at'])) {
-            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['created_at'])) {
-            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['updated_at'])) {
-            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
-        }
+//        if (isset($attributes['email_verified_at'])) {
+//            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
+//        }
+//
+//        if (isset($attributes['created_at'])) {
+//            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
+//        }
+//
+//        if (isset($attributes['updated_at'])) {
+//            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
+//        }
 
         if (isset($attributes['password'])) {
             $attributes['password'] = Hash::make($attributes['password']);
@@ -80,12 +117,12 @@ class UsersController extends Controller
             'roles' => 'required|regex:/^[0-9]+(,[0-9]+)?,?$/i',
             'email' => 'required',
             'phone' => 'required|regex:/^38071[0-9]{7}$/i',
-            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
             'enabled' => 'required|in:0,1',
-            'type' => 'required|integer',
-            'remember_token' => 'nullable',
-            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
-            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'type' => 'required|integer',
+//            'remember_token' => 'nullable',
+//            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
+//            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
         ];
 
         if ($request->get('password') != "") {
@@ -98,17 +135,17 @@ class UsersController extends Controller
 
         $attributes = $request->only($only);
 
-        if (isset($attributes['email_verified_at'])) {
-            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['created_at'])) {
-            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['updated_at'])) {
-            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
-        }
+//        if (isset($attributes['email_verified_at'])) {
+//            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
+//        }
+//
+//        if (isset($attributes['created_at'])) {
+//            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
+//        }
+//
+//        if (isset($attributes['updated_at'])) {
+//            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
+//        }
 
         if (isset($attributes['password'])) {
             $attributes['password'] = Hash::make($attributes['password']);
@@ -120,6 +157,13 @@ class UsersController extends Controller
 
         $user->save();
 
+        return redirect(route('admin.users'));
+    }
+
+    public function usersRemoveAction(Request $request)
+    {
+        $id = $request->get('id');
+        User::destroy($id);
         return redirect(route('admin.users'));
     }
 }

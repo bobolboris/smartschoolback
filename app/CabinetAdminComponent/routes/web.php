@@ -5,8 +5,13 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('users')->group(function () {
         Route::get('/', 'CabinetAdminComponent\Http\Controllers\UsersController@usersAction')->name('admin.users');
+        Route::get('editForm', 'CabinetAdminComponent\Http\Controllers\UsersController@showEditFormAction')->name('admin.users.editForm');
+        Route::get('addForm', 'CabinetAdminComponent\Http\Controllers\UsersController@showAddFormAction')->name('admin.users.addForm');
+        Route::get('removeForm', 'CabinetAdminComponent\Http\Controllers\UsersController@showRemoveFormAction')->name('admin.users.removeForm');
+
         Route::post('save', 'CabinetAdminComponent\Http\Controllers\UsersController@usersSaveAction')->name('admin.users.save');
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\UsersController@usersAddAction')->name('admin.users.add');
+        Route::post('remove', 'CabinetAdminComponent\Http\Controllers\UsersController@usersRemoveAction')->name('admin.users.remove');
     });
 
     Route::prefix('parents')->group(function () {
@@ -19,9 +24,6 @@ Route::prefix('admin')->group(function () {
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\ParentsController@parentsAddAction')->name('admin.parents.add');
         Route::post('remove', 'CabinetAdminComponent\Http\Controllers\ParentsController@childrenRemoveAction')->name('admin.parents.remove');
 
-        Route::post('getChildren', 'CabinetAdminComponent\Http\Controllers\ParentsController@getChildrenAction');
-        Route::post('removeChild', 'CabinetAdminComponent\Http\Controllers\ParentsController@removeChildAction');
-        Route::post('saveRelationsChildParent', 'CabinetAdminComponent\Http\Controllers\ParentsController@saveRelationsChildParentAction');
     });
 
     Route::prefix('schools')->group(function () {
@@ -56,7 +58,6 @@ Route::prefix('admin')->group(function () {
         Route::post('save', 'CabinetAdminComponent\Http\Controllers\ChildrenController@childrenSaveAction')->name('admin.children.save');
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\ChildrenController@childrenAddAction')->name('admin.children.add');
         Route::post('remove', 'CabinetAdminComponent\Http\Controllers\ChildrenController@childrenRemoveAction')->name('admin.children.remove');
-        Route::post('getById', 'CabinetAdminComponent\Http\Controllers\ChildrenController@getByIdAction');
     });
 
     Route::prefix('access_points')->group(function () {
@@ -78,13 +79,6 @@ Route::prefix('admin')->group(function () {
         Route::post('remove', 'CabinetAdminComponent\Http\Controllers\ChildParentController@parentChildrenRemoveAction')->name('admin.parent_children.remove');
         Route::post('addChild', 'CabinetAdminComponent\Http\Controllers\ChildParentController@addChildAction')->name('admin.parent_children.addChild');
 
-//        Route::get('editForm', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@showEditFormAction')->name('admin.access_points.editForm');
-//        Route::get('addForm', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@showAddFormAction')->name('admin.access_points.addForm');
-//        Route::get('removeForm', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@showRemoveFormAction')->name('admin.access_points.removeForm');
-//
-//        Route::post('save', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@accessPointsSaveAction')->name('admin.access_points.save');
-//        Route::post('add', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@accessPointsAddAction')->name('admin.access_points.add');
-//        Route::post('remove', 'CabinetAdminComponent\Http\Controllers\AccessPointsController@accessPointRemoveAction')->name('admin.access_points.remove');
     });
 
 });
