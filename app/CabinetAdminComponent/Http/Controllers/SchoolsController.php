@@ -21,10 +21,47 @@ class SchoolsController extends Controller
         }
 
         $data = [
-            'schools' => $schools
+            'schools' => $schools->toArray()
         ];
 
-        return view('cabinet_admin.school', $data);
+        return view('cabinet_admin.index.school', $data);
+    }
+
+    public function showEditFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $school = School::find($id);
+
+        $data = [
+            'school' => $school->toArray(),
+            'action' => route('admin.schools.save')
+        ];
+
+        return view('cabinet_admin.edit.school', $data);
+    }
+
+    public function showAddFormAction()
+    {
+        $school = new School();
+
+        $data = [
+            'school' => $school->toArray(),
+            'action' => route('admin.schools.add')
+        ];
+
+        return view('cabinet_admin.edit.school', $data);
+    }
+
+    public function showRemoveFormAction(Request $request)
+    {
+        $data = [
+            'action' => route('admin.schools.remove'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'id' => $request->get('id')
+        ];
+
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function schoolsAddAction(Request $request)
@@ -53,6 +90,13 @@ class SchoolsController extends Controller
         $school->fill($request->all());
         $school->save();
 
+        return redirect(route('admin.schools'));
+    }
+
+    public function schoolsRemoveAction(Request $request)
+    {
+        $id = $request->get('id');
+        School::destroy($id);
         return redirect(route('admin.schools'));
     }
 }

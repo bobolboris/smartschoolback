@@ -13,6 +13,10 @@
         </div>
 
         <div class="row justify-content-center">
+            <a href="{{ route('admin.access_points.addForm') }}" class="btn text-white bg-dark addBtn">Добавить <i class="fas fa-plus"></i></a>
+        </div>
+
+        <div class="row justify-content-center">
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
@@ -71,89 +75,40 @@
                 </thead>
                 <tbody>
 
-                <form method="POST" action="{{route('admin.access_points.add')}}">
-                    @csrf
-                    <tr>
-                        <td>
-                            #
-                        </td>
-                        <td class="name">
-                            <input type="text" name="name" value="">
-                        </td>
-                        <td class="zonea">
-                            <input type="number" name="zonea" value="" style="width: 50px">
-                        </td>
-                        <td class="zoneb">
-                            <input type="number" name="zoneb" value="" style="width: 50px">
-                        </td>
-                        <td>
-                            <select name="school_id">
-                                @foreach($schools as $school)
-                                    <option
-                                        value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td class="system_id">
-                            <input type="number" name="system_id" value="" style="width: 80px">
-                        </td>
-                        <td>
-                            <div class="icons">
-                                <button type="submit">
-                                    <i class="fas fa-save"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                </form>
 
                 @foreach($access_points as $access_point)
-                    <form method="POST" action="{{route('admin.access_points.save')}}">
-                        @csrf
                         <tr>
                             <td>
-                                <input type="hidden" name="id" value="{{$access_point->id}}">
-                                {{$access_point->id}}
+                                {{ $access_point->id }}
                             </td>
                             <td class="name">
-                                <input type="text" name="name" value="{{$access_point->name}}">
+                                {{ $access_point->name }}
                             </td>
                             <td class="zonea">
-                                <input type="number" name="zonea" value="{{$access_point->zonea}}" style="width: 50px">
+                                {{ $access_point->zonea }}
                             </td>
                             <td class="zoneb">
-                                <input type="number" name="zoneb" value="{{$access_point->zoneb}}" style="width: 50px">
+                                {{ $access_point->zoneb }}
                             </td>
                             <td>
-                                <select name="school_id">
-                                    @foreach($schools as $school)
-                                        @if($school->id == $access_point->school_id)
-                                            <option value="{{$school->id}}"
-                                                    selected>{{$school->address . " - " . $school->name}}</option>
-                                        @else
-                                            <option
-                                                value="{{$school->id}}">{{$school->address . " - " . $school->name}}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
+                                {{ $access_point->school->address . " - " . $access_point->school->name }}
                             </td>
                             <td>
-                                <input name="system_id" type="number" value="{{$access_point->system_id}}"
-                                       style="width: 80px">
+                                {{ $access_point->system_id }}
                             </td>
                             <td>
                                 <div class="icons">
-                                    <button type="submit">
-                                        <i class="fas fa-save"></i>
-                                    </button>
-                                    <button>
-                                        <i class="fas fa-trash-alt show_popup" rel="popupDelPar"></i>
-                                    </button>
+
+                                    <a href="{{ route('admin.access_points.editForm') . "?id=" . $access_point['id'] }}">
+                                        <i class="fas fa-user-edit"></i>
+                                    </a>
+                                    <a href="{{ route('admin.access_points.removeForm') . "?id=" . $access_point['id'] }}">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
 
                                 </div>
                             </td>
                         </tr>
-                    </form>
                 @endforeach
                 </tbody>
             </table>

@@ -9,6 +9,7 @@ class Child extends Model
     public $timestamps = false;
     protected $table = 'children';
     protected $fillable = ['surname', 'name', 'patronymic', 'photo_id', 'class_id', 'user_id', 'system_id'];
+    protected $with = ['schoolClass', 'user'];
 
     public static function findBySystemId($id)
     {

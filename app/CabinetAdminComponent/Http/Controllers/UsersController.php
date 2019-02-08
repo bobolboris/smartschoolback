@@ -25,7 +25,7 @@ class UsersController extends Controller
             'users' => $users
         ];
 
-        return view('cabinet_admin.users', $data);
+        return view('cabinet_admin.index.users', $data);
     }
 
     public function usersAddAction(Request $request)

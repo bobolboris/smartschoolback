@@ -7,8 +7,6 @@ use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
 use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\Parents;
-use App\MainComponent\School;
-use App\MainComponent\SchoolClass;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
@@ -26,34 +24,59 @@ class ParentsController extends Controller
             $parents = Parents::all();
         }
 
-//        $school = new School(['id' => -1, 'name' => '-', 'address' => '-']);
-//        $schoolClass = new SchoolClass(['id' => -1, 'name' => '-', 'school_id' => -1]);
-//        $schoolClass->school = $school;
-//
-//        $child = new Child();
-//        $child->id = null;
-//        $child->surname = '-';
-//        $child->name = '-';
-//        $child->patronymic = '-';
-//        $child->photo_id = null;
-//        $child->class_id = null;
-//        $child->user_id = null;
-//        $child->system_id = -1;
-//        $child->schoolClass = $schoolClass;
         $users = collect([new User(['email' => 'NULL'])]);
         $users = $users->concat(User::all())->all();
 
-
         $children_ids = Child::select('id')->get();
-        $children_ids = collect([new Child()])->concat($children_ids)->all();
 
         $data = [
-            'parents' => $parents,
+            'parents' => $parents->toArray(),
             'users' => $users,
             'children_ids' => $children_ids
         ];
 
-        return view('cabinet_admin.parents', $data);
+        return view('cabinet_admin.index.parents', $data);
+    }
+
+    public function showEditFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $parent = Parents::find($id);
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
+
+        $data = [
+            'parent' => $parent->toArray(),
+            'users' => $users,
+            'action' => route('admin.parents.save')
+        ];
+
+        return view('cabinet_admin.edit.parents', $data);
+    }
+
+    public function showAddFormAction()
+    {
+        $parent = new Parents();
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
+
+        $data = [
+            'parent' => $parent->toArray(),
+            'users' => $users,
+            'action' => route('admin.parents.add')
+        ];
+
+        return view('cabinet_admin.edit.parents', $data);
+    }
+
+    public function showRemoveFormAction(Request $request)
+    {
+        $data = [
+            'action' => route('admin.parents.remove'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'id' => $request->get('id')
+        ];
+
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function parentsAddAction(Request $request)
@@ -89,6 +112,17 @@ class ParentsController extends Controller
         return redirect(route('admin.parents'));
     }
 
+    public function childrenRemoveAction(Request $request)
+    {
+        $id = $request->get('id');
+        Parents::destroy($id);
+        return redirect(route('admin.parents'));
+    }
+
+
+
+
+
     public function getChildrenAction(Request $request)
     {
         $id = $request->get('id');
@@ -120,5 +154,31 @@ class ParentsController extends Controller
         $result = ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->delete();
 
         return response()->json(['ok' => $result]);
+    }
+
+    public function saveRelationsChildParentAction(Request $request)
+    {
+        $child_id = $request->get('child_id');
+        $parent_id = $request->get('parent_id');
+
+        $child = Child::find($child_id);
+        if ($child == null) {
+            return response()->json(['ok' => false, 'errors' => ['Ребенок с таким id не был найден']]);
+        }
+
+        if (Parents::find($parent_id) == null) {
+            return response()->json(['ok' => false, 'errors' => ['Родитель с таким id не был найден']]);
+        }
+
+        $count = ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->count();
+        if ($count != 0) {
+            return response()->json(['ok' => false, 'errors' => ['Такой ребенок уже добавлен']]);
+        }
+
+        ChildParent::create(['child_id' => $child_id, 'parent_id' => $parent_id]);
+
+        $child->schoolClass->school;
+
+        return response()->json(['ok' => true, 'data' => ['child' => $child]]);
     }
 }

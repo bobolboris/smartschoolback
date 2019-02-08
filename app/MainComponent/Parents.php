@@ -9,6 +9,7 @@ class Parents extends Model
     public $timestamps = false;
     protected $table = 'parents';
     protected $fillable = ['surname', 'name', 'patronymic', 'user_id'];
+    protected $with = ['user'];
 
     public function children()
     {

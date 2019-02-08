@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class ChildrenController extends Controller
 {
+    use ChildTrait;
 
     public function childrenAction(Request $request)
     {
@@ -24,6 +25,19 @@ class ChildrenController extends Controller
         }
 
 
+        $data = [
+            'children' => $children->toArray()
+        ];
+
+        return view('cabinet_admin.index.children', $data);
+    }
+
+    public function showEditFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $child = Child::find($id);
+
         $classes = collect([new SchoolClass(['name' => 'NULL'])]);
         $classes = $classes->concat(SchoolClass::all())->all();
 
@@ -31,12 +45,44 @@ class ChildrenController extends Controller
         $users = $users->concat(User::all())->all();
 
         $data = [
-            'children' => $children,
+            'child' => $child->toArray(),
             'classes' => $classes,
-            'users' => $users
+            'users' => $users,
+            'action' => route('admin.children.save')
         ];
 
-        return view('cabinet_admin.children', $data);
+        return view('cabinet_admin.edit.children', $data);
+    }
+
+    public function showAddFormAction()
+    {
+        $child = new Child();
+
+        $classes = collect([new SchoolClass(['name' => 'NULL'])]);
+        $classes = $classes->concat(SchoolClass::all())->all();
+
+        $users = collect([new User(['email' => 'NULL'])]);
+        $users = $users->concat(User::all())->all();
+
+        $data = [
+            'child' => $child->toArray(),
+            'classes' => $classes,
+            'users' => $users,
+            'action' => route('admin.children.add')
+        ];
+
+        return view('cabinet_admin.edit.children', $data);
+    }
+
+    public function showRemoveFormAction(Request $request)
+    {
+        $data = [
+            'action' => route('admin.children.remove'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'id' => $request->get('id')
+        ];
+
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function childrenAddAction(Request $request)
@@ -75,4 +121,32 @@ class ChildrenController extends Controller
 
         return redirect(route('admin.children'));
     }
+
+    public function childrenRemoveAction(Request $request)
+    {
+        $id = $request->get('id');
+        Child::destroy($id);
+        return redirect(route('admin.children'));
+    }
+
+    public function getByIdAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        if ($id == -1) {
+            $child = $this->createEmptyChild();
+            return response()->json(['ok' => true, 'data' => ['child' => $child]]);
+        }
+
+        $child = Child::find($id);
+
+        if ($child == null) {
+            return response()->json(['ok' => false, 'errors' => ['Ребенок с таким id не был найден']]);
+        }
+
+        $child->schoolClass->school;
+
+        return response()->json(['ok' => true, 'data' => ['child' => $child]]);
+    }
+
 }

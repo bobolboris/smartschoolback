@@ -9,6 +9,7 @@ class SchoolClass extends Model
     public $timestamps = false;
     protected $table = 'classes';
     protected $fillable = ['name', 'school_id'];
+    protected $with = ['school'];
 
     public function school()
     {

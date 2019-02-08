@@ -13,6 +13,11 @@
         </div>
 
         <div class="row justify-content-center">
+            <a href="{{ route('admin.schools.addForm') }}" class="btn text-white bg-dark addBtn">Добавить
+                <i class="fas fa-plus"></i></a>
+        </div>
+
+        <div class="row justify-content-center">
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
@@ -41,56 +46,29 @@
                 </thead>
                 <tbody>
 
-                <form method="POST" action="{{route('admin.schools.add')}}">
-                    @csrf
+                @foreach($schools as $school)
                     <tr>
                         <td>
-                            #
+                            {{ $school['id'] }}
                         </td>
-                        <td class="address" style="width: 150%;">
-                            <input type="text" name="address" value="" style="width: 100%;">
+                        <td class="surname">
+                            {{ $school['address'] }}
                         </td>
                         <td class="name">
-                            <input type="text" name="name" value="">
+                            {{ $school['name'] }}
                         </td>
+
                         <td>
                             <div class="icons">
-                                <button type="submit">
-                                    <i class="fas fa-save"></i>
-                                </button>
+                                <a href="{{ route('admin.schools.editForm') . "?id=" . $school['id'] }}">
+                                    <i class="fas fa-user-edit"></i>
+                                </a>
+                                <a href="{{ route('admin.schools.removeForm') . "?id=" . $school['id'] }}">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
                             </div>
                         </td>
                     </tr>
-                </form>
-
-                @foreach($schools as $school)
-                    <form method="POST" action="{{route('admin.schools.save')}}">
-                        @csrf
-                        <tr>
-                            <td>
-                                <input type="hidden" name="id" value="{{$school->id}}">
-                                {{$school->id}}
-                            </td>
-                            <td class="surname">
-                                <input type="text" name="address" value="{{$school->address}}" style="width: 100%;">
-                            </td>
-                            <td class="name">
-                                <input type="text" name="name" value="{{$school->name}}">
-                            </td>
-
-                            <td>
-                                <div class="icons">
-                                    <button type="submit">
-                                        <i class="fas fa-save"></i>
-                                    </button>
-                                    <button>
-                                        <i class="fas fa-trash-alt show_popup" rel="popupDelPar"></i>
-                                    </button>
-
-                                </div>
-                            </td>
-                        </tr>
-                    </form>
                 @endforeach
                 </tbody>
             </table>

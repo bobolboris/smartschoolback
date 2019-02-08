@@ -23,7 +23,50 @@ class AccessPointsController extends Controller
             'access_points' => $access_points,
             'schools' => $schools
         ];
-        return view('cabinet_admin.access_points', $data);
+        return view('cabinet_admin.index.access_points', $data);
+    }
+
+    public function showEditFormAction(Request $request)
+    {
+        $id = $request->get('id');
+
+        $access_point = AccessPoint::find($id);
+
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
+
+        $data = [
+            'access_point' => $access_point->toArray(),
+            'schools' => $schools,
+            'action' => route('admin.access_points.save')
+        ];
+
+        return view('cabinet_admin.edit.access_points', $data);
+    }
+
+    public function showAddFormAction(Request $request)
+    {
+        $access_point = new AccessPoint();
+
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
+
+        $data = [
+            'access_point' => $access_point->toArray(),
+            'schools' => $schools,
+            'action' => route('admin.access_points.add')
+        ];
+
+        return view('cabinet_admin.edit.access_points', $data);
+    }
+
+    public function showRemoveFormAction(Request $request)
+    {
+        $data = [
+            'action' => route('admin.access_points.remove'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'id' => $request->get('id')
+        ];
+
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function accessPointsAddAction(Request $request)
@@ -55,6 +98,13 @@ class AccessPointsController extends Controller
         $access_point->fill($request->all());
         $access_point->save();
 
+        return redirect(route('admin.access_points'));
+    }
+
+    public function accessPointRemoveAction(Request $request)
+    {
+        $id = $request->get('id');
+        AccessPoint::destroy($id);
         return redirect(route('admin.access_points'));
     }
 }
