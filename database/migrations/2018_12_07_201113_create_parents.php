@@ -18,8 +18,11 @@ class CreateParents extends Migration
             $table->string('surname');
             $table->string('name');
             $table->string('patronymic');
+            $table->boolean('is_main')->default(false);
             $table->integer('user_id', false, true)->nullable()->unique();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->integer('parent_id', false, true)->nullable();
+            $table->foreign('parent_id')->references('id')->on('parents');
         });
     }
 

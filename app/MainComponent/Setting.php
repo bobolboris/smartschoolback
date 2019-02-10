@@ -8,7 +8,12 @@ class Setting extends Model
 {
     public $timestamps = false;
     protected $table = 'settings';
-    protected $fillable = ['user_id', 'notification_of_access'];
+    protected $fillable = [
+        'user_id',
+        'notification_of_access',
+        'notification_of_access_telegram',
+        'telegram_chat_id'
+    ];
 
     public function user()
     {

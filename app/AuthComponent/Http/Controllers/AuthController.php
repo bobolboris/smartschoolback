@@ -75,8 +75,7 @@ class AuthController extends Controller
     public function refreshTokenAction(Request $request)
     {
         $auth = JWTAuth::parseToken();
-        $token = $auth->getToken()->refresh();
-
+        $token = JWTAuth::refresh($auth->getToken());
         JWTAuth::setToken($token);
         $data = ['token' => $token, 'expire' => JWTAuth::getPayload()->get('exp')];
         return response()->json(['ok' => true, 'data' => $data]);

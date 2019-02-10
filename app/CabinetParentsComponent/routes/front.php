@@ -20,3 +20,7 @@ Route::prefix('key')->group(function () {
     Route::post('unlock', 'CabinetParentsComponent\Http\Controllers\Children\KeysController@unblockKeyAction');
 });
 
+Route::prefix('additional-parents')->group(function () {
+    Route::post('/', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@additionalParentsIndexAction');
+    Route::post('add', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@addNewAdditionalParentAction');
+});
