@@ -35,7 +35,7 @@ class ReportGenerator
         $accesses = Access::where('child_id', $childId)
             ->where('date', '>=', $startDate)
             ->where('date', '<=', $finishDate)
-            ->orderBy('date', 'asc')
+            ->orderBy('date', 'desc')
             ->get();
 
         $child = Child::find($childId);
