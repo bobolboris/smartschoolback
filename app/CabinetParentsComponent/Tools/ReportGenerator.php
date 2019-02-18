@@ -35,6 +35,7 @@ class ReportGenerator
         $accesses = Access::where('child_id', $childId)
             ->where('date', '>=', $startDate)
             ->where('date', '<=', $finishDate)
+            ->orderBy('date', 'asc')
             ->get();
 
         $child = Child::find($childId);
@@ -82,7 +83,7 @@ class ReportGenerator
             'dateFormation' => date("Y-m-d"),
             'class' => $child->schoolClass->name,
             'school' => $child->schoolClass->school->name,
-            'address' => explode(',', $child->schoolClass->school->address),
+            'address' => $child->schoolClass->school->address,
             'fullNameChild' => "$child->surname $child->name $child->patronymic",
             'fullNameParent' => "$parent->surname $parent->name $parent->patronymic",
             'dates' => $dates
