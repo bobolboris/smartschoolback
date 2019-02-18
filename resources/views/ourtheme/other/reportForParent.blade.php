@@ -118,7 +118,7 @@
 
 <table class="table-2">
     <tr>
-        <th colspan="4">Электронная проходная</th>
+        <th colspan="4" style="text-align: center;">Электронная проходная</th>
     </tr>
     <tr>
         <th width="30%">Дата</th>
