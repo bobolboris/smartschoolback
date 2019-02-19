@@ -8,7 +8,6 @@ use App\MainComponent\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
@@ -18,8 +17,44 @@ class AdditionalParentsController extends BaseController
     public function additionalParentsIndexAction()
     {
         $data = $this->baseLoad();
-        $data['parent']->additional_parents->push(Parents::find($data['parent']->id));
+        $data['parent']->additional_parents;
         return response()->json(['ok' => true, 'data' => $data]);
+    }
+
+    public function additionalParentsEditAction(Request $request)
+    {
+        $data = $this->baseLoad();
+        $id = $request->get('id', -1);
+        $parent = Parents::find($id);
+
+        if ($parent == null) {
+            return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Родитель с таким id не был найден']]);
+        }
+
+        $parent->user;
+
+        $data['aparent'] = $parent;
+
+        return response()->json(['ok' => true, 'data' => $data]);
+    }
+
+    public function saveAdditionalParentAction(Request $request)
+    {
+        $all = $request->all();
+        $result = $this->validationEditAdditionalParent($all);
+
+        if (!$result['ok']) {
+            return response()->json($result);
+        }
+
+        $parent = Parents::find($all['id']);
+
+        $parent->user;
+        $parent->user->phone = $all['phone'];
+        $parent->user->email = $all['email'];
+        $parent->user->save();
+
+        return response()->json(['ok' => true]);
     }
 
     public function addNewAdditionalParentAction(Request $request)
@@ -36,7 +71,7 @@ class AdditionalParentsController extends BaseController
         $user = new User();
 
         $user->phone = $all['phone'];
-        $user->email = @$all['email'];
+        $user->email = $all['email'];
         $user->password = Hash::make($password);
         $user->roles = "1";
         $user->save();
@@ -77,10 +112,21 @@ class AdditionalParentsController extends BaseController
     {
         $validator = Validator::make($request, [
             'phone' => 'required|regex:/^38071[0-9]{7}$/i|unique:users,phone',
-            'email' => 'nullable|email',
+            'email' => 'required|email',
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'required',
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+    }
+
+    protected function validationEditAdditionalParent(array $request)
+    {
+        $id = $request['id'];
+        $validator = Validator::make($request, [
+            'id' => 'required',
+            'phone' => "required|regex:/^38071[0-9]{7}$/i|unique:users,phone,$id",
+            'email' => "required|email|unique:users,email,$id",
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

@@ -23,4 +23,6 @@ Route::prefix('key')->group(function () {
 Route::prefix('additional-parents')->group(function () {
     Route::post('/', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@additionalParentsIndexAction');
     Route::post('add', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@addNewAdditionalParentAction');
+    Route::post('edit', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@additionalParentsEditAction');
+    Route::post('edit_save', 'CabinetParentsComponent\Http\Controllers\AdditionalParentsController@saveAdditionalParentAction');
 });
