@@ -10,13 +10,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use PhoenixSmsSender\Facade\SmsSender;
+use PhoenixSmsSender\MailingRequest;
 
 class AdditionalParentsController extends BaseController
 {
     public function additionalParentsIndexAction()
     {
         $data = $this->baseLoad();
-        $data['parent']->additional_parents;
+        $data['parent']->additional_parents->push(Parents::find($data['parent']->id));
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
@@ -50,6 +52,8 @@ class AdditionalParentsController extends BaseController
         $parent->save();
 
         //Send SMS
+        $text = "Вы были зарегестрированы на http://lk.умнаяшколаднр.рф. Ваш пароль: $password Никому его не сообщайте!";
+        SmsSender::createMailing(new MailingRequest('', $text, [$all['phone']]));
 
         foreach ($all as $key => $item) {
             $pos = strpos($key, "child-");
