@@ -11,6 +11,11 @@ class BaseChildrenController extends BaseController
     protected function childLoad($id, $date, $data)
     {
         $child = Child::find($id);
+
+        if ($child == null) {
+            return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Child not found']]);
+        }
+
         $child->schoolClass->school;
         $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
@@ -38,9 +43,6 @@ class BaseChildrenController extends BaseController
             $count--;
         }
         $child->access;
-        if (!isset($child)) {
-            return response()->json(['ok' => false, 'errors' => ['Child not found']]);
-        }
 
         $data['child'] = $child;
         $data['currentDate'] = $date;

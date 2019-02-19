@@ -47,7 +47,6 @@ class ChildController extends BaseChildrenController
     {
         $validator = Validator::make($request, [
             'date' => 'required|date',
-            'child_id' => 'required|exists:children,id'
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
