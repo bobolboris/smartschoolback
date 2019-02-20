@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use PhoenixSmsSender\Facade\SmsSender;
 use PhoenixSmsSender\MailingRequest;
-use PhoenixSmsSender\PhoenixSmsSender;
 
 class ReceiverController extends Controller
 {
@@ -79,7 +78,8 @@ class ReceiverController extends Controller
         $phones = [];
 
         foreach ($child->parents as $parent) {
-            if ($parent->user->setting->notification_of_access == 1) {
+            $setting = $parent->user->setting;
+            if ($setting != null && $setting->notification_of_access == 1) {
                 $phones[] = $parent->user->phone;
             }
         }
