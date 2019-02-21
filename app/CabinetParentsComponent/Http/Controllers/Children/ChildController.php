@@ -39,7 +39,6 @@ class ChildController extends BaseChildrenController
         if (!$result['ok']) {
             return response()->json($result);
         }
-        Log::info('1');
         $date = $request->get('date', date('Y-m-d'));
         $child_id = $request->get('child_id');
         return $this->childLoad($child_id, $date, $this->baseLoad());
