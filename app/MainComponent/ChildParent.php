@@ -10,18 +10,18 @@ class ChildParent extends Model
     protected $table = 'children_parents';
     protected $fillable = ['child_id', 'parent_id'];
 
+    public static function findByParentAndChildId($child_id, $parent_id)
+    {
+        return ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->first();
+    }
+
     public function child()
     {
-        return $this->belongsTo('App\MainComponent\Child', 'child_id', 'id');
+        return $this->belongsTo(Child::class, 'child_id', 'id');
     }
 
     public function parent()
     {
-        return $this->belongsTo('App\MainComponent\Parent', 'parent_id', 'id');
-    }
-
-    public static function findByParentAndChildId($child_id, $parent_id)
-    {
-        return ChildParent::where('child_id', $child_id)->where('parent_id', $parent_id)->first();
+        return $this->belongsTo(ParentModel::class, 'parent_id', 'id');
     }
 }

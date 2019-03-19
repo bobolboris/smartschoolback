@@ -12,11 +12,11 @@ class AccessDenials extends Model
 
     public function key()
     {
-
+        return $this->hasOne(ChildKey::class, 'id', 'key_id');
     }
 
     public function accessPoint()
     {
-
+        return $this->hasOne(AccessPoint::class, 'id', 'access_point_id');
     }
 }

@@ -8,15 +8,10 @@ class Setting extends Model
 {
     public $timestamps = false;
     protected $table = 'settings';
-    protected $fillable = [
-        'user_id',
-        'notification_of_access',
-        'notification_of_access_telegram',
-        'telegram_chat_id'
-    ];
+    protected $fillable = ['key', 'value', 'user_id'];
 
     public function user()
     {
-        return $this->belongsTo('App\MainComponent\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

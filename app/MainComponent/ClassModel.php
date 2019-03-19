@@ -4,7 +4,7 @@ namespace App\MainComponent;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SchoolClass extends Model
+class ClassModel extends Model
 {
     public $timestamps = false;
     protected $table = 'classes';
@@ -13,6 +13,6 @@ class SchoolClass extends Model
 
     public function school()
     {
-        return $this->belongsTo('App\MainComponent\School', 'school_id', 'id');
+        return $this->belongsTo(School::class, 'school_id', 'id');
     }
 }

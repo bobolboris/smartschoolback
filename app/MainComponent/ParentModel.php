@@ -16,25 +16,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed user
  * @property mixed additional_parents
  */
-class Parents extends Model
+class ParentModel extends Model
 {
     public $timestamps = false;
     protected $table = 'parents';
-    protected $fillable = ['surname', 'name', 'patronymic', 'is_main', 'user_id', 'parent_id'];
+    protected $fillable = ['profile_id', 'user_id', 'parent_id'];
     protected $with = ['user'];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'profile_id', 'id');
+    }
 
     public function children()
     {
-        return $this->belongsToMany('App\MainComponent\Child', 'children_parents', 'parent_id', 'child_id');
+        return $this->belongsToMany(Child::class, 'children_parents', 'parent_id', 'child_id');
     }
 
     public function user()
     {
-        return $this->belongsTo('App\MainComponent\User', 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function additional_parents()
     {
-        return $this->hasMany('App\MainComponent\Parents', 'parent_id', 'id');
+        return $this->hasMany(ParentModel::class, 'parent_id', 'id');
     }
 }

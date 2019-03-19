@@ -19,11 +19,11 @@ class Access extends Model
 
     public function child()
     {
-
+        return $this->hasOne(Child::class, 'id', 'child_id');
     }
 
     public function accessPoint()
     {
-        return $this->hasOne('App\MainComponent\AccessPoint', 'id', 'access_point_id');
+        return $this->hasOne(AccessPoint::class, 'id', 'access_point_id');
     }
 }
