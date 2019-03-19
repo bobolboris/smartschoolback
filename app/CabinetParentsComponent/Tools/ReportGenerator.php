@@ -5,7 +5,7 @@ namespace App\CabinetParentsComponent\Tools;
 use Alexusmai\Ruslug\RuslugFacade;
 use App\MainComponent\Access;
 use App\MainComponent\Child;
-use App\MainComponent\Parents;
+use App\MainComponent\ParentModel;
 use Dompdf\Dompdf;
 
 class ReportGenerator
@@ -39,7 +39,7 @@ class ReportGenerator
             ->get();
 
         $child = Child::find($childId);
-        $parent = Parents::find($parentId);
+        $parent = ParentModel::find($parentId);
 
         $dates = [];
 

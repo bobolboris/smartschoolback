@@ -6,7 +6,7 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
 use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\Parents;
+use App\MainComponent\ParentModel;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
@@ -16,12 +16,12 @@ class ParentsController extends Controller
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
-            $parents = Parents::Orwhere('name', 'LIKE', $pattern)
+            $parents = Parent::Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
                 ->get();
         } else {
-            $parents = Parents::all();
+            $parents = Parent::all();
         }
 
         $users = collect([new User(['email' => 'NULL'])]);
@@ -42,7 +42,7 @@ class ParentsController extends Controller
     {
         $id = $request->get('id');
 
-        $parent = Parents::find($id);
+        $parent = Parent::find($id);
         $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
 
         $data = [
@@ -56,7 +56,7 @@ class ParentsController extends Controller
 
     public function showAddFormAction()
     {
-        $parent = new Parents();
+        $parent = new Parent();
         $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
 
         $data = [
@@ -88,7 +88,7 @@ class ParentsController extends Controller
 //            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
         ]);
 
-        Parents::create($request->all());
+        Parent::create($request->all());
 
         return redirect(route('admin.parents'));
     }
@@ -105,7 +105,7 @@ class ParentsController extends Controller
 
         $id = $request->get('id');
 
-        $parent = Parents::find($id);
+        $parent = Parent::find($id);
         $parent->fill($request->all());
         $parent->save();
 
@@ -118,7 +118,7 @@ class ParentsController extends Controller
 
         ChildParent::where('parent_id', $id)->delete();
 
-        Parents::destroy($id);
+        Parent::destroy($id);
         return redirect(route('admin.parents'));
     }
 

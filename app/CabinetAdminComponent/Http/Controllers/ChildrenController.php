@@ -4,7 +4,7 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\SchoolClass;
+use App\MainComponent\ClassModel;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
@@ -38,8 +38,8 @@ class ChildrenController extends Controller
 
         $child = Child::find($id);
 
-        $classes = collect([new SchoolClass(['name' => 'NULL'])]);
-        $classes = $classes->concat(SchoolClass::all())->all();
+        $classes = collect([new ClassModel(['name' => 'NULL'])]);
+        $classes = $classes->concat(ClassModel::all())->all();
 
         $users = collect([new User(['email' => 'NULL'])]);
         $users = $users->concat(User::all())->all();
@@ -58,8 +58,8 @@ class ChildrenController extends Controller
     {
         $child = new Child();
 
-        $classes = collect([new SchoolClass(['name' => 'NULL'])]);
-        $classes = $classes->concat(SchoolClass::all())->all();
+        $classes = collect([new ClassModel(['name' => 'NULL'])]);
+        $classes = $classes->concat(ClassModel::all())->all();
 
         $users = collect([new User(['email' => 'NULL'])]);
         $users = $users->concat(User::all())->all();

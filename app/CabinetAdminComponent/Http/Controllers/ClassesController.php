@@ -5,7 +5,7 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\School;
-use App\MainComponent\SchoolClass;
+use App\MainComponent\ClassModel;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
@@ -13,9 +13,9 @@ class ClassesController extends Controller
     public function classesAction(Request $request)
     {
         if ($request->exists('search')) {
-            $classes = SchoolClass::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
+            $classes = ClassModel::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
         } else {
-            $classes = SchoolClass::all();
+            $classes = ClassModel::all();
         }
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
@@ -32,7 +32,7 @@ class ClassesController extends Controller
     {
         $id = $request->get('id');
 
-        $class = SchoolClass::find($id);
+        $class = ClassModel::find($id);
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
@@ -47,7 +47,7 @@ class ClassesController extends Controller
 
     public function showAddFormAction()
     {
-        $class = new SchoolClass();
+        $class = new ClassModel();
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
@@ -78,7 +78,7 @@ class ClassesController extends Controller
             'school_id' => 'required|exists:schools,id'
         ]);
 
-        SchoolClass::create($request->all());
+        ClassModel::create($request->all());
         return redirect(route('admin.classes'));
     }
 
@@ -92,7 +92,7 @@ class ClassesController extends Controller
 
         $id = $request->get('id');
 
-        $class = SchoolClass::find($id);
+        $class = ClassModel::find($id);
         $class->fill($request->all());
         $class->save();
 
@@ -102,7 +102,7 @@ class ClassesController extends Controller
     public function childrenRemoveAction(Request $request)
     {
         $id = $request->get('id');
-        SchoolClass::destroy($id);
+        ClassModel::destroy($id);
         return redirect(route('admin.classes'));
     }
 }

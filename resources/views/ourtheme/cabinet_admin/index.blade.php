@@ -19,6 +19,17 @@
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 <body>
+<div>
+    <select>
+        <option>Выберите населенный пункт</option>
+    </select>
+    <select>
+        <option>Выберите УЗ</option>
+    </select>
+    <select>
+        <option>Выберите Класс</option>
+    </select>
+</div>
 <div class="overlay_popup"></div>
 
 <nav id="menuVertical">

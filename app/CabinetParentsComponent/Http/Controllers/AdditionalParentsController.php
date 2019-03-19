@@ -3,7 +3,7 @@
 namespace App\CabinetParentsComponent\Http\Controllers;
 
 use App\MainComponent\ChildParent;
-use App\MainComponent\Parents;
+use App\MainComponent\ParentModel;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +25,7 @@ class AdditionalParentsController extends BaseController
     {
         $data = $this->baseLoad();
         $id = $request->get('id', -1);
-        $parent = Parents::find($id);
+        $parent = Parent::find($id);
 
         if ($parent == null) {
             return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Родитель с таким id не был найден']]);
@@ -47,7 +47,7 @@ class AdditionalParentsController extends BaseController
             return response()->json($result);
         }
 
-        $parent = Parents::find($all['id']);
+        $parent = Parent::find($all['id']);
 
         $parent->user;
         $parent->user->phone = $all['phone'];
@@ -78,7 +78,7 @@ class AdditionalParentsController extends BaseController
 
         $parent_id = Auth::user()->entity->id;
 
-        $parent = new Parents();
+        $parent = new Parent();
         $parent->surname = $all['surname'];
         $parent->name = $all['name'];
         $parent->patronymic = $all['patronymic'];

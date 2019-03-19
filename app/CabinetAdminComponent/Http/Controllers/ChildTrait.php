@@ -4,14 +4,14 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Child;
 use App\MainComponent\School;
-use App\MainComponent\SchoolClass;
+use App\MainComponent\ClassModel;
 
 trait ChildTrait
 {
     protected function createEmptyChild()
     {
         $school = new School(['id' => -1, 'name' => '-', 'address' => '-']);
-        $schoolClass = new SchoolClass(['id' => -1, 'name' => '-', 'school_id' => -1]);
+        $schoolClass = new ClassModel(['id' => -1, 'name' => '-', 'school_id' => -1]);
         $schoolClass->school = $school;
 
         $child = new Child();

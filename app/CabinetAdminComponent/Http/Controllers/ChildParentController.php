@@ -5,7 +5,7 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
 use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\Parents;
+use App\MainComponent\ParentModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -15,7 +15,7 @@ class ChildParentController extends Controller
     {
         $id = $request->get('id');
 
-        $children = Parents::find($id)->children;
+        $children = Parent::find($id)->children;
 
         $data = [
             'children' => $children->toArray(),
