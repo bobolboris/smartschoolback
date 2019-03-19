@@ -3,7 +3,6 @@
 namespace App\AuthComponent\Http\Controllers;
 
 use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Jenssegers\Agent\Facades\Agent;
@@ -56,11 +55,6 @@ class BaseController extends Controller
             'os' => Agent::platform(),
             'ip' => $request->header('Customer-IP', ' ')
         ];
-    }
-
-    protected function getSessionByInfo(array $info)
-    {
-        return Session::where('os', $info['os'])->where('ip', $info['ip'])->where('browser', $info['browser'])->first();
     }
 
 }
