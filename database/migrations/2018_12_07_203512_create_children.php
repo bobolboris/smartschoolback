@@ -15,14 +15,15 @@ class CreateChildren extends Migration
     {
         Schema::create('children', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('surname');
-            $table->string('name');
-            $table->string('patronymic');
-            $table->integer('photo_id', false, true)->nullable();
-            $table->foreign('photo_id')->references('id')->on('photos');
+
+            $table->integer('profile_id', false, true)->nullable();
+            $table->foreign('profile_id')->references('id')->on('profiles');
 
             $table->integer('class_id', false, true)->nullable();
             $table->foreign('class_id')->references('id')->on('classes');
+
+            $table->integer('photo_id', false, true)->nullable();
+            $table->foreign('photo_id')->references('id')->on('photos');
 
             $table->integer('user_id', false, true)->nullable()->unique();
             $table->foreign('user_id')->references('id')->on('users');

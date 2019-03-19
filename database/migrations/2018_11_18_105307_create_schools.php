@@ -17,6 +17,9 @@ class CreateSchools extends Migration
             $table->increments('id');
             $table->string('address');
             $table->string('name');
+
+            $table->integer('locality_id', false, true)->nullable();
+            $table->foreign('locality_id')->references('id')->on('localities');
         });
     }
 
