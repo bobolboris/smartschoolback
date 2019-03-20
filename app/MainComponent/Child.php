@@ -4,6 +4,20 @@ namespace App\MainComponent;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed id
+ * @property mixed profile_id
+ * @property mixed class_id
+ * @property mixed photo_id
+ * @property mixed user_id
+ * @property mixed system_id
+ * @property mixed profile
+ * @property mixed parents
+ * @property mixed class
+ * @property mixed key
+ * @property mixed user
+ * @property mixed photo
+ */
 class Child extends Model
 {
     public $timestamps = false;
@@ -18,7 +32,7 @@ class Child extends Model
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'profile_id', 'id');
+        return $this->hasOne(Profile::class, 'id', 'profile_id');
     }
 
     public function parents()
@@ -43,7 +57,7 @@ class Child extends Model
 
     public function photo()
     {
-        return $this->hasOne(Photo::class, 'photo_id', 'id');
+        return $this->hasOne(Photo::class, 'id', 'photo_id');
     }
 
 }

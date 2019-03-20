@@ -6,10 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property mixed id
- * @property mixed surname
- * @property mixed name
- * @property mixed patronymic
- * @property mixed is_main
+ * @property mixed profile_id
  * @property mixed user_id
  * @property mixed parent_id
  * @property mixed children
@@ -25,7 +22,7 @@ class ParentModel extends Model
 
     public function profile()
     {
-        return $this->hasOne(Profile::class, 'profile_id', 'id');
+        return $this->hasOne(Profile::class, 'id','profile_id');
     }
 
     public function children()
@@ -35,7 +32,7 @@ class ParentModel extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class,  'id', 'user_id');
     }
 
     public function additional_parents()

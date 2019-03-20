@@ -10,6 +10,10 @@ namespace App\MainComponent;
  * @property mixed password
  * @property mixed enabled
  * @property mixed type
+ * @property mixed parent
+ * @property mixed child
+ * @property mixed admin
+ * @property mixed settings
  */
 class User extends UserJWT
 {
@@ -32,13 +36,23 @@ class User extends UserJWT
         'password', 'remember_token'
     ];
 
-    public function entity()
+    public function parent()
     {
         return $this->hasOne(ParentModel::class, 'user_id', 'id');
     }
 
-    public function setting()
+    public function child()
     {
-        return $this->hasOne(Setting::class, 'user_id', 'id');
+        return $this->hasOne(Child::class, 'user_id', 'id');
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'user_id', 'id');
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(Setting::class, 'user_id', 'id');
     }
 }

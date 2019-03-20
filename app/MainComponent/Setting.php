@@ -4,6 +4,13 @@ namespace App\MainComponent;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed id
+ * @property mixed key
+ * @property mixed value
+ * @property mixed user_id
+ * @property mixed user
+ */
 class Setting extends Model
 {
     public $timestamps = false;

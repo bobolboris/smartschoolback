@@ -4,6 +4,13 @@ namespace App\MainComponent;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed id
+ * @property mixed type
+ * @property mixed profile_id
+ * @property mixed user_id
+ * @property mixed locality_id
+ */
 class Admin extends Model
 {
     public $timestamps = false;

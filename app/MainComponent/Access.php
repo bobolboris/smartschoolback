@@ -11,6 +11,16 @@ use Illuminate\Database\Eloquent\Model;
  * 3 – Неизвестно.
  */
 
+/**
+ * @property mixed id
+ * @property mixed direction
+ * @property mixed time
+ * @property mixed date
+ * @property mixed cause
+ * @property mixed child_id
+ * @property mixed access_point_id
+ * @property mixed system_id
+ */
 class Access extends Model
 {
     public $timestamps = false;

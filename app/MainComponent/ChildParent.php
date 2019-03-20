@@ -4,6 +4,13 @@ namespace App\MainComponent;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed id
+ * @property mixed child_id
+ * @property mixed child
+ * @property mixed parent_id
+ * @property mixed parent
+ */
 class ChildParent extends Model
 {
     public $timestamps = false;
