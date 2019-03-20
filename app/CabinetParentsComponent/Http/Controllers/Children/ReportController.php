@@ -18,7 +18,7 @@ class ReportController extends BaseChildrenController
         $rp = new ReportGenerator();
 
         $user = JWTAuth::parseToken()->authenticate();
-        $parentId = $user->entity->id;
+        $parentId = $user->parent->id;
 
         $childId = $request->get('child_id');
         $startDate = $request->get('startDate');

@@ -4,7 +4,6 @@ namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
 use App\MainComponent\Access;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ChildController extends BaseChildrenController
@@ -33,6 +32,14 @@ class ChildController extends BaseChildrenController
         return response()->json($result);
     }
 
+    protected function validateChild(array $request)
+    {
+        $validator = Validator::make($request, [
+            'date' => 'required|date',
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+    }
+
     public function childAction(Request $request)
     {
         $result = $this->validateChild($request->all());
@@ -42,13 +49,5 @@ class ChildController extends BaseChildrenController
         $date = $request->get('date', date('Y-m-d'));
         $child_id = $request->get('child_id');
         return $this->childLoad($child_id, $date, $this->baseLoad());
-    }
-
-    protected function validateChild(array $request)
-    {
-        $validator = Validator::make($request, [
-            'date' => 'required|date',
-        ]);
-        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 }

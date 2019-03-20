@@ -15,7 +15,7 @@ class BaseController extends Controller
     protected function baseLoad()
     {
         $user = JWTAuth::parseToken()->authenticate();
-        $user->entity->children;
-        return ['parent' => $user->entity];
+        $user->parent->children;
+        return ['parent' => $user->parent];
     }
 }

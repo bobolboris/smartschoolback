@@ -62,18 +62,26 @@ class KeysController extends BaseChildrenController
 
         $shortCodeKey = $child->key->short_codekey;
 
-        $surname = $child['surname'];
-        $name = $child['name'];
-        $patronymic = $child['patronymic'];
+        $surname = $child->profile->surname;
+        $name = $child->profile->name;
+        $patronymic = $child->profile->patronymic;
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
-        $class = $child->schoolClass->name;
-        $school = $child->schoolClass->school->name;
+        $class = $child->class->name;
+        $school = $child->class->school->name;
         $text = "Номер пропуска: $shortCodeKey, ЗАБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс $class";
 
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
+    }
+
+    protected function validateKey(array $request)
+    {
+        $validator = Validator::make($request, [
+            'child_id' => 'required|exists:children,id'
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 
     public function unblockKeyAction(Request $request)
@@ -125,26 +133,18 @@ class KeysController extends BaseChildrenController
 
         $shortCodeKey = $child->key->short_codekey;
 
-        $surname = $child['surname'];
-        $name = $child['name'];
-        $patronymic = $child['patronymic'];
+        $surname = $child->profile->surname;
+        $name = $child->profile->name;
+        $patronymic = $child->profile->patronymic;
 
         $fullName = mb_convert_case("$surname $name $patronymic", MB_CASE_UPPER, "UTF-8");
-        $class = $child->schoolClass->name;
-        $school = $child->schoolClass->school->name;
+        $class = $child->class->name;
+        $school = $child->class->school->name;
         $text = "Номер пропуска: $shortCodeKey, РАЗБЛОКИРОВАН. Учащийся: $fullName. УЗ: $school, класс $class";
 
         SmsSender::createMailing(new MailingRequest('', $text, [$user->phone]));
 
         return response()->json($result);
-    }
-
-    protected function validateKey(array $request)
-    {
-        $validator = Validator::make($request, [
-            'child_id' => 'required|exists:children,id'
-        ]);
-        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
 
 }

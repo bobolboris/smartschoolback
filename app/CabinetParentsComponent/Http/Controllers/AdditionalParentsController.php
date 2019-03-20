@@ -4,6 +4,7 @@ namespace App\CabinetParentsComponent\Http\Controllers;
 
 use App\MainComponent\ChildParent;
 use App\MainComponent\ParentModel;
+use App\MainComponent\Profile;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,7 @@ class AdditionalParentsController extends BaseController
     {
         $data = $this->baseLoad();
         $id = $request->get('id', -1);
-        $parent = Parent::find($id);
+        $parent = ParentModel::find($id);
 
         if ($parent == null) {
             return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Родитель с таким id не был найден']]);
@@ -47,7 +48,7 @@ class AdditionalParentsController extends BaseController
             return response()->json($result);
         }
 
-        $parent = Parent::find($all['id']);
+        $parent = ParentModel::find($all['id']);
 
         $parent->user;
         $parent->user->phone = $all['phone'];
@@ -76,14 +77,18 @@ class AdditionalParentsController extends BaseController
         $user->roles = "1";
         $user->save();
 
-        $parent_id = Auth::user()->entity->id;
+        $parentId = Auth::user()->parent->id;
 
-        $parent = new Parent();
-        $parent->surname = $all['surname'];
-        $parent->name = $all['name'];
-        $parent->patronymic = $all['patronymic'];
+        $profile = new Profile();
+        $profile->surname = $all['surname'];
+        $profile->name = $all['name'];
+        $profile->patronymic = $all['patronymic'];
+        $profile->save();
+
+        $parent = new ParentModel();
+        $parent->profile_id = $profile->id;
         $parent->user_id = $user->id;
-        $parent->parent_id = $parent_id;
+        $parent->parent_id = $parentId;
         $parent->save();
 
         //Send SMS
@@ -98,7 +103,7 @@ class AdditionalParentsController extends BaseController
                 if (!is_numeric($child_id)) {
                     return ['ok' => false, 'errors' => ['error' => 'Неверный child_id ребенка']];
                 }
-                if (ChildParent::findByParentAndChildId($child_id, $parent_id) == null) {
+                if (ChildParent::findByParentAndChildId($child_id, $parentId) == null) {
                     return ['ok' => false, 'errors' => ['error' => "$child_id это не ваш ребенок!"]];
                 }
                 ChildParent::create(['parent_id' => $parent->id, 'child_id' => $child_id]);

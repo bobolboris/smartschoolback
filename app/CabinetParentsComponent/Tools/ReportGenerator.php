@@ -45,6 +45,10 @@ class ReportGenerator
 
         $previousDate = null;
 
+        $day = "01";
+        $month = "01";
+        $year = "1991";
+
         foreach ($accesses as $access) {
             if ($previousDate != $access->date) {
                 $temp = explode('-', $access->date);
@@ -68,11 +72,14 @@ class ReportGenerator
             $dates[$date][] = $tmp;
         }
 
-        $firstSymbolNameChild = substr($child->name, 0, 2);
-        $firstSymbolPatronymicChild = substr($child->name, 0, 2);
+        $childProfile = $child->profile;
+        $parentProfile = $parent->profile;
 
-        $schoolName = $child->schoolClass->school->name;
-        $title = "report $child->surname $firstSymbolNameChild$firstSymbolPatronymicChild $schoolName";
+        $firstSymbolNameChild = substr($childProfile->name, 0, 2);
+        $firstSymbolPatronymicChild = substr($childProfile->name, 0, 2);
+
+        $schoolName = $child->class->school->name;
+        $title = "report $childProfile->surname $firstSymbolNameChild$firstSymbolPatronymicChild $schoolName";
         $title = str_replace(' ', '_', $title);
         $title = RuslugFacade::make($title);
 
@@ -81,11 +88,11 @@ class ReportGenerator
             'startDate' => $startDate,
             'finishDate' => $finishDate,
             'dateFormation' => date("Y-m-d"),
-            'class' => $child->schoolClass->name,
-            'school' => $child->schoolClass->school->name,
-            'address' => $child->schoolClass->school->address,
-            'fullNameChild' => "$child->surname $child->name $child->patronymic",
-            'fullNameParent' => "$parent->surname $parent->name $parent->patronymic",
+            'class' => $child->class->name,
+            'school' => $child->class->school->name,
+            'address' => $child->class->school->address,
+            'fullNameChild' => "$childProfile->surname $childProfile->name $childProfile->patronymic",
+            'fullNameParent' => "$parentProfile->surname $parentProfile->name $parentProfile->patronymic",
             'dates' => $dates
         ];
     }
@@ -113,7 +120,7 @@ class ReportGenerator
 
     public function testAction()
     {
-        return response($this->generateReport(1, 1, "2018-12-01", "2018-12-30")['report'])
-            ->header('Content-type', 'application/pdf');
+        $report = $this->generateReport(1, 1, "2018-12-01", "2018-12-30")['report'];
+        return response($report)->header('Content-type', 'application/pdf');
     }
 }

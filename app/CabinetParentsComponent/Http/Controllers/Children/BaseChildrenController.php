@@ -5,7 +5,6 @@ namespace App\CabinetParentsComponent\Http\Controllers\Children;
 use App\CabinetParentsComponent\Http\Controllers\BaseController;
 use App\MainComponent\Access;
 use App\MainComponent\Child;
-use Illuminate\Support\Facades\Log;
 
 class BaseChildrenController extends BaseController
 {
@@ -17,17 +16,15 @@ class BaseChildrenController extends BaseController
             return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Child not found']]);
         }
 
-        $child->schoolClass->school;
         $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
 
-
-        if ($child->key->expires != null) {
+        if ($child->key->expires == null) {
+            $child->key->state = 1;
+        } else {
             $expires = strtotime($child->key->expires);
             $now = time();
             $child->key->state = ($expires < $now) ? 0 : 1;
-        } else {
-            $child->key->state = 1;
         }
 
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();

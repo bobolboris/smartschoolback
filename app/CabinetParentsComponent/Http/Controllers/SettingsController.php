@@ -2,16 +2,36 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers;
 
+use App\MainComponent\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SettingsController extends BaseController
 {
+    protected $settings;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->settings = [
+            'notification_of_access' => ['0', '1'],
+            'notification_of_access_telegram' => ['0', '1'],
+        ];
+    }
+
     public function indexAction()
     {
         $data = $this->baseLoad();
         $user = $data['parent']->user;
-        $data['setting'] = $user->setting;
+
+        $settings = [];
+        foreach ($user->settings as $setting) {
+            $settings[$setting['key']] = $setting['value'];
+        }
+
+        $data['settings'] = $settings;
+
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
@@ -19,19 +39,31 @@ class SettingsController extends BaseController
     {
         $user = JWTAuth::parseToken()->authenticate();
         if (!isset($user)) {
-            return response()->json(['ok' => true, 'errors' => ['user not found']]);
+            return response()->json(['ok' => false, 'errors' => ['user not found']]);
         }
 
-        $req = $request->get('request');
+        foreach ($this->settings as $key => $value) {
+            $setting = Setting::where('key', $key)->where('user_id', Auth::user()->id)->first();
+            
+            if ($setting == null) {
+                $setting = new Setting();
+                $setting->key = $key;
+                $setting->user_id = Auth::user()->id;
+            }
 
-        $user->setting->notification_of_access = isset($req['notification_of_access']) ? $req['notification_of_access'] : 0;
-        $user->setting->notification_of_access_telegram = isset($req['notification_of_access_telegram']) ? $req['notification_of_access_telegram'] : 0;
+            if ($request->has($key)) {
+                if ($value != null && !in_array($request->get($key), $value)) {
+                    return response()->json(['ok' => false, 'errors' => ["Invalid setting value $key"]]);
+                }
 
-        if (isset($req['telegram_chat_id'])) {
-            $user->setting->telegram_chat_id = $req['telegram_chat_id'];
+                $setting->value = $request->get($key);
+            }else {
+                $setting->value = '0';
+            }
+            
+            $setting->save();
         }
 
-        $user->setting->save();
         return response()->json(['ok' => true]);
     }
 
