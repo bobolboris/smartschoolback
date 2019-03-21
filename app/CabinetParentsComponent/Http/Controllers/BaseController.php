@@ -16,6 +16,12 @@ class BaseController extends Controller
     {
         $user = JWTAuth::parseToken()->authenticate();
         $user->parent->children;
+        $user->parent->is_senior = $user->hasRole('СтаршийРодитель');
         return ['parent' => $user->parent];
+    }
+
+    protected function baseAction()
+    {
+        return response()->json(['ok' => true, 'data' => $this->baseLoad()]);
     }
 }

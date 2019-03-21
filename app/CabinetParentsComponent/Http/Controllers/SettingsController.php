@@ -2,69 +2,42 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers;
 
-use App\MainComponent\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class SettingsController extends BaseController
 {
-    protected $settings;
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->settings = [
-            'notification_of_access' => ['0', '1'],
-            'notification_of_access_telegram' => ['0', '1'],
-        ];
-    }
-
     public function indexAction()
     {
         $data = $this->baseLoad();
-        $user = $data['parent']->user;
-
-        $settings = [];
-        foreach ($user->settings as $setting) {
-            $settings[$setting['key']] = $setting['value'];
-        }
-
-        $data['settings'] = $settings;
-
+        $data['aparent'] = $data['parent'];
         return response()->json(['ok' => true, 'data' => $data]);
     }
 
     public function saveAction(Request $request)
     {
-        $user = JWTAuth::parseToken()->authenticate();
-        if (!isset($user)) {
-            return response()->json(['ok' => false, 'errors' => ['user not found']]);
+        $result = $this->validationEdit($request->all());
+
+        if (!$result['ok']) {
+            return response()->json($result);
         }
 
-        foreach ($this->settings as $key => $value) {
-            $setting = Setting::where('key', $key)->where('user_id', Auth::user()->id)->first();
-            
-            if ($setting == null) {
-                $setting = new Setting();
-                $setting->key = $key;
-                $setting->user_id = Auth::user()->id;
-            }
-
-            if ($request->has($key)) {
-                if ($value != null && !in_array($request->get($key), $value)) {
-                    return response()->json(['ok' => false, 'errors' => ["Invalid setting value $key"]]);
-                }
-
-                $setting->value = $request->get($key);
-            }else {
-                $setting->value = '0';
-            }
-            
-            $setting->save();
-        }
+        Auth::user()->phone = $request->get('phone');
+        Auth::user()->email = $request->get('email');
+        Auth::user()->save();
 
         return response()->json(['ok' => true]);
     }
 
+    protected function validationEdit(array $request)
+    {
+        $id = Auth::user()->id;
+        $validator = Validator::make($request, [
+            'phone' => ['required', 'regex:/^38071[0-9]{7}$/i', Rule::unique('users', 'phone')->ignore($id, 'id')],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id, 'id')]
+        ]);
+        return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
+    }
 }

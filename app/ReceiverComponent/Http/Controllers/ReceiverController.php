@@ -73,20 +73,20 @@ class ReceiverController extends Controller
         }
         $access->save();
 
-        $fio = "$child->surname $child->name $child->patronymic";
+        $fio = $child->profile->surname . ' ' . $child->profile->name . ' ' . $child->patronymic;
 
         $phones = [];
 
         foreach ($child->parents as $parent) {
-            $setting = $parent->user->setting;
-            if ($setting != null && $setting->notification_of_access == 1) {
+            $setting = $parent->user->settings->where('key', 'notification_of_access')->first();
+            if ($setting != null && $setting->value == 1) {
                 $phones[] = $parent->user->phone;
             }
         }
 
         $text_sms = ($access->direction == 1) ? 'Вход в УЗ: ' : 'Выход из УЗ: ';
 
-        SmsSender::createMailing(new MailingRequest('', $text_sms . $access->time . " " . $fio, $phones));
+        SmsSender::createMailing(new MailingRequest('', $text_sms . $access->time . ' ' . $fio, $phones));
         return response()->json(['ok' => true]);
     }
 }
