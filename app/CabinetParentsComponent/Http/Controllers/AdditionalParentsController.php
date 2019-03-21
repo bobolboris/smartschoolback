@@ -166,11 +166,11 @@ class AdditionalParentsController extends BaseController
     protected function validationAdditionalParent(array $request)
     {
         $validator = Validator::make($request, [
-            'phone' => 'required|regex:/^38071[0-9]{7}$/i|unique:users,phone',
-            'email' => 'required|email|unique:users,email',
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
+            'phone' => ['required', 'regex:/^38071[0-9]{7}$/i', 'unique:users,phone'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
@@ -179,9 +179,9 @@ class AdditionalParentsController extends BaseController
     {
         $id = ParentModel::find($request['id'])->user;
         $validator = Validator::make($request, [
-            'id' => 'required|exists:parents,id',
+            'id' => ['required', 'exists:parents,id'],
             'phone' => ['required', 'regex:/^38071[0-9]{7}$/i', Rule::unique('users', 'phone')->ignore($id, 'id')],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id, 'id')]
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($id, 'id')]
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
@@ -189,7 +189,7 @@ class AdditionalParentsController extends BaseController
     protected function validationDeleteAdditionalParent(array $request)
     {
         $validator = Validator::make($request, [
-            'id' => 'required|exists:parents,id',
+            'id' => ['required', 'exists:parents,id'],
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

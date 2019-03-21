@@ -34,9 +34,9 @@ class ReportController extends BaseChildrenController
     protected function validateReportParent(array $request)
     {
         $validator = Validator::make($request, [
-            'child_id' => 'required|exists:children,id',
-            'startDate' => 'required',
-            'finishDate' => 'required'
+            'child_id' => ['required', 'exists:children,id'],
+            'startDate' => ['required', 'date'],
+            'finishDate' => ['required', 'date'],
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

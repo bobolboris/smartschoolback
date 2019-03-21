@@ -79,7 +79,7 @@ class KeysController extends BaseChildrenController
     protected function validateKey(array $request)
     {
         $validator = Validator::make($request, [
-            'child_id' => 'required|exists:children,id'
+            'child_id' => ['required', 'exists:children,id']
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

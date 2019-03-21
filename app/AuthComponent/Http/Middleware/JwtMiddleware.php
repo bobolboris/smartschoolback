@@ -2,10 +2,8 @@
 
 namespace App\AuthComponent\Http\Middleware;
 
-use App\MainComponent\Session;
 use Closure;
 use Exception;
-use Jenssegers\Agent\Facades\Agent;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 use Tymon\JWTAuth\Facades\JWTAuth;

@@ -36,7 +36,7 @@ class SettingsController extends BaseController
         $id = Auth::user()->id;
         $validator = Validator::make($request, [
             'phone' => ['required', 'regex:/^38071[0-9]{7}$/i', Rule::unique('users', 'phone')->ignore($id, 'id')],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($id, 'id')]
+            'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($id, 'id')]
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

@@ -35,7 +35,7 @@ class ChildController extends BaseChildrenController
     protected function validateChild(array $request)
     {
         $validator = Validator::make($request, [
-            'date' => 'required|date',
+            'date' => ['required', 'date'],
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }

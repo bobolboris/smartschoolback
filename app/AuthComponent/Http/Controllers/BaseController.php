@@ -22,8 +22,8 @@ class BaseController extends Controller
     protected function validateLoginFirstStage(array $request)
     {
         $validator = Validator::make($request, [
-            $this->username() => 'required|exists:users',
-            'password' => 'required'
+            $this->username() => ['required', 'max:255', 'exists:users'],
+            'password' => ['required', 'max:255']
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
@@ -31,8 +31,8 @@ class BaseController extends Controller
     protected function validateLoginSecondStage(array $request)
     {
         $validator = Validator::make($request, [
-            'sms_code' => 'required',
-            'identifier' => 'required'
+            'sms_code' => ['required', 'max:255'],
+            'identifier' => ['required', 'max:255']
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
@@ -40,7 +40,7 @@ class BaseController extends Controller
     protected function validateRefreshSmsCode(array $request)
     {
         $validator = Validator::make($request, [
-            'identifier' => 'required|integer'
+            'identifier' => ['required', 'max:255']
         ]);
         return ($validator->fails()) ? ['ok' => false, 'errors' => $validator->errors()] : ['ok' => true];
     }
