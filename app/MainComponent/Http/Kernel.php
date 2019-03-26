@@ -72,6 +72,8 @@ class Kernel extends HttpKernel
 
         'check.role' => \App\CabinetParentsComponent\Http\Middleware\CheckRole::class,
         'check.roles' => \App\CabinetParentsComponent\Http\Middleware\CheckRoles::class,
+        'set.default.guard' => \App\CabinetAdminComponent\Http\Middleware\SetDefaultGuard::class,
+        'determination.position' => \App\CabinetAdminComponent\Http\Middleware\DeterminationPosition::class,
     ];
 
     /**
@@ -84,6 +86,7 @@ class Kernel extends HttpKernel
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \App\MainComponent\Http\Middleware\Authenticate::class,
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,

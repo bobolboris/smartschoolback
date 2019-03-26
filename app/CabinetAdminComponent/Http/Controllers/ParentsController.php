@@ -2,26 +2,24 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-
 use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
-use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\ParentModel;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
-class ParentsController extends Controller
+class ParentsController extends BaseController
 {
     public function parentsAction(Request $request)
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
-            $parents = Parent::Orwhere('name', 'LIKE', $pattern)
+            $parents = ParentModel::Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
                 ->get();
         } else {
-            $parents = Parent::all();
+            $parents = ParentModel::all();
         }
 
         $users = collect([new User(['email' => 'NULL'])]);
@@ -42,7 +40,7 @@ class ParentsController extends Controller
     {
         $id = $request->get('id');
 
-        $parent = Parent::find($id);
+        $parent = ParentModel::find($id);
         $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
 
         $data = [
@@ -56,7 +54,7 @@ class ParentsController extends Controller
 
     public function showAddFormAction()
     {
-        $parent = new Parent();
+        $parent = new ParentModel();
         $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
 
         $data = [
@@ -105,7 +103,7 @@ class ParentsController extends Controller
 
         $id = $request->get('id');
 
-        $parent = Parent::find($id);
+        $parent = ParentModel::find($id);
         $parent->fill($request->all());
         $parent->save();
 

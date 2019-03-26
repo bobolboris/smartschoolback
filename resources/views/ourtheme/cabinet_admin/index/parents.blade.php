@@ -52,13 +52,13 @@
                             {{ $parent['id'] }}
                         </td>
                         <td class="surname">
-                            {{ $parent['surname'] }}
+                            {{ $parent['profile']['surname'] }}
                         </td>
                         <td class="name">
-                            {{ $parent['name'] }}
+                            {{ $parent['profile']['name'] }}
                         </td>
                         <td class="patronymic">
-                            {{$parent['patronymic'] }}
+                            {{$parent['profile']['patronymic'] }}
                         </td>
                         <td class="user">
                             {{ $parent['user']['id'] . " - " . $parent['user']['email'] }}

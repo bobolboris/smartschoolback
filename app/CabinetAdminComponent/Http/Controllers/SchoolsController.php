@@ -2,12 +2,11 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-
-use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\School;
+use App\CabinetAdminComponent\School;
+use App\MainComponent\Locality;
 use Illuminate\Http\Request;
 
-class SchoolsController extends Controller
+class SchoolsController extends BaseController
 {
     public function schoolsAction(Request $request)
     {
@@ -33,8 +32,12 @@ class SchoolsController extends Controller
 
         $school = School::find($id);
 
+        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
+        $localities = $localities->concat(Locality::all())->all();
+
         $data = [
             'school' => $school->toArray(),
+            'localities' => $localities,
             'action' => route('admin.schools.save')
         ];
 
@@ -45,8 +48,12 @@ class SchoolsController extends Controller
     {
         $school = new School();
 
+        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
+        $localities = $localities->concat(Locality::all())->all();
+
         $data = [
             'school' => $school->toArray(),
+            'localities' => $localities,
             'action' => route('admin.schools.add')
         ];
 

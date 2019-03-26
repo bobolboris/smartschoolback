@@ -5,6 +5,9 @@
         <div class="row justify-content-center">
             <h1>Пользователи</h1>
         </div>
+        <div class="row justify-content-center">
+            <p>* - почены поля для продвиных администраторов если не уверены не меняйте эти поля!</p>
+        </div>
 
         <div class="row justify-content-center">
             <div class="object-editPer">
@@ -36,7 +39,17 @@
                                 @endif
                             </td>
                             <td>
-                                <textarea name="roles" class="text-dark">{{ @$user['roles'] }}</textarea>
+                                @foreach($roles as $key => $value)
+                                        <label class="row">
+                                            <span>{{ $key }}</span>
+                                            @if (in_array($value, $user['roles_array']))
+                                                <input type="checkbox" name="roles[]" class="form-check-input" value="{{ $value }}" checked>
+                                            @else
+                                                <input type="checkbox" name="roles[]" class="form-check-input" value="{{ $value }}">
+                                            @endif
+                                        </label>
+                                @endforeach
+
                             </td>
                         </tr>
                         <tr>
@@ -74,6 +87,19 @@
                         </tr>
 
                         <tr>
+                            <td>
+                                *email_verified_at
+                                @if ($errors->has('email_verified_at'))
+                                    <br><strong class="text-danger">{{ $errors->first('email_verified_at') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <input type="datetime-local" name="email_verified_at"
+                                       value="{{ str_replace(' ', 'T', @$user['email_verified_at']) }}">
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td>Включен</td>
                             <td>
                                 <select name="enabled">
@@ -85,6 +111,44 @@
                                         <option value="1" selected>Да</option>
                                     @endif
                                 </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                *remember_token
+                                @if ($errors->has('remember_token'))
+                                    <br><strong class="text-danger">{{ $errors->first('remember_token') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <textarea name="remember_token">{{ @$user['remember_token'] }}</textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                *created_at
+                                @if ($errors->has('created_at'))
+                                    <br><strong class="text-danger">{{ $errors->first('created_at') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <input type="datetime-local" name="created_at"
+                                       value="{{ str_replace(' ', 'T', @$user['created_at']) }}">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                *update_at
+                                @if ($errors->has('updated_at'))
+                                    <br><strong class="text-danger">{{ $errors->first('updated_at') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <input type="datetime-local" name="updated_at"
+                                       value="{{ str_replace(' ', 'T', @$user['updated_at']) }}">
                             </td>
                         </tr>
 

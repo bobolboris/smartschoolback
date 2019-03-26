@@ -2,13 +2,12 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-
-use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\School;
-use App\MainComponent\ClassModel;
+use App\CabinetAdminComponent\Admin;
+use App\CabinetAdminComponent\ClassModel;
+use App\CabinetAdminComponent\School;
 use Illuminate\Http\Request;
 
-class ClassesController extends Controller
+class ClassesController extends BaseController
 {
     public function classesAction(Request $request)
     {
@@ -36,9 +35,12 @@ class ClassesController extends Controller
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
+        $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
+
         $data = [
             'class' => $class->toArray(),
             'schools' => $schools->toArray(),
+            'admins' => $admins->toArray(),
             'action' => route('admin.classes.save')
         ];
 
@@ -51,9 +53,12 @@ class ClassesController extends Controller
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
+        $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
+
         $data = [
             'class' => $class->toArray(),
             'schools' => $schools->toArray(),
+            'admins' => $admins->toArray(),
             'action' => route('admin.classes.add')
         ];
 

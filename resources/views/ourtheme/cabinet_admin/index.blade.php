@@ -12,7 +12,7 @@
 
     <script type="text/javascript" src="{{ asset('themes/cabinet_admin/js/adminPopup.js') }}"></script>
 
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/cabinet_admin/css/normalize.css') }}">
+    {{--<link rel="stylesheet" type="text/css" href="{{ asset('themes/cabinet_admin/css/normalize.css') }}">--}}
     <link rel="stylesheet" type="text/css" href="{{ asset('themes/cabinet_admin/css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('themes/cabinet_admin/css/admin.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"

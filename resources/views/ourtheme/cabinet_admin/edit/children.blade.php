@@ -76,37 +76,6 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr class="class">
-                            <td>
-                                Пользователь
-                                @if ($errors->has('user_id'))
-                                    <br><strong class="text-danger">{{ $errors->first('user_id') }}</strong>
-                                @endif
-                            </td>
-                            <td>
-                                <select name="user_id">
-                                    @foreach($users as $user)
-                                        @if($user['id'] == @$child['user_id'])
-                                            <option value="{{ @$user['id'] }}"
-                                                    selected>{{ @$user['id'] . " - " . @$user['email'] }}</option>
-                                        @else
-                                            <option
-                                                value="{{ @$user['id'] }}">{{ @$user['id'] . " - " . @$user['email'] }}</option>
-                                        @endif
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                        <tr class="class">
-                            <td>
-                                System ID
-                                @if ($errors->has('system_id'))
-                                    <br><strong class="text-danger">{{ $errors->first('system_id') }}</strong>
-                                @endif
-                            </td>
-                            <td><input type="text" name="system_id" value="{{ @$child['system_id'] }}"></td>
-                        </tr>
-
                         </tbody>
                     </table>
                     <input type="submit" class="btn btn-primary" value="Сохранить">

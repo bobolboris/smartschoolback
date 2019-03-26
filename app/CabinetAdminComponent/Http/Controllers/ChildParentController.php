@@ -4,18 +4,17 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
-use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\ParentModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
-class ChildParentController extends Controller
+class ChildParentController extends BaseController
 {
     public function parentChildrenAction(Request $request)
     {
         $id = $request->get('id');
 
-        $children = Parent::find($id)->children;
+        $children = ParentModel::find($id)->children;
 
         $data = [
             'children' => $children->toArray(),

@@ -1,7 +1,29 @@
 <?php
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', 'CabinetAdminComponent\Http\Controllers\MainController@indexAction');
+
+    Route::match(['get', 'head'], 'login', 'CabinetAdminComponent\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
+    Route::post('login', 'CabinetAdminComponent\Http\Controllers\Auth\LoginController@login');
+    Route::get('logout', 'CabinetAdminComponent\Http\Controllers\Auth\LoginController@logout')->name('logout');
+    Route::post('logout', 'CabinetAdminComponent\Http\Controllers\Auth\LoginController@logout');
+
+    Route::prefix('email')->group(function () {
+        Route::match(['get', 'head'], 'resend', 'CabinetAdminComponent\Http\Controllers\Auth\VerificationController@resend')->name('verification.resend')->middleware('auth', 'throttle:6,1');;
+        Route::match(['get', 'head'], 'verify', 'CabinetAdminComponent\Http\Controllers\Auth\VerificationController@show')->name('verification.notice');
+        Route::match(['get', 'head'], 'verify/{id}', 'CabinetAdminComponent\Http\Controllers\Auth\VerificationController@verify')->name('verification.verify')->middleware('auth', 'signed', 'throttle:6,1');
+    });
+
+    Route::prefix('password')->group(function () {
+        Route::post('email', 'CabinetAdminComponent\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        Route::match(['get', 'head'], 'reset', 'CabinetAdminComponent\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+        Route::post('reset', 'CabinetAdminComponent\Http\Controllers\Auth\ResetPasswordController@reset')->name('password.update');
+        Route::match(['get', 'head'], 'reset/{token}', 'CabinetAdminComponent\Http\Controllers\Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    });
+
+    Route::match(['get', 'head'], 'register', 'CabinetAdminComponent\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+    Route::post('register', 'CabinetAdminComponent\Http\Controllers\Auth\RegisterController@register');
+
+    Route::get('/', 'CabinetAdminComponent\Http\Controllers\MainController@indexAction')->name('cabinet.admin.index');
 
     Route::prefix('users')->group(function () {
         Route::get('/', 'CabinetAdminComponent\Http\Controllers\UsersController@usersAction')->name('admin.users');

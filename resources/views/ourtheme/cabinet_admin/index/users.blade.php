@@ -5,6 +5,9 @@
         <div class="row justify-content-center">
             <h1>Пользователи</h1>
         </div>
+        <div class="row justify-content-center">
+            <p>Для получения большего количество информации о пользователе перейдите в режим редактирования</p>
+        </div>
         <div class="row justify-content-end">
             <form class="form-search" action="{{ url()->full() }}">
                 <input type="text" name="search" class="input-medium search-query" value="{{request('search')}}">
@@ -12,7 +15,12 @@
             </form>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
+            <a href="{{ route('admin.users.addForm') }}" class="btn text-white bg-dark addBtn">Добавить
+                <i class="fas fa-plus"></i></a>
+        </div>
+
+        <div class="row justify-content-center">
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>

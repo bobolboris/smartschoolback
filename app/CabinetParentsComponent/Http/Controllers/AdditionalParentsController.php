@@ -82,7 +82,7 @@ class AdditionalParentsController extends BaseController
         $user->phone = $all['phone'];
         $user->email = $all['email'];
         $user->password = Hash::make($password);
-        $user->roles = '0';
+        $user->roles = User::getRoleIdByName('Родитель');
         $user->save();
 
         Setting::create([

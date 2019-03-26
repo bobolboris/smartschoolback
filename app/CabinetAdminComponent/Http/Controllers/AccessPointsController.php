@@ -3,17 +3,16 @@
 namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\AccessPoint;
-use App\MainComponent\Http\Controllers\Controller;
 use App\MainComponent\School;
 use Illuminate\Http\Request;
 
-class AccessPointsController extends Controller
+class AccessPointsController extends BaseController
 {
     public function accessPointsAction(Request $request)
     {
-        if($request->exists('search')){
+        if ($request->exists('search')) {
             $access_points = AccessPoint::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
-        }else{
+        } else {
             $access_points = AccessPoint::all();
         }
 

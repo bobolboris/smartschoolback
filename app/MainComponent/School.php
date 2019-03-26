@@ -25,6 +25,6 @@ class School extends Model
 
     public function locality()
     {
-        return $this->belongsTo(Locality::class, 'id', 'locality_id');
+        return $this->hasOne(Locality::class, 'id', 'locality_id');
     }
 }

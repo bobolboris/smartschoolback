@@ -2,9 +2,7 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-use App\MainComponent\Http\Controllers\Controller;
-
-class MainController extends Controller
+class MainController extends BaseController
 {
     public function indexAction()
     {

@@ -28,7 +28,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="address" value="{{ @$school['address'] }}" class="text-dark">
+                                <textarea name="address">{{ @$school['address'] }}</textarea>
                             </td>
                         </tr>
 
@@ -40,7 +40,28 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$school['name'] }}" class="text-dark">
+                                <textarea name="name">{{ @$school['name'] }}</textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                Насленный пункт
+                                @if ($errors->has('locality_id'))
+                                    <br><strong class="text-danger">{{ $errors->first('locality_id') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <select name="locality_id">
+                                    @foreach($localities as $locality)
+
+                                        @if ($locality['id'] == @$school['locality_id'])
+                                            <option value="{{ $locality['id'] }}" selected>{{ $locality['name'] }}</option>
+                                        @else
+                                            <option value="{{ $locality['id'] }}">{{ $locality['name'] }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
                             </td>
                         </tr>
 

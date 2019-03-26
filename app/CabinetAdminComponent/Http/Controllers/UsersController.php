@@ -2,13 +2,12 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\User;
+use App\CabinetAdminComponent\User;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class UsersController extends Controller
+class UsersController extends BaseController
 {
     public function usersAction(Request $request)
     {
@@ -36,6 +35,7 @@ class UsersController extends Controller
 
         $data = [
             'user' => $user->toArray(),
+            'roles' => User::getAllRoles(),
             'action' => route('admin.users.save')
         ];
 
@@ -48,6 +48,7 @@ class UsersController extends Controller
 
         $data = [
             'user' => $user->toArray(),
+            'roles' => User::getAllRoles(),
             'action' => route('admin.users.add')
         ];
 
@@ -68,20 +69,16 @@ class UsersController extends Controller
     public function usersAddAction(Request $request)
     {
         $rules = [
-            'roles' => 'required|regex:/^[0-9]+(,[0-9]+)?,?$/i',
+            'roles' => 'nullable|array',
             'email' => 'required',
-            'phone' => 'required|regex:/^38071[0-9]{7}$/i',
-//            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
+            'phone' => 'required',
+            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i:s',
             'enabled' => 'required|in:0,1',
-//            'type' => 'required|integer',
-//            'remember_token' => 'nullable',
-//            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
-//            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
+            'remember_token' => 'nullable',
+            'created_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'updated_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'password' => 'required|min:6',
         ];
-
-        if ($request->get('password') != "") {
-            $rules['password'] = 'min:6';
-        }
 
         $this->validate($request, $rules);
 
@@ -89,20 +86,25 @@ class UsersController extends Controller
 
         $attributes = $request->only($only);
 
-//        if (isset($attributes['email_verified_at'])) {
-//            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
-//        }
-//
-//        if (isset($attributes['created_at'])) {
-//            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
-//        }
-//
-//        if (isset($attributes['updated_at'])) {
-//            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
-//        }
+        if (isset($attributes['email_verified_at'])) {
+            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['email_verified_at']);
+            $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
+        }
 
-        if (isset($attributes['password'])) {
-            $attributes['password'] = Hash::make($attributes['password']);
+        if (isset($attributes['created_at'])) {
+            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
+            $attributes['created_at'] = $attributes['created_at']->format('Y-m-d H:i:s');
+        }
+
+        if (isset($attributes['updated_at'])) {
+            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
+            $attributes['updated_at'] = $attributes['updated_at']->format('Y-m-d H:i:s');
+        }
+
+        $attributes['password'] = Hash::make($attributes['password']);
+
+        if (isset($attributes['roles'])) {
+            $attributes['roles'] = implode(',', $attributes['roles']);
         }
 
         User::create($attributes);
@@ -114,15 +116,14 @@ class UsersController extends Controller
     {
         $rules = [
             'id' => 'required|exists:users',
-            'roles' => 'required|regex:/^[0-9]+(,[0-9]+)?,?$/i',
+            'roles' => 'nullable|array',
             'email' => 'required',
-            'phone' => 'required|regex:/^38071[0-9]{7}$/i',
-//            'email_verified_at' => 'nullable|date_format:Y-m-d\Th:m',
+            'phone' => 'required',
+            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i:s',
             'enabled' => 'required|in:0,1',
-//            'type' => 'required|integer',
-//            'remember_token' => 'nullable',
-//            'created_at' => 'nullable|date_format:Y-m-d\Th:m',
-//            'updated_at' => 'nullable|date_format:Y-m-d\Th:m',
+            'remember_token' => 'nullable',
+            'created_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'updated_at' => 'nullable|date_format:Y-m-d\TH:i:s',
         ];
 
         if ($request->get('password') != "") {
@@ -135,20 +136,27 @@ class UsersController extends Controller
 
         $attributes = $request->only($only);
 
-//        if (isset($attributes['email_verified_at'])) {
-//            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['email_verified_at'])->format('Y-m-d H:i:s');
-//        }
-//
-//        if (isset($attributes['created_at'])) {
-//            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['created_at'])->format('Y-m-d H:i:s');
-//        }
-//
-//        if (isset($attributes['updated_at'])) {
-//            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\Th:m', $attributes['updated_at'])->format('Y-m-d H:i:s');
-//        }
+        if (isset($attributes['email_verified_at'])) {
+            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['email_verified_at']);
+            $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
+        }
+
+        if (isset($attributes['created_at'])) {
+            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
+            $attributes['created_at'] = $attributes['created_at']->format('Y-m-d H:i:s');
+        }
+
+        if (isset($attributes['updated_at'])) {
+            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
+            $attributes['updated_at'] = $attributes['updated_at']->format('Y-m-d H:i:s');
+        }
 
         if (isset($attributes['password'])) {
             $attributes['password'] = Hash::make($attributes['password']);
+        }
+
+        if (isset($attributes['roles'])) {
+            $attributes['roles'] = implode(',', $attributes['roles']);
         }
 
         $id = $request->get('id');

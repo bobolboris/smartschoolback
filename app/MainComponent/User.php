@@ -10,6 +10,7 @@ namespace App\MainComponent;
  * @property mixed password
  * @property mixed enabled
  * @property mixed type
+ * @property mixed roles_array
  * @property mixed parent
  * @property mixed child
  * @property mixed admin
@@ -35,6 +36,8 @@ class User extends UserJWT
     protected $hidden = [
         'password', 'remember_token'
     ];
+
+    protected $appends = ['roles_array'];
 
     public function parent()
     {

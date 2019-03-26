@@ -41,6 +41,9 @@
                             </span>
                         @endif
                     </th>
+                    <th scope="col">
+                        Населенный пункт
+                    </th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
@@ -56,6 +59,9 @@
                         </td>
                         <td class="name">
                             {{ $school['name'] }}
+                        </td>
+                        <td class="name">
+                            {{ ($school['locality'] == null) ? 'NULL' : $school['locality']['name'] }}
                         </td>
 
                         <td>

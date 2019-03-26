@@ -16,13 +16,14 @@ class CreateAdmins extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->tinyInteger('type', false, true);
-
             $table->integer('profile_id', false, true)->nullable();
             $table->foreign('profile_id')->references('id')->on('profiles');
 
             $table->integer('user_id', false, true)->nullable()->unique();
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->integer('school_id', false, true)->nullable();
+            $table->foreign('school_id')->references('id')->on('schools');
 
             $table->integer('locality_id', false, true)->nullable();
             $table->foreign('locality_id')->references('id')->on('localities');

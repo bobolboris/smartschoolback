@@ -3,12 +3,15 @@
 namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Child;
-use App\MainComponent\Http\Controllers\Controller;
+use App\MainComponent\ChildKey;
+use App\MainComponent\ChildParent;
 use App\MainComponent\ClassModel;
+use App\MainComponent\Photo;
+use App\MainComponent\Profile;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
-class ChildrenController extends Controller
+class ChildrenController extends BaseController
 {
     use ChildTrait;
 
@@ -23,7 +26,6 @@ class ChildrenController extends Controller
         } else {
             $children = Child::all();
         }
-
 
         $data = [
             'children' => $children->toArray()
@@ -41,13 +43,9 @@ class ChildrenController extends Controller
         $classes = collect([new ClassModel(['name' => 'NULL'])]);
         $classes = $classes->concat(ClassModel::all())->all();
 
-        $users = collect([new User(['email' => 'NULL'])]);
-        $users = $users->concat(User::all())->all();
-
         $data = [
             'child' => $child->toArray(),
             'classes' => $classes,
-            'users' => $users,
             'action' => route('admin.children.save')
         ];
 
@@ -61,13 +59,9 @@ class ChildrenController extends Controller
         $classes = collect([new ClassModel(['name' => 'NULL'])]);
         $classes = $classes->concat(ClassModel::all())->all();
 
-        $users = collect([new User(['email' => 'NULL'])]);
-        $users = $users->concat(User::all())->all();
-
         $data = [
             'child' => $child->toArray(),
             'classes' => $classes,
-            'users' => $users,
             'action' => route('admin.children.add')
         ];
 
@@ -92,11 +86,14 @@ class ChildrenController extends Controller
             'name' => 'required',
             'patronymic' => 'required',
             'class_id' => 'nullable|exists:classes,id',
-//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
-            'system_id' => 'nullable|integer',
         ]);
 
-        Child::create($request->all());
+        $profile = Profile::create($request->only(['surname', 'name', 'patronymic']));
+
+        Child::create([
+            'class_id' => $request->get('class_id'),
+            'profile_id' => $profile->id,
+        ]);
 
         return redirect(route('admin.children'));
     }
@@ -109,14 +106,23 @@ class ChildrenController extends Controller
             'name' => 'required',
             'patronymic' => 'required',
             'class_id' => 'nullable|exists:classes,id',
-//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
-            'system_id' => 'nullable|integer',
         ]);
 
         $id = $request->get('id');
 
         $child = Child::find($id);
-        $child->fill($request->all());
+
+        $profile = Profile::find($child->profile_id);
+
+        if ($profile == null) {
+            $profile = new Profile();
+        }
+
+        $profile->fill($request->only(['surname', 'name', 'patronymic']));
+        $profile->save();
+
+        $child->class_id = $request->get('class_id');
+        $child->profile_id = $profile->id;
         $child->save();
 
         return redirect(route('admin.children'));
@@ -125,7 +131,35 @@ class ChildrenController extends Controller
     public function childrenRemoveAction(Request $request)
     {
         $id = $request->get('id');
-        Child::destroy($id);
+
+        $child = Child::find($id);
+
+        if ($child == null) {
+            return redirect(route('admin.children'));
+        }
+
+        if ($child->profile_id != null) {
+            Profile::destroy($child->profile_id);
+        }
+
+        if ($child->user_id != null) {
+            User::destroy($child->user_id);
+        }
+
+        if ($child->photo_id != null) {
+            $photo = Photo::find($child->photo_id);
+
+            if ($photo != null) {
+                @unlink($photo->path);
+                $photo->delete();
+            }
+        }
+
+        ChildParent::where('child_id', $id)->delete();
+        ChildKey::where('child_id', $id)->delete();
+
+        $child->delete();
+
         return redirect(route('admin.children'));
     }
 

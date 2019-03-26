@@ -36,12 +36,6 @@
                     <th scope="col">
                         Класс
                     </th>
-                    <th scope="col">
-                        Пользователь<br>(id - email)
-                    </th>
-                    <th scope="col">
-                        System ID
-                    </th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
@@ -53,26 +47,16 @@
                             {{ $child['id'] }}
                         </td>
                         <td class="surname">
-                            {{ $child['surname'] }}
+                            {{ $child['profile']['surname'] }}
                         </td>
                         <td class="name">
-                            {{ $child['name'] }}
+                            {{ $child['profile']['name'] }}
                         </td>
                         <td class="patronymic">
-                            {{ $child['patronymic'] }}
+                            {{ $child['profile']['patronymic'] }}
                         </td>
                         <td class="class">
-                            {{ $child['school_class']['name'] }}
-                        </td>
-                        <td class="user">
-                            @if ($child['user_id'] != null)
-                                {{ $child['user']['id'] . " - " . $child['user']['email'] }}
-                            @else
-                                NULL
-                            @endif
-                        </td>
-                        <td class="system_id">
-                            {{ $child['system_id'] }}
+                            {{ $child['class']['name'] }}
                         </td>
 
                         <td>

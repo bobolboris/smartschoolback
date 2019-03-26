@@ -16,6 +16,8 @@ class CreateClasses extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('admin_id', false, true)->nullable();
+            $table->foreign('admin_id')->references('id')->on('admins');
             $table->integer('school_id', false, true)->nullable();
             $table->foreign('school_id')->references('id')->on('schools');
         });

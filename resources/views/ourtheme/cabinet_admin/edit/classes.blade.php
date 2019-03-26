@@ -33,6 +33,26 @@
 
                         <tr>
                             <td>
+                                Админ
+                                @if ($errors->has('admin_id'))
+                                    <br><strong class="text-danger">{{ $errors->first('admin_id') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <select name="admin_id">
+                                    @foreach($admins as $admin)
+                                        @if(@$admin['id'] == @$school['admin_id'])
+                                            <option value="{{ @$admin['id'] }}" selected>{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>
+                                        @else
+                                            <option value="{{ @$admin['id'] }}">{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
                                 Школа
                                 @if ($errors->has('school_id'))
                                     <br><strong class="text-danger">{{ $errors->first('school_id') }}</strong>

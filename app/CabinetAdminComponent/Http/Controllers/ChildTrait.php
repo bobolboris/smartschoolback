@@ -3,8 +3,8 @@
 namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\MainComponent\Child;
-use App\MainComponent\School;
 use App\MainComponent\ClassModel;
+use App\MainComponent\School;
 
 trait ChildTrait
 {

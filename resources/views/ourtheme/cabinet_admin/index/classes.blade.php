@@ -28,6 +28,9 @@
                         Название
                     </th>
                     <th scope="col">
+                        Админ
+                    </th>
+                    <th scope="col">
                         Школа
                     </th>
                     <th scope="col">Управление учеткой</th>
@@ -42,6 +45,9 @@
                         </td>
                         <td class="name">
                             {{ $class['name'] }}
+                        </td>
+                        <td>
+                            {{ ($class['admin'] == null) ? 'NULL' : $class['admin']['user']['email'] }}
                         </td>
                         <td>
                             {{ $class['school']['name'] }}
