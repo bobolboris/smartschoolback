@@ -27,7 +27,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="surname" value="{{ @$parent['surname'] }}" class="text-dark">
+                                <input type="text" name="surname" value="{{ @$parent['profile']['surname'] }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
@@ -40,7 +40,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$parent['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ @$parent['profile']['name'] }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
@@ -51,7 +51,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="patronymic" value="{{ @$parent['patronymic'] }}"
+                                <input type="text" name="patronymic" value="{{ @$parent['profile']['patronymic'] }}"
                                        class="text-dark">
                             </td>
                         </tr>

@@ -14,7 +14,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <a href="{{ route('admin.children.addForm') }}" class="btn text-white bg-dark addBtn">
+            <a href="{{ route('admin.children_extended.addForm') }}" class="btn text-white bg-dark addBtn">
                 <span>Добавить</span>
                 <i class="fas fa-plus"></i>
             </a>
@@ -25,10 +25,11 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Отчество</th>
-                    <th scope="col">Класс</th>
+                    <th scope="col">profile_id</th>
+                    <th scope="col">class_id</th>
+                    <th scope="col">photo_id</th>
+                    <th scope="col">user_id</th>
+                    <th scope="col">system_id</th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
@@ -39,25 +40,28 @@
                         <td>
                             {{ $child['id'] }}
                         </td>
-                        <td class="surname">
-                            {{ $child['profile']['surname'] }}
+                        <td>
+                            {{ ($child['profile_id'] == null) ? 'NULL' : $child['profile_id'] }}
                         </td>
-                        <td class="name">
-                            {{ $child['profile']['name'] }}
+                        <td>
+                            {{ ($child['class_id'] == null) ? 'NULL' : $child['class_id'] }}
                         </td>
-                        <td class="patronymic">
-                            {{ $child['profile']['patronymic'] }}
+                        <td>
+                            {{ ($child['photo_id'] == null) ? 'NULL' : $child['photo_id'] }}
                         </td>
-                        <td class="class">
-                            {{ $child['class']['name'] }}
+                        <td>
+                            {{ ($child['user_id'] == null) ? 'NULL' : $child['user_id'] }}
+                        </td>
+                        <td>
+                            {{ ($child['system_id'] == null) ? 'NULL' : $child['system_id'] }}
                         </td>
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children.editForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children_extended.editForm', ['id' => $child['id']]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.children.removeForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children_extended.removeForm', ['id' => $child['id']]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

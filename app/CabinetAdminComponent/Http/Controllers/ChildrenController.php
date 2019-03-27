@@ -8,6 +8,7 @@ use App\MainComponent\ChildParent;
 use App\MainComponent\ClassModel;
 use App\MainComponent\Photo;
 use App\MainComponent\Profile;
+use App\MainComponent\Setting;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
 
@@ -143,7 +144,12 @@ class ChildrenController extends BaseController
         }
 
         if ($child->user_id != null) {
-            User::destroy($child->user_id);
+            $user = User::find($child->user_id);
+
+            if ($user != null) {
+                Setting::where('user_id', $user->id)->delete();
+                $user->delete();
+            }
         }
 
         if ($child->photo_id != null) {

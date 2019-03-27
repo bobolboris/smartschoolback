@@ -39,9 +39,10 @@
                                 @endif
                             </td>
                             <td>
+
                                 <select name="admin_id">
                                     @foreach($admins as $admin)
-                                        @if(@$admin['id'] == @$school['admin_id'])
+                                        @if(@$admin['id'] == @$class['admin_id'])
                                             <option value="{{ @$admin['id'] }}" selected>{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>
                                         @else
                                             <option value="{{ @$admin['id'] }}">{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>

@@ -35,27 +35,45 @@
 <nav id="menuVertical">
     <ul>
         <li>
-            <a href="{{ route('admin.users') }}"><span>Пользователи</span></a>
+            <a href="{{ route('admin.users') }}">
+                <span>Пользователи</span>
+            </a>
         </li>
 
         <li>
-            <a href="{{ route('admin.children') }}"><span>Ученики</span></a>
+            <a href="{{ route('admin.children') }}">
+                <span>Ученики</span>
+            </a>
         </li>
 
         <li>
-            <a href="{{ route('admin.schools') }}"><span>Школы</span></a>
+            <a href="{{ route('admin.children_extended') }}">
+                <span>Ученики (Расширенная)</span>
+            </a>
         </li>
 
         <li>
-            <a href="{{ route('admin.classes') }}"><span>Классы</span></a>
+            <a href="{{ route('admin.schools') }}">
+                <span>Школы</span>
+            </a>
         </li>
 
         <li>
-            <a href="{{ route('admin.access_points') }}"><span>Точки доступа</span></a>
+            <a href="{{ route('admin.classes') }}">
+                <span>Классы</span>
+            </a>
         </li>
 
         <li>
-            <a href="{{ route('admin.parents') }}"><span>Родители</span></a>
+            <a href="{{ route('admin.access_points') }}">
+                <span>Точки доступа</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.parents') }}">
+                <span>Родители</span>
+            </a>
         </li>
 
 

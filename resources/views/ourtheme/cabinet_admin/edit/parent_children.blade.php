@@ -14,8 +14,8 @@
                     <select name="child_id">
                         @foreach($children as $child)
                             <option value="{{ $child['id'] }}">
-                                {{ $child['surname'] . " " . $child['name'] . " " . $child['patronymic']
-                                . " - " . $child['school_class']['name'] . " - " . $child['school_class']['school']['name']  }}
+                                {{ $child['profile']['surname'] . " " . $child['profile']['name'] . " " . $child['profile']['patronymic']
+                                . " - " . $child['class']['name'] . " - " . $child['class']['school']['name']  }}
                             </option>
                         @endforeach
 

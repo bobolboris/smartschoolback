@@ -5,8 +5,11 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 use App\MainComponent\Child;
 use App\MainComponent\ChildParent;
 use App\MainComponent\ParentModel;
+use App\MainComponent\Profile;
+use App\MainComponent\Setting;
 use App\MainComponent\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ParentsController extends BaseController
 {
@@ -83,28 +86,33 @@ class ParentsController extends BaseController
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'required',
-//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
         ]);
 
-        Parent::create($request->all());
+        $profile = Profile::create($request->only(['surname', 'name', 'patronymic']));
+
+        ParentModel::create(['profile_id' => $profile->id]);
 
         return redirect(route('admin.parents'));
     }
 
     public function parentsSaveAction(Request $request)
     {
+        $id = $request->get('id');
+
         $this->validate($request, [
             'id' => 'required|exists:parents',
             'surname' => 'required',
             'name' => 'required',
             'patronymic' => 'required',
-//            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+            'user_id' => ['nullable', 'exists:users,id', Rule::unique('parents', 'user_id')->ignore($id, 'id'), 'unique:children'],
         ]);
 
-        $id = $request->get('id');
-
         $parent = ParentModel::find($id);
-        $parent->fill($request->all());
+        $parent->profile->fill($request->only(['surname', 'name', 'patronymic']));
+        $parent->profile->save();
+
+        $parent->fill(['user_id' => $request->get('user_id')]);
         $parent->save();
 
         return redirect(route('admin.parents'));
@@ -114,9 +122,29 @@ class ParentsController extends BaseController
     {
         $id = $request->get('id');
 
+        $parent = ParentModel::find($id);
+
+        if ($parent == null) {
+            return redirect(route('admin.parents'));
+        }
+
         ChildParent::where('parent_id', $id)->delete();
 
-        Parent::destroy($id);
+        if ($parent->profile_id != null) {
+            Profile::destroy($parent->profile_id);
+        }
+
+        if ($parent->user_id != null) {
+            $user = User::find($parent->user_id);
+
+            if ($user != null) {
+                Setting::where('user_id', $user->id)->delete();
+                $user->delete();
+            }
+        }
+
+        $parent->delete();
+
         return redirect(route('admin.parents'));
     }
 

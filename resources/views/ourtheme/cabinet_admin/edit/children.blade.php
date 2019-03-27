@@ -21,18 +21,19 @@
                         <tbody>
                         <tr>
                             <td>
-                                Фамилия
+                                <span>Фамилия</span>
                                 @if ($errors->has('surname'))
                                     <br><strong class="text-danger">{{ $errors->first('surname') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="surname" value="{{ @$child['surname'] }}" class="text-dark">
+                                <input type="text" name="surname" value="{{ @$child['profile']['surname'] }}"
+                                       class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Имя
+                                <span>Имя</span>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -40,24 +41,25 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$child['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ @$child['profile']['name'] }}"
+                                       class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Отчество
+                                <span>Отчество</span>
                                 @if ($errors->has('patronymic'))
                                     <br><strong class="text-danger">{{ $errors->first('patronymic') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="patronymic" value="{{ @$child['patronymic'] }}"
+                                <input type="text" name="patronymic" value="{{ @$child['profile']['patronymic'] }}"
                                        class="text-dark">
                             </td>
                         </tr>
                         <tr class="class">
                             <td>
-                                Класс
+                                <span>Класс</span>
                                 @if ($errors->has('class_id'))
                                     <br><strong class="text-danger">{{ $errors->first('class_id') }}</strong>
                                 @endif
