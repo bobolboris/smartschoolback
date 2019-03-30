@@ -42,7 +42,7 @@ class Child extends Model
 
     public function class()
     {
-        return $this->belongsTo(ClassModel::class, 'class_id', 'id');
+        return $this->hasOne(ClassModel::class, 'id', 'class_id');
     }
 
     public function key()

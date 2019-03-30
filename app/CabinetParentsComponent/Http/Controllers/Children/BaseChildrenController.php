@@ -27,6 +27,8 @@ class BaseChildrenController extends BaseController
             $child->key->state = ($expires < $now) ? 0 : 1;
         }
 
+        $child->class->school;
+
         $last = Access::where('child_id', $id)->orderBy('id', 'desc')->first();
 
         $child->status = ($last->direction == 1) ? 'В учебном заведении с: ' : 'Не в учебном заведении с ';
