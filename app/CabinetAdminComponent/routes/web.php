@@ -106,8 +106,8 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('parent_children')->group(function () {
         Route::get('/', 'CabinetAdminComponent\Http\Controllers\ChildParentController@parentChildrenAction')->name('admin.parent_children');
-        Route::get('removeForm', 'CabinetAdminComponent\Http\Controllers\ChildParentController@showRemoveFormAction')->name('admin.parent_children.removeForm');
-        Route::get('remove_form', 'CabinetAdminComponent\Http\Controllers\ChildParentController@showAddChildFormAction')->name('admin.parent_children.addChildForm');
+        Route::get('remove_form', 'CabinetAdminComponent\Http\Controllers\ChildParentController@showRemoveFormAction')->name('admin.parent_children.removeForm');
+        Route::get('add_child', 'CabinetAdminComponent\Http\Controllers\ChildParentController@showAddChildFormAction')->name('admin.parent_children.addChildForm');
 
         Route::post('remove', 'CabinetAdminComponent\Http\Controllers\ChildParentController@parentChildrenRemoveAction')->name('admin.parent_children.remove');
         Route::post('add_child', 'CabinetAdminComponent\Http\Controllers\ChildParentController@addChildAction')->name('admin.parent_children.addChild');
