@@ -1,7 +1,7 @@
 @extends('cabinet_admin.index')
 
 @section('content')
-    <div class="container-fluid content">
+    <div class="container content">
         <div class="row justify-content-center">
             <h1>Школы</h1>
         </div>
@@ -54,9 +54,9 @@
                             <td>
                                 <select name="locality_id">
                                     @foreach($localities as $locality)
-
                                         @if ($locality['id'] == @$school['locality_id'])
-                                            <option value="{{ $locality['id'] }}" selected>{{ $locality['name'] }}</option>
+                                            <option value="{{ $locality['id'] }}"
+                                                    selected>{{ $locality['name'] }}</option>
                                         @else
                                             <option value="{{ $locality['id'] }}">{{ $locality['name'] }}</option>
                                         @endif

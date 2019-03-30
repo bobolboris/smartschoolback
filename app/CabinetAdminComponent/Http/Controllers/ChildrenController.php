@@ -20,7 +20,8 @@ class ChildrenController extends BaseController
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
-            $children = Child::Orwhere('name', 'LIKE', $pattern)
+            $children = Child::join('profiles', 'profiles.id', '=', 'children.profile_id')
+                ->Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
                 ->get();

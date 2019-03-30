@@ -75,7 +75,7 @@ body {
     color: #fff;
 }
 
-.menu {
+.admin_menu {
     position: absolute;
     width: 198px;
     height: 100%;
@@ -122,11 +122,12 @@ body {
 }
 
 .form-search input[type="text"] {
-    border-radius: 15px;
+    /*border-radius: 15px;*/
+    height: 38px;
 }
 
 .row h1 {
-    font-size: 32;
+    /*font-size: 32;*/
     font-weight: bold;
 }
 
@@ -288,6 +289,39 @@ i {
     margin-bottom: 20px;
 }
 
+.admin_search {
+    padding-top: 5px;
+    padding-right: 10px;
+}
+
+.search_button {
+    color: white;
+    background: black;
+    border: 0;
+}
+
+.out_link {
+    font-size: 25px;
+    color: white;
+}
+
+#search-nav {
+    visibility: hidden;
+}
+
+#search-nav ~ label {
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+}
+
+#search-nav + label + div {
+    display: none;
+}
+
+#search-nav:checked + label + div {
+    display: block;
+}
 /*
 body {
   width: 100%;

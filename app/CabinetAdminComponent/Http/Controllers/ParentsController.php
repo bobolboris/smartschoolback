@@ -17,7 +17,8 @@ class ParentsController extends BaseController
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
-            $parents = ParentModel::Orwhere('name', 'LIKE', $pattern)
+            $parents = ParentModel::join('profiles', 'profiles.id', '=', 'parents.profile_id')
+                ->Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
                 ->get();

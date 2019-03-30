@@ -1,24 +1,23 @@
 @extends('cabinet_admin.index')
 
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row justify-content-center">
             <h1>Пользователи</h1>
+            <a href="{{ route('admin.users.addForm') }}" class="btn" style="padding-top: 8px;">
+                <i class="fas fa-plus" style="font-size: 30px;"></i>
+            </a>
         </div>
         <div class="row justify-content-center">
             <p>Для получения большего количество информации о пользователе перейдите в режим редактирования</p>
         </div>
-        <div class="row justify-content-end">
-            <form class="form-search" action="{{ url()->full() }}">
-                <input type="text" name="search" class="input-medium search-query" value="{{request('search')}}">
-                <button type="submit" class="btn text-white bg-dark">Найти</button>
-            </form>
-        </div>
 
-        <div class="row justify-content-center">
-            <a href="{{ route('admin.users.addForm') }}" class="btn text-white bg-dark addBtn">Добавить
-                <i class="fas fa-plus"></i></a>
-        </div>
+        {{--<div class="row justify-content-center">--}}
+            {{--<a href="{{ route('admin.users.addForm') }}" class="btn text-white bg-dark addBtn">--}}
+                {{--<span>Добавить</span>--}}
+                {{--<i class="fas fa-plus"></i>--}}
+            {{--</a>--}}
+        {{--</div>--}}
 
         <div class="row justify-content-center">
             <table class="table table-hover table-striped">

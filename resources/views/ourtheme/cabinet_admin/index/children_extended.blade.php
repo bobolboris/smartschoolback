@@ -2,21 +2,11 @@
 
 @section('content')
 
-    <div class="container-fluid content">
+    <div class="container content">
         <div class="row justify-content-center">
             <h1>Ученики</h1>
-        </div>
-        <div class="row justify-content-end">
-            <form class="form-search" action="{{ url()->full() }}">
-                <input type="text" name="search" class="input-medium search-query" value="{{ request('search') }}">
-                <button type="submit" class="btn text-white bg-dark">Найти</button>
-            </form>
-        </div>
-
-        <div class="row justify-content-center">
-            <a href="{{ route('admin.children_extended.addForm') }}" class="btn text-white bg-dark addBtn">
-                <span>Добавить</span>
-                <i class="fas fa-plus"></i>
+            <a href="{{ route('admin.children_extended.addForm') }}" class="btn" style="padding-top: 8px;">
+                <i class="fas fa-plus" style="font-size: 30px;"></i>
             </a>
         </div>
 

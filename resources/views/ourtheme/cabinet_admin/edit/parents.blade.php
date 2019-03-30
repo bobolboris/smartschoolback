@@ -1,7 +1,7 @@
 @extends('cabinet_admin.index')
 
 @section('content')
-    <div class="container-fluid content">
+    <div class="container content">
         <div class="row justify-content-center">
             <h1>Родители</h1>
         </div>
