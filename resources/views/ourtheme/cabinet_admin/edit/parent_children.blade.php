@@ -7,7 +7,7 @@
         </div>
 
         <div class="row justify-content-center">
-            <form method="POST" action="{{ route('admin.parent_children.addChild') }}">
+            <form method="POST" action="{{ route('admin.parent_children.add') }}">
                 @csrf
                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                 <div class="form-group">

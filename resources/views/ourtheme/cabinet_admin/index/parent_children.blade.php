@@ -4,7 +4,7 @@
     <div class="container content">
         <div class="row justify-content-center">
             <h1>Дети - {{ $fullName }}</h1>
-            <a href="{{ route('admin.parent_children.addChild') }}" class="btn" style="padding-top: 8px;">
+            <a href="{{ route('admin.parent_children.addChildForm') }}" class="btn" style="padding-top: 8px;">
                 <i class="fas fa-plus" style="font-size: 30px;"></i>
             </a>
         </div>
