@@ -29,7 +29,6 @@
         {{--<option>Выберите Класс</option>--}}
     {{--</select>--}}
 {{--</div>--}}
-{{--<div class="overlay_popup"></div>--}}
 
 <input type="checkbox" name="mobile-nav" id="mobile-nav" class="gaadiexp-check">
 <label for="mobile-nav" class="gaadiexp white" tabindex="0"><span></span></label>
@@ -77,6 +76,12 @@
                 <li>
                     <a href="{{ route('admin.parents') }}">
                         <span>Родители</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.profiles') }}">
+                        <span>Профили</span>
                     </a>
                 </li>
             </ul>

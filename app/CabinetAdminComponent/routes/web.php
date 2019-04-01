@@ -114,4 +114,16 @@ Route::prefix('admin')->group(function () {
 
     });
 
+    Route::prefix('profiles')->group(function () {
+        Route::get('/', 'CabinetAdminComponent\Http\Controllers\ProfilesController@profilesAction')->name('admin.profiles');
+        Route::get('remove_form', 'CabinetAdminComponent\Http\Controllers\ProfilesController@showRemoveFormAction')->name('admin.profiles.removeForm');
+        Route::get('add_form', 'CabinetAdminComponent\Http\Controllers\ProfilesController@showAddFormAction')->name('admin.profiles.addForm');
+        Route::get('edit_form', 'CabinetAdminComponent\Http\Controllers\ProfilesController@showEditFormAction')->name('admin.profiles.editForm');
+
+        Route::post('save', 'CabinetAdminComponent\Http\Controllers\ProfilesController@profileSaveAction')->name('admin.profile.save');
+        Route::post('remove', 'CabinetAdminComponent\Http\Controllers\ProfilesController@profileRemoveAction')->name('admin.profile.remove');
+        Route::post('add', 'CabinetAdminComponent\Http\Controllers\ProfilesController@profileAddAction')->name('admin.profile.add');
+
+    });
+
 });
