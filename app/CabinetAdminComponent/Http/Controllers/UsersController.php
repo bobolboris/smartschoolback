@@ -72,11 +72,11 @@ class UsersController extends BaseController
             'roles' => 'nullable|array',
             'email' => 'required',
             'phone' => 'required',
-            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i',
             'enabled' => 'required|in:0,1',
             'remember_token' => 'nullable',
-            'created_at' => 'nullable|date_format:Y-m-d\TH:i:s',
-            'updated_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'created_at' => 'nullable|date_format:Y-m-d\TH:i',
+            'updated_at' => 'nullable|date_format:Y-m-d\TH:i',
             'password' => 'required|min:6',
         ];
 
@@ -87,25 +87,23 @@ class UsersController extends BaseController
         $attributes = $request->only($only);
 
         if (isset($attributes['email_verified_at'])) {
-            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['email_verified_at']);
+            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['email_verified_at']);
             $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
         }
 
         if (isset($attributes['created_at'])) {
-            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
+            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['created_at']);
             $attributes['created_at'] = $attributes['created_at']->format('Y-m-d H:i:s');
         }
 
         if (isset($attributes['updated_at'])) {
-            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
+            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['updated_at']);
             $attributes['updated_at'] = $attributes['updated_at']->format('Y-m-d H:i:s');
         }
 
         $attributes['password'] = Hash::make($attributes['password']);
 
-        if (isset($attributes['roles'])) {
-            $attributes['roles'] = implode(',', $attributes['roles']);
-        }
+        $attributes['roles'] = isset($attributes['roles']) ? implode(',', $attributes['roles']) : '';
 
         User::create($attributes);
 
@@ -155,9 +153,8 @@ class UsersController extends BaseController
             $attributes['password'] = Hash::make($attributes['password']);
         }
 
-        if (isset($attributes['roles'])) {
-            $attributes['roles'] = implode(',', $attributes['roles']);
-        }
+        $attributes['roles'] = isset($attributes['roles']) ? implode(',', $attributes['roles']) : '';
+
 
         $id = $request->get('id');
         $user = User::find($id);
