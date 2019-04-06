@@ -19,11 +19,6 @@ class AccessPoint extends Model
     protected $fillable = ['name', 'zonea', 'zoneb', 'school_id', 'system_id'];
     protected $with = ['school'];
 
-    public static function findBySystemId($id)
-    {
-        return AccessPoint::where('system_id', $id)->first();
-    }
-
     public function school()
     {
         return $this->hasOne(School::class, 'id', 'school_id');

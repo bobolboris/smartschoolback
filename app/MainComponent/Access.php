@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed child_id
  * @property mixed access_point_id
  * @property mixed system_id
+ * @property mixed child
+ * @property mixed accessPoint
  */
 class Access extends Model
 {

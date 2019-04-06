@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed key_id
  * @property mixed access_point_id
  * @property mixed system_id
+ * @property mixed key
+ * @property mixed accessPoint
  */
 class AccessDenial extends Model
 {

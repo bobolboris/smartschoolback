@@ -2,10 +2,10 @@
 
 namespace App\ReceiverComponent\Http\Controllers;
 
-use App\MainComponent\Access;
-use App\MainComponent\AccessDenial;
-use App\MainComponent\AccessPoint;
-use App\MainComponent\Child;
+use App\ReceiverComponent\Access;
+use App\ReceiverComponent\AccessDenial;
+use App\ReceiverComponent\AccessPoint;
+use App\ReceiverComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -45,6 +45,7 @@ class ReceiverController extends Controller
         if (!$request->has('json')) {
             return response('error');
         }
+
         $data = json_decode($request->get('json'), true);
 
         $access = new Access();
@@ -71,10 +72,10 @@ class ReceiverController extends Controller
         if (isset($data['log']['ID'])) {
             $access->system_id = $data['log']['ID'];
         }
+
         $access->save();
 
-        $fio = $child->profile->surname . ' ' . $child->profile->name . ' ' . $child->patronymic;
-
+        $fio = $child->profile->full_name;
         $phones = [];
 
         foreach ($child->parents as $parent) {
@@ -84,9 +85,9 @@ class ReceiverController extends Controller
             }
         }
 
-        $text_sms = ($access->direction == 1) ? 'Вход в УЗ: ' : 'Выход из УЗ: ';
+        $text = ($access->direction == 1) ? 'Вход в УЗ:' : 'Выход из УЗ:';
+        SmsSender::createMailing(new MailingRequest('', "$text $access->time $fio", $phones));
 
-        SmsSender::createMailing(new MailingRequest('', $text_sms . $access->time . ' ' . $fio, $phones));
         return response()->json(['ok' => true]);
     }
 }
