@@ -2,13 +2,13 @@
 
 namespace App\MainComponent\Http\Controllers;
 
-use App\MainComponent\User;
+use App\CabinetAdminComponent\Locality;
 
 class TestController
 {
     public function testAction()
     {
-        dd(User::find(1)->settings->where('key','notification_of_access')->first()->toArray());
+        dd(Locality::find(2));
         return response('111');
     }
 }

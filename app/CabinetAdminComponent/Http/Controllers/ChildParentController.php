@@ -3,7 +3,7 @@
 namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\CabinetAdminComponent\Child;
-use App\MainComponent\ChildParent;
+use App\CabinetAdminComponent\ChildParent;
 use App\CabinetAdminComponent\ParentModel;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;

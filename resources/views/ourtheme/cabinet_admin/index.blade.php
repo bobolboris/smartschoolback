@@ -18,90 +18,99 @@
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 </head>
 
-{{--<div>--}}
-    {{--<select>--}}
-        {{--<option>Выберите населенный пункт</option>--}}
-    {{--</select>--}}
-    {{--<select>--}}
-        {{--<option>Выберите УЗ</option>--}}
-    {{--</select>--}}
-    {{--<select>--}}
-        {{--<option>Выберите Класс</option>--}}
-    {{--</select>--}}
-{{--</div>--}}
-
 <input type="checkbox" name="mobile-nav" id="mobile-nav" class="gaadiexp-check">
 <label for="mobile-nav" class="gaadiexp white" tabindex="0"><span></span></label>
 
 <nav role="navigation" class="header-nav">
-    <div class="fixed-nav ">
+    <div class="fixed-nav">
         <div class="menu">
             <ul>
                 <li>
-                    <a href="{{ route('admin.users') }}">
-                        <span>Пользователи</span>
-                    </a>
+                    <a href="{{ route('admin.users') }}">Пользователи</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.children') }}">
-                        <span>Ученики</span>
-                    </a>
+                    <a href="{{ route('admin.children') }}">Ученики</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.children_extended') }}">
-                        <span>Ученики (Расширенная)</span>
-                    </a>
+                    <a href="{{ route('admin.children_extended') }}">Ученики (Расширенная)</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.schools') }}">
-                        <span>Школы</span>
-                    </a>
+                    <a href="{{ route('admin.schools') }}">Школы</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.classes') }}">
-                        <span>Классы</span>
-                    </a>
+                    <a href="{{ route('admin.classes') }}">Классы</a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.access_points') }}">
-                        <span>Точки доступа</span>
-                    </a>
+                    <a href="{{ route('admin.localities') }}">Местоположения</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.access_points') }}">Точки доступа</a>
                 </li>
 
                 <li>
                     <a href="{{ route('admin.parents') }}">
-                        <span>Родители</span>
+                        Родители
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.profiles') }}">
-                        <span>Профили</span>
-                    </a>
+                    <a href="{{ route('admin.profiles') }}">Профили</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.admins_extended') }}">Администраторы (расширенная)</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.children_keys') }}">Пропуска</a>
                 </li>
             </ul>
         </div>
-        <div class="d-flex justify-content-end">
-            <input type="checkbox" name="search-nav" id="search-nav">
-            <label for="search-nav">
-                <i class="fas fa-search"></i>
-            </label>
-
-            <div>
-                <form class="form-inline admin_search" method="GET" action="{{ url()->full() }}">
-                    <input class="form-control mr-sm-2" type="search" name="search" value="{{ request('search') }}">
-                    <button type="submit" class="btn text-white bg-dark">Найти</button>
-                </form>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <div class="d-flex justify-content-center">
+                    <form class="text-center" method="POST">
+                        <select>
+                            <option>Выберите населенный пункт</option>
+                        </select>
+                        <select>
+                            <option>Выберите УЗ</option>
+                        </select>
+                        <select>
+                            <option>Выберите Класс</option>
+                        </select>
+                        <input type="submit" value="Сохранить">
+                    </form>
+                </div>
             </div>
-            <a href="{{ route('logout') }}" class="btn out_link">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
+
+            <div class="col-3">
+                <div class="d-flex justify-content-end">
+                    <input type="checkbox" name="search-nav" id="search-nav">
+                    <label for="search-nav">
+                        <i class="fas fa-search"></i>
+                    </label>
+
+                    <div>
+                        <form class="form-inline admin_search" method="GET" action="{{ url()->full() }}">
+                            <input class="form-control mr-sm-2 w-50" type="search" name="search" value="{{ request('search') }}">
+                            <button type="submit" class="btn text-white bg-dark">Найти</button>
+                        </form>
+                    </div>
+                    <a href="{{ route('logout') }}" class="btn out_link">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </div>
+            </div>
         </div>
+
 
     </div>
 

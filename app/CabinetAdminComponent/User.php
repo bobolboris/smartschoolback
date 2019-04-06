@@ -21,4 +21,24 @@ class User extends Base
      * @var array
      */
     protected $hidden = [];
+
+    public function parent()
+    {
+        return $this->hasOne(ParentModel::class, 'user_id', 'id');
+    }
+
+    public function child()
+    {
+        return $this->hasOne(Child::class, 'user_id', 'id');
+    }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class, 'user_id', 'id');
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(Setting::class, 'user_id', 'id');
+    }
 }

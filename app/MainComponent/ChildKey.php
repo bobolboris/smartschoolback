@@ -22,6 +22,6 @@ class ChildKey extends Model
 
     public function child()
     {
-        return $this->belongsTo(Child::class, 'child_id', 'id');
+        return $this->hasOne(Child::class, 'id', 'child_id');
     }
 }

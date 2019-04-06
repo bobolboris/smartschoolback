@@ -2,12 +2,12 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-use App\MainComponent\Child;
-use App\MainComponent\ChildParent;
-use App\MainComponent\ParentModel;
-use App\MainComponent\Profile;
-use App\MainComponent\Setting;
-use App\MainComponent\User;
+use App\CabinetAdminComponent\Child;
+use App\CabinetAdminComponent\ChildParent;
+use App\CabinetAdminComponent\ParentModel;
+use App\CabinetAdminComponent\Profile;
+use App\CabinetAdminComponent\Setting;
+use App\CabinetAdminComponent\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 

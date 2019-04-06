@@ -26,7 +26,7 @@ class AccessPoint extends Model
 
     public function school()
     {
-        return $this->hasOne('App\MainComponent\School', 'id', 'school_id');
+        return $this->hasOne(School::class, 'id', 'school_id');
     }
 
     public function access()

@@ -4,9 +4,9 @@ namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\CabinetAdminComponent\ClassModel;
 use App\CabinetAdminComponent\User;
-use App\MainComponent\Child;
-use App\MainComponent\Photo;
-use App\MainComponent\Profile;
+use App\CabinetAdminComponent\Child;
+use App\CabinetAdminComponent\Photo;
+use App\CabinetAdminComponent\Profile;
 use Illuminate\Http\Request;
 
 class ChildrenExtendedController extends BaseController

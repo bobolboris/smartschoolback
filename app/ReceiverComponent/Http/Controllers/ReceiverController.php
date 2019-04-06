@@ -3,7 +3,7 @@
 namespace App\ReceiverComponent\Http\Controllers;
 
 use App\MainComponent\Access;
-use App\MainComponent\AccessDenials;
+use App\MainComponent\AccessDenial;
 use App\MainComponent\AccessPoint;
 use App\MainComponent\Child;
 use App\MainComponent\Http\Controllers\Controller;
@@ -21,7 +21,7 @@ class ReceiverController extends Controller
         }
         $data = json_decode($request->get('json'), true);
 
-        $accessDenial = new AccessDenials();
+        $accessDenial = new AccessDenial();
         $accessDenial->time = $data['info']['time'];
         $accessDenial->date = $data['info']['date'];
         $accessDenial->direction = 0;

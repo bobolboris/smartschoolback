@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed access_point_id
  * @property mixed system_id
  */
-class AccessDenials extends Model
+class AccessDenial extends Model
 {
     public $timestamps = false;
     protected $table = 'access_denials';

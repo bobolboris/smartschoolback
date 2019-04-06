@@ -3,8 +3,7 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-
-use App\MainComponent\Profile;
+use App\CabinetAdminComponent\Profile;
 use Illuminate\Http\Request;
 
 class ProfilesController extends BaseController

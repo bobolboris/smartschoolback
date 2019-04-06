@@ -2,8 +2,8 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers\Auth;
 
+use App\CabinetAdminComponent\User;
 use App\MainComponent\Http\Controllers\Controller;
-use App\MainComponent\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

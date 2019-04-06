@@ -29,9 +29,8 @@ class UsersController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
 
-        $user = User::find($id);
+        $user = User::findOrFail($request->get('id'));
 
         $data = [
             'user' => $user->toArray(),
@@ -69,15 +68,15 @@ class UsersController extends BaseController
     public function usersAddAction(Request $request)
     {
         $rules = [
-            'roles' => 'nullable|array',
-            'email' => 'required',
-            'phone' => 'required',
-            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i',
-            'enabled' => 'required|in:0,1',
-            'remember_token' => 'nullable',
-            'created_at' => 'nullable|date_format:Y-m-d\TH:i',
-            'updated_at' => 'nullable|date_format:Y-m-d\TH:i',
-            'password' => 'required|min:6',
+            'roles' => ['nullable', 'array'],
+            'email' => ['required'],
+            'phone' => ['required'],
+            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'enabled' => ['required', 'in:0,1'],
+            'remember_token' => ['nullable', 'string', 'max:100'],
+            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'password' => ['required', 'min:6'],
         ];
 
         $this->validate($request, $rules);
@@ -91,21 +90,25 @@ class UsersController extends BaseController
             $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
         }
 
-        if (isset($attributes['created_at'])) {
-            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['created_at']);
-            $attributes['created_at'] = $attributes['created_at']->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['updated_at'])) {
-            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['updated_at']);
-            $attributes['updated_at'] = $attributes['updated_at']->format('Y-m-d H:i:s');
-        }
-
         $attributes['password'] = Hash::make($attributes['password']);
 
         $attributes['roles'] = isset($attributes['roles']) ? implode(',', $attributes['roles']) : '';
 
-        User::create($attributes);
+        $user = User::create($attributes);
+
+        if (isset($attributes['created_at']) && $user->created_at != $attributes['created_at']) {
+            $temp = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
+            $temp = $temp->format('Y-m-d H:i:s');
+            User::where('id', $attributes['id'])->update(['created_at' => $temp]);
+            unset($attributes['created_at']);
+        }
+
+        if (isset($attributes['updated_at']) && $user->updated_at != $attributes['updated_at']) {
+            $temp = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
+            $temp = $temp->format('Y-m-d H:i:s');
+            User::where('id', $attributes['id'])->update(['updated_at' => $temp]);
+            unset($attributes['updated_at']);
+        }
 
         return redirect(route('admin.users'));
     }
@@ -113,19 +116,19 @@ class UsersController extends BaseController
     public function usersSaveAction(Request $request)
     {
         $rules = [
-            'id' => 'required|exists:users',
-            'roles' => 'nullable|array',
-            'email' => 'required',
-            'phone' => 'required',
-            'email_verified_at' => 'nullable|date_format:Y-m-d\TH:i:s',
-            'enabled' => 'required|in:0,1',
-            'remember_token' => 'nullable',
-            'created_at' => 'nullable|date_format:Y-m-d\TH:i:s',
-            'updated_at' => 'nullable|date_format:Y-m-d\TH:i:s',
+            'id' => ['required', 'exists:users'],
+            'roles' => ['nullable', 'array'],
+            'email' => ['required'],
+            'phone' => ['required'],
+            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'enabled' => ['required', 'in:0,1'],
+            'remember_token' => ['nullable', 'string', 'max:100'],
+            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
         ];
 
         if ($request->get('password') != "") {
-            $rules['password'] = 'min:6';
+            $rules['password'] = ['min:6'];
         }
 
         $this->validate($request, $rules);
@@ -139,36 +142,36 @@ class UsersController extends BaseController
             $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
         }
 
-        if (isset($attributes['created_at'])) {
-            $attributes['created_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
-            $attributes['created_at'] = $attributes['created_at']->format('Y-m-d H:i:s');
-        }
-
-        if (isset($attributes['updated_at'])) {
-            $attributes['updated_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
-            $attributes['updated_at'] = $attributes['updated_at']->format('Y-m-d H:i:s');
-        }
-
         if (isset($attributes['password'])) {
             $attributes['password'] = Hash::make($attributes['password']);
         }
 
         $attributes['roles'] = isset($attributes['roles']) ? implode(',', $attributes['roles']) : '';
 
+        $user = User::findOrFail($request->get('id'));
 
-        $id = $request->get('id');
-        $user = User::find($id);
-        $user->fill($attributes);
+        if (isset($attributes['created_at']) && $user->created_at != $attributes['created_at']) {
+            $temp = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['created_at']);
+            $temp = $temp->format('Y-m-d H:i:s');
+            User::where('id', $attributes['id'])->update(['created_at' => $temp]);
+            unset($attributes['created_at']);
+        }
 
-        $user->save();
+        if (isset($attributes['updated_at']) && $user->updated_at != $attributes['updated_at']) {
+            $temp = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['updated_at']);
+            $temp = $temp->format('Y-m-d H:i:s');
+            User::where('id', $attributes['id'])->update(['updated_at' => $temp]);
+            unset($attributes['updated_at']);
+        }
+
+        $user->fill($attributes)->save();
 
         return redirect(route('admin.users'));
     }
 
     public function usersRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        User::destroy($id);
+        User::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.users'));
     }
 }

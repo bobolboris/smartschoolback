@@ -2,8 +2,8 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-use App\MainComponent\AccessPoint;
-use App\MainComponent\School;
+use App\CabinetAdminComponent\AccessPoint;
+use App\CabinetAdminComponent\School;
 use Illuminate\Http\Request;
 
 class AccessPointsController extends BaseController
@@ -42,7 +42,7 @@ class AccessPointsController extends BaseController
         return view('cabinet_admin.edit.access_points', $data);
     }
 
-    public function showAddFormAction(Request $request)
+    public function showAddFormAction()
     {
         $access_point = new AccessPoint();
 

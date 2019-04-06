@@ -2,6 +2,7 @@
 
 namespace App\MainComponent;
 
+use App\MainComponent\Traits\TypesLocationsTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -15,9 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Locality extends Model
 {
+    use TypesLocationsTrait;
+
     public $timestamps = false;
     protected $table = 'localities';
     protected $fillable = ['type', 'name', 'locality_id'];
+    protected $appends = ['type_name'];
 
     public function locality()
     {

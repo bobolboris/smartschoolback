@@ -3,7 +3,7 @@
 namespace App\CabinetAdminComponent\Http\Controllers;
 
 use App\CabinetAdminComponent\School;
-use App\MainComponent\Locality;
+use App\CabinetAdminComponent\Locality;
 use Illuminate\Http\Request;
 
 class SchoolsController extends BaseController

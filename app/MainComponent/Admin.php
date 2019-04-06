@@ -44,6 +44,6 @@ class Admin extends Model
 
     public function class()
     {
-        return $this->belongsTo(ClassModel::class, 'admin_id',  'id');
+        return $this->hasOne(ClassModel::class, 'admin_id', 'id');
     }
 }

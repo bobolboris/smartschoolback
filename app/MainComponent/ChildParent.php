@@ -24,11 +24,11 @@ class ChildParent extends Model
 
     public function child()
     {
-        return $this->belongsTo(Child::class, 'child_id', 'id');
+        return $this->hasOne(Child::class, 'id', 'child_id');
     }
 
     public function parent()
     {
-        return $this->belongsTo(ParentModel::class, 'parent_id', 'id');
+        return $this->hasOne(ParentModel::class, 'id', 'parent_id');
     }
 }
