@@ -25,18 +25,18 @@
                 <tbody id="childBody">
                 @foreach($children as $child)
                     <tr>
-                        <td>{{ $child['id'] }}</td>
-                        <td>{{ $child['profile']['surname'] }}</td>
-                        <td>{{ $child['profile']['name'] }}</td>
-                        <td>{{ $child['profile']['patronymic'] }}</td>
-                        <td>{{ $child['class']['name'] }}</td>
-                        <td>{{ $child['class']['school']['name'] }}</td>
+                        <td>{{ $child->id }}</td>
+                        <td>{{ $child->profile->surname }}</td>
+                        <td>{{ $child->profile->name }}</td>
+                        <td>{{ $child->profile->patronymic }}</td>
+                        <td>{{ $child->class->name }}</td>
+                        <td>{{ $child->class->school->name }}</td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children.editForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children.editForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.parent_children.removeForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.parent_children.removeForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -46,6 +46,7 @@
                 </tbody>
             </table>
         </div>
+        {{ $children->links() }}
     </div>
 @endsection
 

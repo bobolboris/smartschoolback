@@ -13,7 +13,7 @@ use Illuminate\Validation\Rule;
 
 class ParentsController extends BaseController
 {
-    public function parentsAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
@@ -21,9 +21,9 @@ class ParentsController extends BaseController
                 ->Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
-                ->get();
+                ->paginate(10);
         } else {
-            $parents = ParentModel::all();
+            $parents = ParentModel::paginate(10);
         }
 
         $users = collect([new User(['email' => 'NULL'])]);
@@ -32,7 +32,7 @@ class ParentsController extends BaseController
         $children_ids = Child::select('id')->get();
 
         $data = [
-            'parents' => $parents->toArray(),
+            'parents' => $parents,
             'users' => $users,
             'children_ids' => $children_ids
         ];
@@ -42,13 +42,11 @@ class ParentsController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-
-        $parent = ParentModel::find($id);
-        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
+        $parent = ParentModel::findOrFail($request->get('id'));
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
 
         $data = [
-            'parent' => $parent->toArray(),
+            'parent' => $parent,
             'users' => $users,
             'action' => route('admin.parents.save')
         ];
@@ -59,10 +57,10 @@ class ParentsController extends BaseController
     public function showAddFormAction()
     {
         $parent = new ParentModel();
-        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
 
         $data = [
-            'parent' => $parent->toArray(),
+            'parent' => $parent,
             'users' => $users,
             'action' => route('admin.parents.add')
         ];
@@ -84,10 +82,10 @@ class ParentsController extends BaseController
     public function parentsAddAction(Request $request)
     {
         $this->validate($request, [
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
-            'user_id' => 'nullable|exists:users,id|unique:parents|unique:children',
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
+            'user_id' => ['nullable', 'exists:users,id', 'unique:parents', 'unique:children'],
         ]);
 
         $profile = Profile::create($request->only(['surname', 'name', 'patronymic']));
@@ -102,10 +100,10 @@ class ParentsController extends BaseController
         $id = $request->get('id');
 
         $this->validate($request, [
-            'id' => 'required|exists:parents',
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
+            'id' => ['required', 'exists:parents'],
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
             'user_id' => ['nullable', 'exists:users,id', Rule::unique('parents', 'user_id')->ignore($id, 'id'), 'unique:children'],
         ]);
 
@@ -123,11 +121,7 @@ class ParentsController extends BaseController
     {
         $id = $request->get('id');
 
-        $parent = ParentModel::find($id);
-
-        if ($parent == null) {
-            return redirect(route('admin.parents'));
-        }
+        $parent = ParentModel::findOrFail($id);
 
         ChildParent::where('parent_id', $id)->delete();
 

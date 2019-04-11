@@ -28,30 +28,30 @@
                 @foreach($children as $child)
                     <tr>
                         <td>
-                            {{ $child['id'] }}
+                            {{ $child->id }}
                         </td>
                         <td>
-                            {{ ($child['profile_id'] == null) ? 'NULL' : $child['profile_id'] }}
+                            {{  $child->profile_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ ($child['class_id'] == null) ? 'NULL' : $child['class_id'] }}
+                            {{ $child->class_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ ($child['photo_id'] == null) ? 'NULL' : $child['photo_id'] }}
+                            {{ $child->photo_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ ($child['user_id'] == null) ? 'NULL' : $child['user_id'] }}
+                            {{ $child->user_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ ($child['system_id'] == null) ? 'NULL' : $child['system_id'] }}
+                            {{ $child->system_id ?? 'NULL' }}
                         </td>
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children_extended.editForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children_extended.editForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.children_extended.removeForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children_extended.removeForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -61,5 +61,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $children->links() }}
     </div>
 @endsection

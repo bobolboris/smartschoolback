@@ -33,25 +33,25 @@
                 @foreach($localities as $locality)
                     <tr>
                         <td>
-                            {{ $locality['id'] }}
+                            {{ $locality->id }}
                         </td>
                         <td class="name">
-                            {{ $locality['type_name'] }}
+                            {{ $locality->type_name }}
                         </td>
                         <td>
-                            {{ $locality['name'] }}
+                            {{ $locality->name }}
                         </td>
                         <td>
-                            {{ $showNULL(@$locality['locality']['name']) }}
+                            {{ $showNULL(@$locality->locality->name) }}
                         </td>
                         <td>
                             <div class="icons">
                                 <div class="icons">
-                                    <a href="{{ route('admin.localities.editForm', ['id' => $locality['id']]) }}">
+                                    <a href="{{ route('admin.localities.editForm', ['id' => $locality->id]) }}">
                                         <i class="fas fa-user-edit"></i>
                                     </a>
                                     <pre>       </pre>
-                                    <a href="{{ route('admin.localities.removeForm', ['id' => $locality['id']]) }}">
+                                    <a href="{{ route('admin.localities.removeForm', ['id' => $locality->id]) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
@@ -62,5 +62,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $localities->links() }}
     </div>
 @endsection

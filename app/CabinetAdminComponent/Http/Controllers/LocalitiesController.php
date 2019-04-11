@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class LocalitiesController extends BaseController
 {
-    public function localityAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $localities = Locality::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
+            $localities = Locality::where('name', 'LIKE', "%" . $request->get('search') . "%")->paginate(10);
         } else {
-            $localities = Locality::all();
+            $localities = Locality::paginate(10);
         }
 
         $data = [
@@ -26,10 +26,10 @@ class LocalitiesController extends BaseController
     public function showEditFormAction(Request $request)
     {
         $locality = Locality::findOrFail($request->get('id'));
-        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all())->all();
+        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
-            'locality' => $locality->toArray(),
+            'locality' => $locality,
             'localities' => $localities,
             'types' => Locality::getAllTypes(),
             'action' => route('admin.localities.save')
@@ -41,10 +41,10 @@ class LocalitiesController extends BaseController
     public function showAddFormAction()
     {
         $locality = new Locality();
-        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all())->all();
+        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
-            'locality' => $locality->toArray(),
+            'locality' => $locality,
             'localities' => $localities,
             'types' => Locality::getAllTypes(),
             'action' => route('admin.localities.add')

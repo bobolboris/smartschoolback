@@ -49,23 +49,23 @@
                 @foreach($profiles as $profile)
                     <tr>
                         <td>
-                            {{ $profile['id'] }}
+                            {{ $profile->id }}
                         </td>
                         <td>
-                            {{ $profile['surname'] }}
+                            {{ $profile->surname }}
                         </td>
                         <td>
-                            {{ $profile['name'] }}
+                            {{ $profile->name }}
                         </td>
                         <td>
-                            {{ $profile['patronymic'] }}
+                            {{ $profile->patronymic }}
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.profiles.editForm', ['id' => $profile['id']]) }}">
+                                <a href="{{ route('admin.profiles.editForm', ['id' => $profile->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.profiles.removeForm', ['id' => $profile['id']]) }}">
+                                <a href="{{ route('admin.profiles.removeForm', ['id' => $profile->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -75,6 +75,7 @@
                 </tbody>
             </table>
         </div>
+        {{ $profiles->links() }}
     </div>
 @endsection
 

@@ -9,19 +9,19 @@ use Illuminate\Http\Request;
 
 class ClassesController extends BaseController
 {
-    public function classesAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $classes = ClassModel::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
+            $classes = ClassModel::where('name', 'LIKE', "%" . $request->get('search') . "%")->paginate(10);
         } else {
-            $classes = ClassModel::all();
+            $classes = ClassModel::paginate(10);
         }
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
         $data = [
-            'classes' => $classes->toArray(),
-            'schools' => $schools->toArray()
+            'classes' => $classes,
+            'schools' => $schools
         ];
 
         return view('cabinet_admin.index.classes', $data);
@@ -29,18 +29,16 @@ class ClassesController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-
-        $class = ClassModel::find($id);
+        $class = ClassModel::find($request->get('id'));
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
         $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
 
         $data = [
-            'class' => $class->toArray(),
-            'schools' => $schools->toArray(),
-            'admins' => $admins->toArray(),
+            'class' => $class,
+            'schools' => $schools,
+            'admins' => $admins,
             'action' => route('admin.classes.save')
         ];
 
@@ -56,9 +54,9 @@ class ClassesController extends BaseController
         $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
 
         $data = [
-            'class' => $class->toArray(),
-            'schools' => $schools->toArray(),
-            'admins' => $admins->toArray(),
+            'class' => $class,
+            'schools' => $schools,
+            'admins' => $admins,
             'action' => route('admin.classes.add')
         ];
 
@@ -79,35 +77,31 @@ class ClassesController extends BaseController
     public function classesAddAction(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'school_id' => 'required|exists:schools,id'
+            'name' => ['required'],
+            'school_id' => ['required', 'exists:schools,id']
         ]);
 
         ClassModel::create($request->all());
+
         return redirect(route('admin.classes'));
     }
 
     public function classesSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:classes',
-            'name' => 'required',
-            'school_id' => 'required|exists:schools,id'
+            'id' => ['required', 'exists:classes'],
+            'name' => ['required'],
+            'school_id' => ['required', 'exists:schools,id']
         ]);
 
-        $id = $request->get('id');
-
-        $class = ClassModel::find($id);
-        $class->fill($request->all());
-        $class->save();
+        ClassModel::findOrFail($request->get('id'))->fill($request->all())->save();
 
         return redirect(route('admin.classes'));
     }
 
     public function childrenRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        ClassModel::destroy($id);
+        ClassModel::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.classes'));
     }
 }

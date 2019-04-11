@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$locality['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$locality->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -22,7 +22,7 @@
 
                         <tr>
                             <td>
-                                Тип
+                                <span>Тип</span>
                                 @if ($errors->has('type'))
                                     <br><strong class="text-danger">{{ $errors->first('type') }}</strong>
                                 @endif
@@ -42,19 +42,19 @@
 
                         <tr>
                             <td>
-                                Название
+                                <span>Название</span>
                                 @if ($errors->has('name'))
                                     <br><strong class="text-danger">{{ $errors->first('name') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$locality['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ $locality->name }}" class="text-dark">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                Насленный пункт
+                                <span>Насленный пункт</span>
                                 @if ($errors->has('locality_id'))
                                     <br><strong class="text-danger">{{ $errors->first('locality_id') }}</strong>
                                 @endif
@@ -62,10 +62,10 @@
                             <td>
                                 <select name="locality_id">
                                     @foreach($localities as $value)
-                                        @if (@$value['id'] == @$locality['locality_id'])
-                                            <option value="{{ @$value['id'] }}" selected>{{ @$value['name'] }}</option>
+                                        @if (@$value->id == @$locality->locality_id)
+                                            <option value="{{ @$value->id }}" selected>{{ @$value->name }}</option>
                                         @else
-                                            <option value="{{ @$value['id'] }}">{{ @$value['name'] }}</option>
+                                            <option value="{{ @$value->id }}">{{ @$value->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>

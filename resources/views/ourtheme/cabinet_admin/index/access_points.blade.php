@@ -93,10 +93,10 @@
                             <div class="icons">
 
 
-                                <a href="{{ route('admin.access_points.editForm', ['id' => @$access_point['id']]) }}">
+                                <a href="{{ route('admin.access_points.editForm', ['id' => $access_point->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.access_points.removeForm', ['id' => @$access_point['id']]) }}">
+                                <a href="{{ route('admin.access_points.removeForm', ['id' => $access_point->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
 
@@ -107,5 +107,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $access_points->links() }}
     </div>
 @endsection

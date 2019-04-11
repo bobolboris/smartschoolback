@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$class['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$class->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -21,19 +21,19 @@
                         <tbody>
                         <tr>
                             <td>
-                                Имя
+                                <span>Имя</span>
                                 @if ($errors->has('name'))
                                     <br><strong class="text-danger">{{ $errors->first('name') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$class['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ @$class->name }}" class="text-dark">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                Админ
+                                <span>Админ</span>
                                 @if ($errors->has('admin_id'))
                                     <br><strong class="text-danger">{{ $errors->first('admin_id') }}</strong>
                                 @endif
@@ -42,10 +42,12 @@
 
                                 <select name="admin_id">
                                     @foreach($admins as $admin)
-                                        @if(@$admin['id'] == @$class['admin_id'])
-                                            <option value="{{ @$admin['id'] }}" selected>{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>
+                                        @if(@$admin->id == @$class->admin_id)
+                                            <option value="{{ @$admin->id }}"
+                                                    selected>{{ @$admin['user']['email'] ?? 'NULL' }}</option>
                                         @else
-                                            <option value="{{ @$admin['id'] }}">{{ (@$admin['user'] == null) ? 'NULL' : @$admin['user']['email'] }}</option>
+                                            <option
+                                                value="{{ @$admin->id }}">{{ @$admin['user']['email'] ?? 'NULL' }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -54,7 +56,7 @@
 
                         <tr>
                             <td>
-                                Школа
+                                <span>Школа</span>
                                 @if ($errors->has('school_id'))
                                     <br><strong class="text-danger">{{ $errors->first('school_id') }}</strong>
                                 @endif
@@ -62,12 +64,12 @@
                             <td>
                                 <select name="school_id">
                                     @foreach($schools as $school)
-                                        @if(@$school['id'] == @$class['school_id'])
-                                            <option value="{{ @$school['id'] }}"
-                                                    selected>{{ @$school['address'] . " - " . @$school['name'] }}</option>
+                                        @if(@$school->id == @$class->school_id)
+                                            <option value="{{ @$school->id }}"
+                                                    selected>{{ @$school->address . " - " . @$school->name }}</option>
                                         @else
                                             <option
-                                                value="{{ @$school['id'] }}">{{ @$school['address'] . " - " . @$school['name'] }}</option>
+                                                value="{{ @$school->id  }}">{{ @$school->address . " - " . @$school->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>

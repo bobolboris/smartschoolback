@@ -27,27 +27,27 @@
                 @foreach($children as $child)
                     <tr>
                         <td>
-                            {{ $child['id'] }}
+                            {{ $child->id }}
                         </td>
                         <td class="surname">
-                            {{ $child['profile']['surname'] }}
+                            {{ $child->profile->surname ?? 'NULL' }}
                         </td>
                         <td class="name">
-                            {{ $child['profile']['name'] }}
+                            {{ $child->profile->name ?? 'NULL' }}
                         </td>
                         <td class="patronymic">
-                            {{ $child['profile']['patronymic'] }}
+                            {{ $child->profile->patronymic ?? 'NULL' }}
                         </td>
                         <td class="class">
-                            {{ $child['class']['name'] }}
+                            {{ $child->class->name ?? 'NULL' }}
                         </td>
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children.editForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children.editForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.children.removeForm', ['id' => $child['id']]) }}">
+                                <a href="{{ route('admin.children.removeForm', ['id' => $child->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -57,5 +57,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $children->links() }}
     </div>
 @endsection

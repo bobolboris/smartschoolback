@@ -39,33 +39,33 @@
                 @foreach($parents as $parent)
                     <tr>
                         <td>
-                            {{ $parent['id'] }}
+                            {{ $parent->id }}
                         </td>
-                        <td class="surname">
-                            {{ $parent['profile']['surname'] }}
+                        <td>
+                            {{ $parent->profile->surname }}
                         </td>
-                        <td class="name">
-                            {{ $parent['profile']['name'] }}
+                        <td>
+                            {{ $parent->profile->name }}
                         </td>
-                        <td class="patronymic">
-                            {{$parent['profile']['patronymic'] }}
+                        <td>
+                            {{$parent->profile->patronymic }}
                         </td>
-                        <td class="user">
-                            {{ $parent['user']['id'] . " - " . $parent['user']['email'] }}
+                        <td>
+                            {{ $parent->user->id . " - " . $parent->user->email }}
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.parents.editForm', ['id' => $parent['id']]) }}">
+                                <a href="{{ route('admin.parents.editForm', ['id' => $parent->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.parents.removeForm', ['id' => $parent['id']]) }}">
+                                <a href="{{ route('admin.parents.removeForm', ['id' => $parent->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                         </td>
 
                         <td>
-                            <a href="{{route('admin.parent_children', ['id' => $parent['id']])}}" class="btn btn-primary">Просмотр</a>
+                            <a href="{{route('admin.parent_children', ['id' => $parent->id])}}" class="btn btn-primary">Просмотр</a>
                         </td>
                     </tr>
                 @endforeach
@@ -73,5 +73,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $parents->links() }}
     </div>
 @endsection

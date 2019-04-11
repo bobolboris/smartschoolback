@@ -75,20 +75,20 @@
         <div class="row">
             <div class="col-3"></div>
             <div class="col-6">
-                <div class="d-flex justify-content-center">
-                    <form class="text-center" method="POST">
-                        <select>
-                            <option>Выберите населенный пункт</option>
-                        </select>
-                        <select>
-                            <option>Выберите УЗ</option>
-                        </select>
-                        <select>
-                            <option>Выберите Класс</option>
-                        </select>
-                        <input type="submit" value="Сохранить">
-                    </form>
-                </div>
+                {{--<div class="d-flex justify-content-center">--}}
+                    {{--<form class="text-center" method="POST">--}}
+                        {{--<select>--}}
+                            {{--<option>Выберите населенный пункт</option>--}}
+                        {{--</select>--}}
+                        {{--<select>--}}
+                            {{--<option>Выберите УЗ</option>--}}
+                        {{--</select>--}}
+                        {{--<select>--}}
+                            {{--<option>Выберите Класс</option>--}}
+                        {{--</select>--}}
+                        {{--<input type="submit" value="Сохранить">--}}
+                    {{--</form>--}}
+                {{--</div>--}}
             </div>
 
             <div class="col-3">

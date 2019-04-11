@@ -14,9 +14,8 @@ use Illuminate\Http\Request;
 
 class ChildrenController extends BaseController
 {
-    use ChildTrait;
 
-    public function childrenAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
@@ -24,13 +23,13 @@ class ChildrenController extends BaseController
                 ->Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
-                ->get();
+                ->paginate(10);
         } else {
-            $children = Child::all();
+            $children = Child::paginate(10);
         }
 
         $data = [
-            'children' => $children->toArray()
+            'children' => $children
         ];
 
         return view('cabinet_admin.index.children', $data);
@@ -38,15 +37,12 @@ class ChildrenController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
+        $child = Child::findOrFail($request->get('id'));
 
-        $child = Child::find($id);
-
-        $classes = collect([new ClassModel(['name' => 'NULL'])]);
-        $classes = $classes->concat(ClassModel::all())->all();
+        $classes = collect([new ClassModel(['name' => 'NULL'])])->concat(ClassModel::all());
 
         $data = [
-            'child' => $child->toArray(),
+            'child' => $child,
             'classes' => $classes,
             'action' => route('admin.children.save')
         ];
@@ -58,11 +54,10 @@ class ChildrenController extends BaseController
     {
         $child = new Child();
 
-        $classes = collect([new ClassModel(['name' => 'NULL'])]);
-        $classes = $classes->concat(ClassModel::all())->all();
+        $classes = collect([new ClassModel(['name' => 'NULL'])])->concat(ClassModel::all());
 
         $data = [
-            'child' => $child->toArray(),
+            'child' => $child,
             'classes' => $classes,
             'action' => route('admin.children.add')
         ];
@@ -84,10 +79,10 @@ class ChildrenController extends BaseController
     public function childrenAddAction(Request $request)
     {
         $this->validate($request, [
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
-            'class_id' => 'nullable|exists:classes,id',
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
+            'class_id' => ['nullable', 'exists:classes,id'],
         ]);
 
         $profile = Profile::create($request->only(['surname', 'name', 'patronymic']));
@@ -103,16 +98,14 @@ class ChildrenController extends BaseController
     public function childrenSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:children',
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
-            'class_id' => 'nullable|exists:classes,id',
+            'id' => ['required', 'exists:children'],
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
+            'class_id' => ['nullable', 'exists:classes,id'],
         ]);
 
-        $id = $request->get('id');
-
-        $child = Child::find($id);
+        $child = Child::findOrFail($request->get('id'));
 
         $profile = Profile::find($child->profile_id);
 
@@ -120,8 +113,7 @@ class ChildrenController extends BaseController
             $profile = new Profile();
         }
 
-        $profile->fill($request->only(['surname', 'name', 'patronymic']));
-        $profile->save();
+        $profile->fill($request->only(['surname', 'name', 'patronymic']))->save();
 
         $child->class_id = $request->get('class_id');
         $child->profile_id = $profile->id;
@@ -133,12 +125,7 @@ class ChildrenController extends BaseController
     public function childrenRemoveAction(Request $request)
     {
         $id = $request->get('id');
-
-        $child = Child::find($id);
-
-        if ($child == null) {
-            return redirect(route('admin.children'));
-        }
+        $child = Child::findOrFail($id);
 
         if ($child->profile_id != null) {
             Profile::destroy($child->profile_id);

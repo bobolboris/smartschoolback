@@ -25,11 +25,6 @@ class Child extends Model
     protected $fillable = ['profile_id', 'class_id', 'photo_id', 'user_id', 'system_id'];
     protected $with = ['profile', 'user', 'photo', 'class'];
 
-    public static function findBySystemId($id)
-    {
-        return Child::where('system_id', $id)->first();
-    }
-
     public function profile()
     {
         return $this->hasOne(Profile::class, 'id', 'profile_id');

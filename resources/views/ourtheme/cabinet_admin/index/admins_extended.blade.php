@@ -57,27 +57,27 @@
                 @foreach($admins as $admin)
                     <tr>
                         <td>
-                            {{ $admin['id'] }}
+                            {{ $admin->id }}
                         </td>
                         <td>
-                            {{ $showNULL($admin['profile_id']) }}
+                            {{ $admin->profile_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $showNULL($admin['user_id']) }}
+                            {{ $admin->user_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $showNULL($admin['school_id']) }}
+                            {{ $admin->school_id ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $showNULL($admin['locality_id']) }}
+                            {{ $admin->locality_id ?? 'NULL' }}
                         </td>
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.admins_extended.editForm', ['id' => $admin['id']]) }}">
+                                <a href="{{ route('admin.admins_extended.editForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.admins_extended.removeForm', ['id' => $admin['id']]) }}">
+                                <a href="{{ route('admin.admins_extended.removeForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -87,5 +87,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $admins->links() }}
     </div>
 @endsection

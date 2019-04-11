@@ -79,32 +79,32 @@
                 @foreach($children_keys as $children_key)
                     <tr>
                         <td>
-                            {{ $children_key['id'] }}
+                            {{ $children_key->id }}
                         </td>
                         <td>
-                            0x{{ bin2hex($children_key['codekey']) }}
+                            0x{{ bin2hex($children_key->codekey) ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $children_key['short_codekey'] }}
+                            {{ $children_key->short_codekey }}
                         </td>
                         <td>
-                            {{ $children_key['codekeytime'] }}
+                            {{ $children_key->codekeytime }}
                         </td>
                         <td>
-                            {{ $children_key['expires'] }}
+                            {{ $children_key->expires ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $children_key['status'] }}
+                            {{ $children_key->status }}
                         </td>
                         <td>
-                            {{ $children_key['child']['profile']['full_name'] }}
+                            {{ $children_key->child->profile->full_name ?? 'NULL' }}
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.children_keys.editForm', ['id' => @$children_key['id']]) }}">
+                                <a href="{{ route('admin.children_keys.editForm', ['id' => $children_key->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.children_keys.removeForm', ['id' => @$children_key['id']]) }}">
+                                <a href="{{ route('admin.children_keys.removeForm', ['id' => $children_key->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -114,5 +114,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $children_keys->links() }}
     </div>
 @endsection

@@ -10,19 +10,16 @@ use Illuminate\Validation\ValidationException;
 
 class ChildParentController extends BaseController
 {
-    public function parentChildrenAction(Request $request)
+    public function indexAction(Request $request)
     {
         $id = $request->get('id');
-
-        $parent = ParentModel::find($id);
+        $parent = ParentModel::findOrFail($id);
 
         $children = $parent->children;
 
-        $fullName = $parent->profile->surname . " " . $parent->profile->name . " " . $parent->profile->patronymic;
-
         $data = [
-            'children' => $children->toArray(),
-            'fullName' => $fullName,
+            'children' => $children,
+            'fullName' => $parent->profile->full_name,
             'id' => $id
         ];
 
@@ -42,8 +39,7 @@ class ChildParentController extends BaseController
 
     public function parentChildrenRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        ChildParent::destroy($id);
+        ChildParent::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.parents'));
     }
 
@@ -55,7 +51,7 @@ class ChildParentController extends BaseController
 
         $data = [
             'parent_id' => $parent_id,
-            'children' => $children->toArray()
+            'children' => $children
         ];
 
         return view('cabinet_admin.edit.parent_children', $data);

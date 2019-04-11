@@ -14,13 +14,13 @@
                 <form method="POST" action="{{ $action }}">
                     @csrf
 
-                    <input type="hidden" name="email_verified_at" value="{{ @$user['email_verified_at'] }}">
-                    <input type="hidden" name="type" value="{{ @$user['type'] }}">
-                    <input type="hidden" name="remember_token" value="{{ @$user['remember_token'] }}">
-                    <input type="hidden" name="created_at" value="{{ @$user['created_at'] }}">
-                    <input type="hidden" name="updated_at" value="{{ @$user['updated_at'] }}">
+                    <input type="hidden" name="email_verified_at" value="{{ @$user->email_verified_at }}">
+                    <input type="hidden" name="type" value="{{ @$user->type }}">
+                    <input type="hidden" name="remember_token" value="{{ @$user->remember_token }}">
+                    <input type="hidden" name="created_at" value="{{ @$user->created_at }}">
+                    <input type="hidden" name="updated_at" value="{{ @$user->updated_at }}">
 
-                    <input type="hidden" name="id" value="{{ @$user['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$user->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -31,52 +31,51 @@
                         <tbody>
                         <tr>
                             <td>
-                                Роли
+                                <span>Роли</span>
                                 @if ($errors->has('roles'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('roles') }}</strong>
-                                    </span>
+                                    <br><strong>{{ $errors->first('roles') }}</strong>
                                 @endif
                             </td>
                             <td>
                                 @foreach($roles as $key => $value)
-                                        <label class="row">
-                                            <span>{{ $key }}</span>
-                                            @if (in_array($value, $user['roles_array']))
-                                                <input type="checkbox" name="roles[]" class="form-check-input" value="{{ $value }}" checked>
-                                            @else
-                                                <input type="checkbox" name="roles[]" class="form-check-input" value="{{ $value }}">
-                                            @endif
-                                        </label>
+                                    <label class="row">
+                                        <span>{{ $key }}</span>
+                                        @if (in_array($value, $user['roles_array']))
+                                            <input type="checkbox" name="roles[]" class="form-check-input"
+                                                   value="{{ $value }}" checked>
+                                        @else
+                                            <input type="checkbox" name="roles[]" class="form-check-input"
+                                                   value="{{ $value }}">
+                                        @endif
+                                    </label>
                                 @endforeach
-
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                email
+                                <span>email</span>
                                 @if ($errors->has('email'))
                                     <br><strong class="text-danger">{{ $errors->first('email') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="email" value="{{ @$user['email'] }}" class="text-dark">
+                                <input type="text" name="email" value="{{ @$user->email }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Телефон
+                                <span>Телефон</span>
                                 @if ($errors->has('phone'))
                                     <br><strong class="text-danger">{{ $errors->first('phone') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="phone" value="{{ @$user['phone'] }}" class="text-dark">
+                                <input type="text" name="phone" value="{{ @$user->phone }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Пароль
+                                <span>Пароль</span>
                                 @if ($errors->has('password'))
                                     <br><strong class="text-danger">{{ $errors->first('password') }}</strong>
                                 @endif
@@ -88,22 +87,27 @@
 
                         <tr>
                             <td>
-                                *email_verified_at
+                                <span>*email_verified_at</span>
                                 @if ($errors->has('email_verified_at'))
                                     <br><strong class="text-danger">{{ $errors->first('email_verified_at') }}</strong>
                                 @endif
                             </td>
                             <td>
                                 <input type="datetime-local" name="email_verified_at"
-                                       value="{{ str_replace(' ', 'T', @$user['email_verified_at']) }}">
+                                       value="{{ str_replace(' ', 'T', @$user->email_verified_at) }}">
                             </td>
                         </tr>
 
                         <tr>
-                            <td>Включен</td>
+                            <td>
+                                <span>Включен</span>
+                                @if ($errors->has('enabled'))
+                                    <br><strong class="text-danger">{{ $errors->first('enabled') }}</strong>
+                                @endif
+                            </td>
                             <td>
                                 <select name="enabled">
-                                    @if(@$user['enabled'] == 0)
+                                    @if(@$user->enabled == 0)
                                         <option value="0" selected>Нет</option>
                                         <option value="1">Да</option>
                                     @else
@@ -116,39 +120,39 @@
 
                         <tr>
                             <td>
-                                *remember_token
+                                <span>*remember_token</span>
                                 @if ($errors->has('remember_token'))
                                     <br><strong class="text-danger">{{ $errors->first('remember_token') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <textarea name="remember_token">{{ @$user['remember_token'] }}</textarea>
+                                <textarea name="remember_token">{{ @$user->remember_token }}</textarea>
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                *created_at
+                                <span>*created_at</span>
                                 @if ($errors->has('created_at'))
                                     <br><strong class="text-danger">{{ $errors->first('created_at') }}</strong>
                                 @endif
                             </td>
                             <td>
                                 <input type="datetime-local" name="created_at"
-                                       value="{{ str_replace(' ', 'T', @$user['created_at']) }}">
+                                       value="{{ str_replace(' ', 'T', @$user->created_at) }}">
                             </td>
                         </tr>
 
                         <tr>
                             <td>
-                                *update_at
+                                <span>*update_at</span>
                                 @if ($errors->has('updated_at'))
                                     <br><strong class="text-danger">{{ $errors->first('updated_at') }}</strong>
                                 @endif
                             </td>
                             <td>
                                 <input type="datetime-local" name="updated_at"
-                                       value="{{ str_replace(' ', 'T', @$user['updated_at']) }}">
+                                       value="{{ str_replace(' ', 'T', @$user->updated_at) }}">
                             </td>
                         </tr>
 

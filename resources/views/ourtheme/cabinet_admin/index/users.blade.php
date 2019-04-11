@@ -13,10 +13,10 @@
         </div>
 
         {{--<div class="row justify-content-center">--}}
-            {{--<a href="{{ route('admin.users.addForm') }}" class="btn text-white bg-dark addBtn">--}}
-                {{--<span>Добавить</span>--}}
-                {{--<i class="fas fa-plus"></i>--}}
-            {{--</a>--}}
+        {{--<a href="{{ route('admin.users.addForm') }}" class="btn text-white bg-dark addBtn">--}}
+        {{--<span>Добавить</span>--}}
+        {{--<i class="fas fa-plus"></i>--}}
+        {{--</a>--}}
         {{--</div>--}}
 
         <div class="row justify-content-center">
@@ -64,19 +64,19 @@
                 @foreach($users as $user)
                     <tr>
                         <td>
-                            {{$user['id']}}
+                            {{ $user->id }}
                         </td>
                         <td class="roles">
-                            {{ $user['roles'] }}
+                            {{ $user->roles }}
                         </td>
                         <td class="email">
-                            {{ $user['email'] }}
+                            {{ $user->email }}
                         </td>
                         <td class="phone">
-                            {{ $user['phone'] }}
+                            {{ $user->phone }}
                         </td>
                         <td class="enabled">
-                            @if($user['enabled'] == 0)
+                            @if($user->enabled == 0)
                                 Нет
                             @else
                                 Да
@@ -85,10 +85,10 @@
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.users.editForm', ['id' => @$user['id']]) }}">
+                                <a href="{{ route('admin.users.editForm', ['id' => $user->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.users.removeForm', ['id' => @$user['id']]) }}">
+                                <a href="{{ route('admin.users.removeForm', ['id' => $user->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -98,5 +98,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $users->links() }}
     </div>
 @endsection

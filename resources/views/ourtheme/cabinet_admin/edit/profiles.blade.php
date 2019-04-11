@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$profile['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$profile->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -21,18 +21,18 @@
                         <tbody>
                         <tr>
                             <td>
-                                Фамилия
+                                <span>Фамилия</span>
                                 @if ($errors->has('surname'))
                                     <br><strong class="text-danger">{{ $errors->first('surname') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="surname" value="{{ @$profile['surname'] }}" class="text-dark">
+                                <input type="text" name="surname" value="{{ @$profile->surname }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Имя
+                                <span>Имя</span>
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -40,18 +40,18 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$profile['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ @$profile->name }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Отчество
+                                <span>Отчество</span>
                                 @if ($errors->has('patronymic'))
                                     <br><strong class="text-danger">{{ $errors->first('patronymic') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="patronymic" value="{{ @$profile['patronymic'] }}"
+                                <input type="text" name="patronymic" value="{{ @$profile->patronymic }}"
                                        class="text-dark">
                             </td>
                         </tr>

@@ -8,41 +8,46 @@ use Illuminate\Http\Request;
 
 class ProfilesController extends BaseController
 {
-    public function profilesAction()
+    public function indexAction()
     {
-        $profiles = Profile::all();
+        $profiles = Profile::paginate(10);
         return view('cabinet_admin.index.profiles', compact('profiles'));
     }
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-        $profile = Profile::find($id);
-        $action = route('admin.profile.save');
-        return view('cabinet_admin.edit.profiles', compact('profile', 'action'));
+        $data = [
+            'profile' => Profile::findOrFail($request->get('id')),
+            'action' => route('admin.profile.save')
+        ];
+        return view('cabinet_admin.edit.profiles', $data);
     }
 
     public function showAddFormAction()
     {
-        $profile = new Profile();
-        $action = route('admin.profile.add');
-        return view('cabinet_admin.edit.profiles', compact('profile', 'action'));
+        $data = [
+            'profile' => new Profile(),
+            'action' => route('admin.profile.add')
+        ];
+        return view('cabinet_admin.edit.profiles', $data);
     }
 
     public function showRemoveFormAction(Request $request)
     {
-        $id = $request->get('id');
-        $backurl = $request->server('HTTP_REFERER', '/');
-        $action = route('admin.profile.remove');
-        return view('cabinet_admin.remove.remove', compact('action', 'backurl', 'id'));
+        $data = [
+            'id' => $request->get('id'),
+            'backurl' => $request->server('HTTP_REFERER', '/'),
+            'action' => route('admin.profile.remove')
+        ];
+        return view('cabinet_admin.remove.remove', $data);
     }
 
     public function profileAddAction(Request $request)
     {
         $this->validate($request, [
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
         ]);
 
         Profile::create($request->all());
@@ -53,23 +58,20 @@ class ProfilesController extends BaseController
     public function profileSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'exists:profiles',
-            'surname' => 'required',
-            'name' => 'required',
-            'patronymic' => 'required',
+            'id' => ['required', 'exists:profiles'],
+            'surname' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
+            'patronymic' => ['required', 'max:255'],
         ]);
 
-        $profile = Profile::find($request->get('id'));
-        $profile = $profile->fill($request->all());
-        $profile->save();
+        Profile::findOrFail($request->get('id'))->fill($request->all())->save();
 
         return redirect(route('admin.profiles'));
     }
 
     public function profileRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        Profile::destroy($id);
+        Profile::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.profiles'));
     }
 }

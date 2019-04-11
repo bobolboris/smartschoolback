@@ -2,29 +2,30 @@
 
 namespace App\CabinetAdminComponent\Http\Controllers;
 
-use App\CabinetAdminComponent\ClassModel;
-use App\CabinetAdminComponent\User;
 use App\CabinetAdminComponent\Child;
+use App\CabinetAdminComponent\ClassModel;
 use App\CabinetAdminComponent\Photo;
 use App\CabinetAdminComponent\Profile;
+use App\CabinetAdminComponent\User;
 use Illuminate\Http\Request;
 
 class ChildrenExtendedController extends BaseController
 {
-    public function childrenAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = "%" . $request->get('search') . "%";
+            $pattern = '%' . $request->get('search') . '%';
             $children = Child::Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
-                ->get();
+                ->OrWhere('id', $request->get('search'))
+                ->paginate(10);
         } else {
-            $children = Child::all();
+            $children = Child::paginate(10);
         }
 
         $data = [
-            'children' => $children->toArray()
+            'children' => $children
         ];
 
         return view('cabinet_admin.index.children_extended', $data);
@@ -32,9 +33,7 @@ class ChildrenExtendedController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-
-        $child = Child::find($id);
+        $child = Child::findOrFail($request->get('id'));
 
         $profiles = collect([new Profile(['name' => 'NULL'])]);
         $profiles = $profiles->concat(Profile::all())->all();
@@ -49,7 +48,7 @@ class ChildrenExtendedController extends BaseController
         $users = $users->concat(User::all())->all();
 
         $data = [
-            'child' => $child->toArray(),
+            'child' => $child,
             'classes' => $classes,
             'profiles' => $profiles,
             'photos' => $photos,
@@ -63,31 +62,25 @@ class ChildrenExtendedController extends BaseController
     public function childrenAddAction(Request $request)
     {
         $this->validate($request, [
-            'profile_id' => 'nullable|exists:profiles,id',
-            'class_id' => 'nullable|exists:classes,id',
-            'photo_id' => 'nullable|exists:photos,id',
-            'user_id' => 'nullable|exists:users,id',
+            'profile_id' => ['nullable', 'exists:profiles,id'],
+            'class_id' => ['nullable', 'exists:classes,id'],
+            'photo_id' => ['nullable', 'exists:photos,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
         ]);
-
         Child::create($request->all());
-
         return redirect(route('admin.children_extended'));
     }
 
     public function childrenSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:children',
-            'profile_id' => 'nullable|exists:profiles,id',
-            'class_id' => 'nullable|exists:classes,id',
-            'photo_id' => 'nullable|exists:photos,id',
-            'user_id' => 'nullable|exists:users,id',
+            'id' => ['required', 'exists:children'],
+            'profile_id' => ['nullable', 'exists:profiles,id'],
+            'class_id' => ['nullable', 'exists:classes,id'],
+            'photo_id' => ['nullable', 'exists:photos,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
         ]);
-
-        $child = Child::find($request->get('id'));
-        $child->fill($request->all());
-        $child->save();
-
+        Child::findOrFail($request->get('id'))->fill($request->all())->save();
         return redirect(route('admin.children_extended'));
     }
 
@@ -108,7 +101,7 @@ class ChildrenExtendedController extends BaseController
         $users = $users->concat(User::all())->all();
 
         $data = [
-            'child' => $child->toArray(),
+            'child' => $child,
             'classes' => $classes,
             'profiles' => $profiles,
             'photos' => $photos,
@@ -132,10 +125,8 @@ class ChildrenExtendedController extends BaseController
 
     public function childrenRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        Child::destroy($id);
+        Child::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.children_extended'));
     }
-
 
 }

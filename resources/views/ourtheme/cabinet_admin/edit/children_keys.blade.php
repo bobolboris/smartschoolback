@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$children_key['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$children_key->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -23,14 +23,12 @@
                             <td>
                                 <span>CodeKey</span>
                                 @if ($errors->has('codekey'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('codekey') }}</strong>
-                                    </span>
+                                    <br><strong>{{ $errors->first('codekey') }}</strong>
                                 @endif
                             </td>
                             <td>
                                 <span>0x</span>
-                                <input type="text" name="code" value="{{ bin2hex(@$children_key['codekey']) }}" class="text-dark">
+                                <input type="text" name="codekey" value="{{ bin2hex(@$children_key->codekey) }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
@@ -41,7 +39,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="short_codekey" value="{{ @$children_key['short_codekey'] }}"
+                                <input type="text" name="short_codekey" value="{{ @$children_key->short_codekey }}"
                                        class="text-dark">
                             </td>
                         </tr>
@@ -53,7 +51,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="datetime-local" name="codekeytime" value="{{ @$children_key['codekeytime'] }}"
+                                <input type="datetime-local" name="codekeytime" value="{{ @$children_key->codekeytime }}"
                                        class="text-dark">
                             </td>
                         </tr>
@@ -65,17 +63,22 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="datetime-local" name="codekeytime" value="{{ @$children_key['expires'] }}"
+                                <input type="datetime-local" name="expires" value="{{ @$children_key->expires }}"
                                        class="text-dark">
                             </td>
                         </tr>
 
 
                         <tr>
-                            <td>Включен</td>
                             <td>
-                                <select name="enabled">
-                                    @if(@$children_key['status'] == 0)
+                                <span>Включен</span>
+                                @if ($errors->has('status'))
+                                    <br><strong class="text-danger">{{ $errors->first('status') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <select name="status">
+                                    @if(@$children_key->status == 0)
                                         <option value="0" selected>Нет</option>
                                         <option value="1">Да</option>
                                     @else
@@ -97,12 +100,12 @@
                             <td>
                                 <select name="child_id">
                                     @foreach($children as $child)
-                                        @if(@$child['id'] == @$children_key['child_id'])
-                                            <option value="{{ @$child['id'] }}"
-                                                    selected>{{ @$child['id'] . ' ' .@$child['profile']['full_name'] }}</option>
+                                        @if(@$child->id == @$children_key->child_id)
+                                            <option value="{{ @$child->id }}"
+                                                    selected>{{ @$child->id . ' ' . @$child->profile->full_name}}</option>
                                         @else
                                             <option
-                                                value="{{ @$child['id'] }}">{{ @$child['id'] . ' ' . @$child['profile']['full_name'] }}</option>
+                                                value="{{ @$child->id }}">{{ @$child->id . ' ' . @$child->profile->full_name }}</option>
                                         @endif
                                     @endforeach
                                 </select>

@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$child['id'] }}">
+                    <input type="hidden" name="id" value="{{ $child->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -30,12 +30,12 @@
                             <td>
                                 <select name="profile_id">
                                     @foreach($profiles as $profile)
-                                        @if($profile['id'] == @$child['class_id'])
-                                            <option value="{{ @$profile['id'] }}"
-                                                    selected>{{ @$profile['id'] . ' ' . @$profile['surname'] . ' ' . @$profile['name'] . ' ' . @$profile['patronymic'] }}</option>
+                                        @if($profile->id == @$child->class_id)
+                                            <option value="{{ @$profile->id }}"
+                                                    selected>{{ @$profile->id . ' ' . @$profile->full_name }}</option>
                                         @else
                                             <option
-                                                value="{{ @$profile['id'] }}">{{ @$profile['id'] . ' ' . @$profile['surname'] . ' ' . @$profile['name'] . ' ' . @$profile['patronymic'] }}</option>
+                                                value="{{ @$profile->id }}">{{ @$profile->id . ' ' . @$profile->full_name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -52,12 +52,12 @@
                             <td>
                                 <select name="class_id">
                                     @foreach($classes as $class)
-                                        @if(@$class['id'] == @$child['class_id'])
-                                            <option value="{{ @$class['id'] }}"
-                                                    selected>{{ @$class['name'] . " - " . @$class['school']['name'] }}</option>
+                                        @if(@$class->id == @$child->class_id)
+                                            <option value="{{ @$class->id  }}"
+                                                    selected>{{ @$class->name . " - " . @$class->school->name }}</option>
                                         @else
                                             <option
-                                                value="{{ @$class['id'] }}">{{ @$class['name'] . " - " . @$class['school']['name'] }}</option>
+                                                value="{{ @$class->id  }}">{{ @$class->name . " - " . @$class->school->name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -74,10 +74,10 @@
                             <td>
                                 <select name="photo_id">
                                     @foreach($photos as $photo)
-                                        @if(@$photo['id'] == @$child['photo_id'])
-                                            <option value="{{ @$photo['id'] }}" selected>{{ @$photo['path'] }}</option>
+                                        @if(@$photo->id == @$child->photo_id)
+                                            <option value="{{ @$photo->id }}" selected>{{ @$photo->path }}</option>
                                         @else
-                                            <option value="{{ @$photo['id'] }}">{{ @$photo['path'] }}</option>
+                                            <option value="{{ @$photo->id }}">{{ @$photo->path }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -94,10 +94,10 @@
                             <td>
                                 <select name="user_id">
                                     @foreach($users as $user)
-                                        @if(@$user['id'] == @$child['user_id'])
-                                            <option value="{{ @$user['id'] }}" selected>{{ @$user['email'] }}</option>
+                                        @if(@$user->id == @$child->user_id)
+                                            <option value="{{ @$user->id }}" selected>{{ @$user->email }}</option>
                                         @else
-                                            <option value="{{ @$user['id'] }}">{{ @$user['email'] }}</option>
+                                            <option value="{{ @$user->id }}">{{ @$user->email }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -112,7 +112,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="number" name="system_id" value="{{ @$child['system_id'] }}">
+                                <input type="number" name="system_id" value="{{ @$child->system_id }}">
                             </td>
                         </tr>
 

@@ -8,12 +8,14 @@ use Illuminate\Http\Request;
 
 class AccessPointsController extends BaseController
 {
-    public function accessPointsAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $access_points = AccessPoint::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
+            $access_points = AccessPoint::where('name', 'LIKE', "%" . $request->get('search') . "%")
+                ->Orwhere('id', $request->get('search'))
+                ->paginate(10);
         } else {
-            $access_points = AccessPoint::all();
+            $access_points = AccessPoint::paginate(10);
         }
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
@@ -31,10 +33,10 @@ class AccessPointsController extends BaseController
 
         $access_point = AccessPoint::find($id);
 
-        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
         $data = [
-            'access_point' => $access_point->toArray(),
+            'access_point' => $access_point,
             'schools' => $schools,
             'action' => route('admin.access_points.save')
         ];
@@ -46,10 +48,10 @@ class AccessPointsController extends BaseController
     {
         $access_point = new AccessPoint();
 
-        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
         $data = [
-            'access_point' => $access_point->toArray(),
+            'access_point' => $access_point,
             'schools' => $schools,
             'action' => route('admin.access_points.add')
         ];
@@ -71,39 +73,31 @@ class AccessPointsController extends BaseController
     public function accessPointsAddAction(Request $request)
     {
         $this->validate($request, [
-            'zonea' => 'required|integer',
-            'zoneb' => 'required|integer',
-            'school_id' => 'required|exists:schools,id',
-            'system_id' => 'required|integer'
+            'zonea' => ['required', 'integer'],
+            'zoneb' => ['required', 'integer'],
+            'school_id' => ['required', 'exists:schools,id'],
+            'system_id' => ['required', 'integer'],
         ]);
-
         AccessPoint::create($request->all());
-
         return redirect(route('admin.access_points'));
     }
 
     public function accessPointsSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:access_points',
-            'zonea' => 'required|integer',
-            'zoneb' => 'required|integer',
-            'school_id' => 'required|exists:schools,id',
-            'system_id' => 'required|integer'
+            'id' => ['required', 'exists:access_points'],
+            'zonea' => ['required', 'integer'],
+            'zoneb' => ['required', 'integer'],
+            'school_id' => ['required', 'exists:schools,id'],
+            'system_id' => ['required', 'integer'],
         ]);
-
-        $id = $request->get('id');
-        $access_point = AccessPoint::find($id);
-        $access_point->fill($request->all());
-        $access_point->save();
-
+        AccessPoint::findOrFail($request->get('id'))->fill($request->all())->save();
         return redirect(route('admin.access_points'));
     }
 
     public function accessPointRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        AccessPoint::destroy($id);
+        AccessPoint::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.access_points'));
     }
 }

@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends BaseController
 {
-    public function usersAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
             $users = User::Orwhere('email', 'LIKE', $pattern)
                 ->OrWhere('phone', 'LIKE', $pattern)
-                ->get();
+                ->paginate(10);
         } else {
-            $users = User::all();
+            $users = User::paginate(10);
         }
 
         $data = [
-            'users' => $users->toArray()
+            'users' => $users
         ];
 
         return view('cabinet_admin.index.users', $data);
@@ -33,7 +33,7 @@ class UsersController extends BaseController
         $user = User::findOrFail($request->get('id'));
 
         $data = [
-            'user' => $user->toArray(),
+            'user' => $user,
             'roles' => User::getAllRoles(),
             'action' => route('admin.users.save')
         ];
@@ -46,7 +46,7 @@ class UsersController extends BaseController
         $user = new User();
 
         $data = [
-            'user' => $user->toArray(),
+            'user' => $user,
             'roles' => User::getAllRoles(),
             'action' => route('admin.users.add')
         ];

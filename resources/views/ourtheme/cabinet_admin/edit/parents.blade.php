@@ -10,7 +10,7 @@
             <div class="object-editPer">
                 <form method="POST" action="{{ $action }}">
                     @csrf
-                    <input type="hidden" name="id" value="{{ @$parent['id'] }}">
+                    <input type="hidden" name="id" value="{{ @$parent->id }}">
                     <table class="table table-hover table-striped">
                         <thead class="thead-dark">
                         <tr>
@@ -21,43 +21,42 @@
                         <tbody>
                         <tr>
                             <td>
-                                Фамилия
+                                <span>Фамилия</span>
                                 @if ($errors->has('surname'))
                                     <br><strong class="text-danger">{{ $errors->first('surname') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="surname" value="{{ @$parent['profile']['surname'] }}" class="text-dark">
+                                <input type="text" name="surname" value="{{ @$parent->profile->surname }}"
+                                       class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Имя
+                                <span>Имя</span>
                                 @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+                                    <br><strong>{{ $errors->first('name') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="name" value="{{ @$parent['profile']['name'] }}" class="text-dark">
+                                <input type="text" name="name" value="{{ @$parent->profile->name }}" class="text-dark">
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                Отчество
+                                <span>Отчество</span>
                                 @if ($errors->has('patronymic'))
                                     <br><strong class="text-danger">{{ $errors->first('patronymic') }}</strong>
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="patronymic" value="{{ @$parent['profile']['patronymic'] }}"
+                                <input type="text" name="patronymic" value="{{ @$parent->profile->patronymic }}"
                                        class="text-dark">
                             </td>
                         </tr>
                         <tr class="class">
                             <td>
-                                Пользователь
+                                <span>Пользователь</span>
                                 @if ($errors->has('user_id'))
                                     <br><strong class="text-danger">{{ $errors->first('user_id') }}</strong>
                                 @endif
@@ -65,12 +64,12 @@
                             <td>
                                 <select name="user_id">
                                     @foreach($users as $user)
-                                        @if($user['id'] == @$parent['user_id'])
-                                            <option value="{{ @$user['id'] }}"
-                                                    selected>{{ @$user['id'] . " - " . @$user['email'] }}</option>
+                                        @if($user->id == @$parent->user_id)
+                                            <option value="{{ @$user->id }}"
+                                                    selected>{{ @$user->id . ' - ' . @$user->email }}</option>
                                         @else
                                             <option
-                                                value="{{ @$user['id'] }}">{{ @$user['id'] . " - " . @$user['email'] }}</option>
+                                                value="{{ @$user->id }}">{{ @$user->id . ' - ' . @$user->email }}</option>
                                         @endif
                                     @endforeach
                                 </select>

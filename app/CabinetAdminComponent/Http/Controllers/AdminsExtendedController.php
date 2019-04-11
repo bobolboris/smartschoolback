@@ -11,12 +11,12 @@ use Illuminate\Http\Request;
 
 class AdminsExtendedController extends BaseController
 {
-    public function adminExtendedAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $admins = Admin::where('name', 'LIKE', "%" . $request->get('search') . "%")->get();
+            $admins = Admin::where('id', $request->get('search'))->paginate(10);
         } else {
-            $admins = Admin::all();
+            $admins = Admin::paginate(10);
         }
 
         $data = [
@@ -28,17 +28,15 @@ class AdminsExtendedController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
+        $admin = Admin::findOrFail($request->get('id'));
 
-        $admin = Admin::find($id);
-
-        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
-        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all())->all();
-        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
-        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all())->all();
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
+        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all());
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
+        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
-            'admin' => $admin->toArray(),
+            'admin' => $admin,
             'schools' => $schools,
             'profiles' => $profiles,
             'users' => $users,
@@ -53,13 +51,13 @@ class AdminsExtendedController extends BaseController
     {
         $admin = new Admin();
 
-        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
-        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all())->all();
-        $users = collect([new User(['email' => 'NULL'])])->concat(User::all())->all();
-        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all())->all();
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
+        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all());
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
+        $localities = collect([new Locality(['name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
-            'admin' => $admin->toArray(),
+            'admin' => $admin,
             'schools' => $schools,
             'profiles' => $profiles,
             'users' => $users,
@@ -105,6 +103,7 @@ class AdminsExtendedController extends BaseController
         ]);
 
         Admin::findOrFail($request->get('id'))->fill($request->all())->save();
+
         return redirect(route('admin.admins_extended'));
     }
 

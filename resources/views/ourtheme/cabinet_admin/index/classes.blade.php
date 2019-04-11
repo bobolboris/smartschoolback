@@ -33,25 +33,25 @@
                 @foreach($classes as $class)
                     <tr>
                         <td>
-                            {{ $class['id'] }}
+                            {{ $class->id }}
                         </td>
                         <td class="name">
-                            {{ $class['name'] }}
+                            {{ $class->name }}
                         </td>
                         <td>
-                            {{ ($class['admin'] == null) ? 'NULL' : $class['admin']['user']['email'] }}
+                            {{ ($class->admin == null) ? 'NULL' : $class->admin->user->email }}
                         </td>
                         <td>
-                            {{ $class['school']['name'] }}
+                            {{ $class->school->name }}
                         </td>
                         <td>
                             <div class="icons">
                                 <div class="icons">
-                                    <a href="{{ route('admin.classes.editForm', ['id' => $class['id']]) }}">
+                                    <a href="{{ route('admin.classes.editForm', ['id' => $class->id]) }}">
                                         <i class="fas fa-user-edit"></i>
                                     </a>
                                     <pre>       </pre>
-                                    <a href="{{ route('admin.classes.removeForm', ['id' => $class['id']]) }}">
+                                    <a href="{{ route('admin.classes.removeForm', ['id' => $class->id]) }}">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </div>
@@ -62,5 +62,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $classes->links() }}
     </div>
 @endsection

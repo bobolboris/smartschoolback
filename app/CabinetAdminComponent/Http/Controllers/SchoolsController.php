@@ -8,19 +8,19 @@ use Illuminate\Http\Request;
 
 class SchoolsController extends BaseController
 {
-    public function schoolsAction(Request $request)
+    public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
             $pattern = "%" . $request->get('search') . "%";
             $schools = School::Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('address', 'LIKE', $pattern)
-                ->get();
+                ->paginate(10);
         } else {
-            $schools = School::all();
+            $schools = School::paginate(10);
         }
 
         $data = [
-            'schools' => $schools->toArray()
+            'schools' => $schools
         ];
 
         return view('cabinet_admin.index.school', $data);
@@ -28,15 +28,13 @@ class SchoolsController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-
-        $school = School::find($id);
+        $school = School::findOrFail($request->get('id'));
 
         $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
-        $localities = $localities->concat(Locality::all())->all();
+        $localities = $localities->concat(Locality::all());
 
         $data = [
-            'school' => $school->toArray(),
+            'school' => $school,
             'localities' => $localities,
             'action' => route('admin.schools.save')
         ];
@@ -49,10 +47,10 @@ class SchoolsController extends BaseController
         $school = new School();
 
         $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
-        $localities = $localities->concat(Locality::all())->all();
+        $localities = $localities->concat(Locality::all());
 
         $data = [
-            'school' => $school->toArray(),
+            'school' => $school,
             'localities' => $localities,
             'action' => route('admin.schools.add')
         ];
@@ -74,8 +72,8 @@ class SchoolsController extends BaseController
     public function schoolsAddAction(Request $request)
     {
         $this->validate($request, [
-            'address' => 'required',
-            'name' => 'required',
+            'address' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
         ]);
 
         School::create($request->all());
@@ -86,24 +84,19 @@ class SchoolsController extends BaseController
     public function schoolsSaveAction(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|exists:schools',
-            'address' => 'required',
-            'name' => 'required',
+            'id' => ['required', 'schools'],
+            'address' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
         ]);
 
-        $id = $request->get('id');
-
-        $school = School::find($id);
-        $school->fill($request->all());
-        $school->save();
+        School::find($request->get('id'))->fill($request->all())->save();
 
         return redirect(route('admin.schools'));
     }
 
     public function schoolsRemoveAction(Request $request)
     {
-        $id = $request->get('id');
-        School::destroy($id);
+        School::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.schools'));
     }
 }

@@ -28,9 +28,7 @@
                     <th scope="col">
                         Название
                         @if ($errors->has('name'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
+                            <br><strong class="text-danger">{{ $errors->first('name') }}</strong>
                         @endif
                     </th>
                     <th scope="col">
@@ -44,24 +42,24 @@
                 @foreach($schools as $school)
                     <tr>
                         <td>
-                            {{ $school['id'] }}
+                            {{ $school->id }}
                         </td>
-                        <td class="surname">
-                            {{ $school['address'] }}
+                        <td>
+                            {{ $school->address }}
                         </td>
-                        <td class="name">
-                            {{ $school['name'] }}
+                        <td>
+                            {{ $school->name }}
                         </td>
-                        <td class="name">
-                            {{ ($school['locality'] == null) ? 'NULL' : $school['locality']['name'] }}
+                        <td>
+                            {{ ($school->locality == null) ? 'NULL' : $school->locality->name }}
                         </td>
 
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.schools.editForm', ['id' => $school['id']]) }}">
+                                <a href="{{ route('admin.schools.editForm', ['id' => $school->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.schools.removeForm', ['id' => $school['id']]) }}">
+                                <a href="{{ route('admin.schools.removeForm', ['id' => $school->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -71,5 +69,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $schools->links() }}
     </div>
 @endsection
