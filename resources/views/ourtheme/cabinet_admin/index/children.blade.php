@@ -19,7 +19,7 @@
                     <th scope="col">Имя</th>
                     <th scope="col">Отчество</th>
                     <th scope="col">Класс</th>
-                    <th scope="col">Управление учеткой</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,7 +41,6 @@
                         <td class="class">
                             {{ $child->class->name ?? 'NULL' }}
                         </td>
-
                         <td>
                             <div class="icons">
                                 <a href="{{ route('admin.children.editForm', ['id' => $child->id]) }}">
@@ -54,6 +53,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

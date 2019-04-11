@@ -12,7 +12,9 @@ class ClassesController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $classes = ClassModel::where('name', 'LIKE', "%" . $request->get('search') . "%")->paginate(10);
+            $classes = ClassModel::where('name', 'LIKE', '%' . $request->get('search') . '%')
+                ->Orwhere('id', $request->get('search'))
+                ->paginate(10);
         } else {
             $classes = ClassModel::paginate(10);
         }
@@ -29,10 +31,9 @@ class ClassesController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-        $class = ClassModel::find($request->get('id'));
+        $class = ClassModel::findOrFail($request->get('id'));
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
-
         $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
 
         $data = [
@@ -50,7 +51,6 @@ class ClassesController extends BaseController
         $class = new ClassModel();
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
-
         $admins = collect([new Admin(['id' => null])])->concat(Admin::all());
 
         $data = [
@@ -77,7 +77,7 @@ class ClassesController extends BaseController
     public function classesAddAction(Request $request)
     {
         $this->validate($request, [
-            'name' => ['required'],
+            'name' => ['required', 'max:255'],
             'school_id' => ['required', 'exists:schools,id']
         ]);
 
@@ -90,7 +90,7 @@ class ClassesController extends BaseController
     {
         $this->validate($request, [
             'id' => ['required', 'exists:classes'],
-            'name' => ['required'],
+            'name' => ['required', 'max:255'],
             'school_id' => ['required', 'exists:schools,id']
         ]);
 

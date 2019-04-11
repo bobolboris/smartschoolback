@@ -13,64 +13,13 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                        @if ($errors->has('id'))
-                            <br><strong class="text-danger">{{ $errors->first('id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        CodeKey
-                        @if ($errors->has('codekey'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('codekey') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        Короткий codekey
-                        @if ($errors->has('short_codekey'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('short_codekey') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        Дата создания
-                        @if ($errors->has('codekeytime'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('codekeytime') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        Время истечения
-                        @if ($errors->has('expires'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('expires') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        Включен
-                        @if ($errors->has('status'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('status') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Ученик
-                        @if ($errors->has('child_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('child_id') }}</strong>
-                            </span>
-                        @endif
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">CodeKey</th>
+                    <th scope="col">Короткий CodeKey</th>
+                    <th scope="col">Дата создания</th>
+                    <th scope="col">Время истечения</th>
+                    <th scope="col">Включен</th>
+                    <th scope="col">Ученик</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -111,6 +60,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

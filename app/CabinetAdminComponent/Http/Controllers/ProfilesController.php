@@ -8,10 +8,24 @@ use Illuminate\Http\Request;
 
 class ProfilesController extends BaseController
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $profiles = Profile::paginate(10);
-        return view('cabinet_admin.index.profiles', compact('profiles'));
+        if ($request->exists('search')) {
+            $pattern = '%' . $request->get('search') . '%';
+            $profiles = Profile::where('name', 'LIKE', $pattern)
+                ->Orwhere('surname', 'LIKE', $pattern)
+                ->Orwhere('patronymic', 'LIKE', $pattern)
+                ->Orwhere('id', $request->get('search'))
+                ->paginate(10);
+        } else {
+            $profiles = Profile::paginate(10);
+        }
+
+        $data = [
+            'profiles' => $profiles
+        ];
+
+        return view('cabinet_admin.index.profiles', $data);
     }
 
     public function showEditFormAction(Request $request)
@@ -20,6 +34,7 @@ class ProfilesController extends BaseController
             'profile' => Profile::findOrFail($request->get('id')),
             'action' => route('admin.profile.save')
         ];
+
         return view('cabinet_admin.edit.profiles', $data);
     }
 
@@ -29,6 +44,7 @@ class ProfilesController extends BaseController
             'profile' => new Profile(),
             'action' => route('admin.profile.add')
         ];
+
         return view('cabinet_admin.edit.profiles', $data);
     }
 
@@ -39,6 +55,7 @@ class ProfilesController extends BaseController
             'backurl' => $request->server('HTTP_REFERER', '/'),
             'action' => route('admin.profile.remove')
         ];
+
         return view('cabinet_admin.remove.remove', $data);
     }
 

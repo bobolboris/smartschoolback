@@ -14,12 +14,7 @@ class ChildrenExtendedController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = '%' . $request->get('search') . '%';
-            $children = Child::Orwhere('name', 'LIKE', $pattern)
-                ->OrWhere('surname', 'LIKE', $pattern)
-                ->OrWhere('patronymic', 'LIKE', $pattern)
-                ->OrWhere('id', $request->get('search'))
-                ->paginate(10);
+            $children = Child::where('id', $request->get('search'))->paginate(10);
         } else {
             $children = Child::paginate(10);
         }
@@ -35,17 +30,10 @@ class ChildrenExtendedController extends BaseController
     {
         $child = Child::findOrFail($request->get('id'));
 
-        $profiles = collect([new Profile(['name' => 'NULL'])]);
-        $profiles = $profiles->concat(Profile::all())->all();
-
-        $classes = collect([new ClassModel(['name' => 'NULL'])]);
-        $classes = $classes->concat(ClassModel::all())->all();
-
-        $photos = collect([new Photo(['path' => 'NULL'])]);
-        $photos = $photos->concat(Photo::all())->all();
-
-        $users = collect([new User(['email' => 'NULL'])]);
-        $users = $users->concat(User::all())->all();
+        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all());
+        $classes = collect([new ClassModel(['name' => 'NULL'])])->concat(ClassModel::all());
+        $photos = collect([new Photo(['path' => 'NULL'])])->concat(Photo::all());
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
 
         $data = [
             'child' => $child,
@@ -67,7 +55,9 @@ class ChildrenExtendedController extends BaseController
             'photo_id' => ['nullable', 'exists:photos,id'],
             'user_id' => ['nullable', 'exists:users,id'],
         ]);
+
         Child::create($request->all());
+
         return redirect(route('admin.children_extended'));
     }
 
@@ -80,7 +70,9 @@ class ChildrenExtendedController extends BaseController
             'photo_id' => ['nullable', 'exists:photos,id'],
             'user_id' => ['nullable', 'exists:users,id'],
         ]);
+
         Child::findOrFail($request->get('id'))->fill($request->all())->save();
+
         return redirect(route('admin.children_extended'));
     }
 
@@ -88,17 +80,10 @@ class ChildrenExtendedController extends BaseController
     {
         $child = new Child();
 
-        $profiles = collect([new Profile(['name' => 'NULL'])]);
-        $profiles = $profiles->concat(Profile::all())->all();
-
-        $classes = collect([new ClassModel(['name' => 'NULL'])]);
-        $classes = $classes->concat(ClassModel::all())->all();
-
-        $photos = collect([new Photo(['path' => 'NULL'])]);
-        $photos = $photos->concat(Photo::all())->all();
-
-        $users = collect([new User(['email' => 'NULL'])]);
-        $users = $users->concat(User::all())->all();
+        $profiles = collect([new Profile(['name' => 'NULL'])])->concat(Profile::all());
+        $classes = collect([new ClassModel(['name' => 'NULL'])])->concat(ClassModel::all());
+        $photos = collect([new Photo(['path' => 'NULL'])])->concat(Photo::all());
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
 
         $data = [
             'child' => $child,

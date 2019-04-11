@@ -13,42 +13,11 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                        @if ($errors->has('id'))
-                            <br><strong class="text-danger">{{ $errors->first('id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        profile_id
-                        @if ($errors->has('profile_id'))
-                            <br><strong class="text-danger">{{ $errors->first('profile_id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        user_id
-                        @if ($errors->has('user_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('user_id') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        school_id
-                        @if ($errors->has('school_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('school_id') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        locality_id
-                        @if ($errors->has('locality_id'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('locality_id') }}</strong>
-                            </span>
-                        @endif
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">profile_id</th>
+                    <th scope="col">user_id</th>
+                    <th scope="col">school_id</th>
+                    <th scope="col">locality_id</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -71,7 +40,6 @@
                         <td>
                             {{ $admin->locality_id ?? 'NULL' }}
                         </td>
-
                         <td>
                             <div class="icons">
                                 <a href="{{ route('admin.admins_extended.editForm', ['id' => $admin->id]) }}">
@@ -84,6 +52,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

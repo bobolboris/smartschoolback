@@ -23,66 +23,37 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                        @if ($errors->has('id'))
-                            <br><strong class="text-danger">{{ $errors->first('id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Роли
-                        @if ($errors->has('roles'))
-                            <br><strong class="text-danger">{{ $errors->first('roles') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        E-mail
-                        @if ($errors->has('email'))
-                            <br><strong class="text-danger">{{ $errors->first('email') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Телефон
-                        @if ($errors->has('phone'))
-                            <br><strong class="text-danger">{{ $errors->first('phone') }}</strong>
-                        @endif
-                    </th>
-
-                    <th scope="col">
-                        Включен
-                        @if ($errors->has('enabled'))
-                            <br><strong class="text-danger">{{ $errors->first('enabled') }}</strong>
-                        @endif
-                    </th>
-
-                    <th scope="col">Управление учеткой</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Роли</th>
+                    <th scope="col">E-mail</th>
+                    <th scope="col">Телефон</th>
+                    <th scope="col">Включен</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
-
 
                 @foreach($users as $user)
                     <tr>
                         <td>
                             {{ $user->id }}
                         </td>
-                        <td class="roles">
+                        <td>
                             {{ $user->roles }}
                         </td>
-                        <td class="email">
+                        <td>
                             {{ $user->email }}
                         </td>
-                        <td class="phone">
+                        <td>
                             {{ $user->phone }}
                         </td>
-                        <td class="enabled">
+                        <td>
                             @if($user->enabled == 0)
                                 Нет
                             @else
                                 Да
                             @endif
                         </td>
-
                         <td>
                             <div class="icons">
                                 <a href="{{ route('admin.users.editForm', ['id' => $user->id]) }}">
@@ -95,6 +66,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

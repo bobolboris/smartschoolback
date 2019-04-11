@@ -13,27 +13,10 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                        @if ($errors->has('id'))
-                            <br><strong class="text-danger">{{ $errors->first('id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Адрес
-                        @if ($errors->has('address'))
-                            <br><strong class="text-danger">{{ $errors->first('address') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Название
-                        @if ($errors->has('name'))
-                            <br><strong class="text-danger">{{ $errors->first('name') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Населенный пункт
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Адрес</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Населенный пункт</th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
@@ -51,7 +34,7 @@
                             {{ $school->name }}
                         </td>
                         <td>
-                            {{ ($school->locality == null) ? 'NULL' : $school->locality->name }}
+                            {{ $school->locality->name ?? 'NULL' }}
                         </td>
 
                         <td>
@@ -66,6 +49,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

@@ -13,18 +13,10 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                    </th>
-                    <th scope="col">
-                        Тип
-                    </th>
-                    <th scope="col">
-                        Название
-                    </th>
-                    <th scope="col">
-                        Родительское местоположение
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Тип</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Родительское местоположение</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -35,14 +27,14 @@
                         <td>
                             {{ $locality->id }}
                         </td>
-                        <td class="name">
+                        <td>
                             {{ $locality->type_name }}
                         </td>
                         <td>
                             {{ $locality->name }}
                         </td>
                         <td>
-                            {{ $showNULL(@$locality->locality->name) }}
+                            {{ $locality->locality->name ?? 'NULL' }}
                         </td>
                         <td>
                             <div class="icons">
@@ -59,6 +51,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

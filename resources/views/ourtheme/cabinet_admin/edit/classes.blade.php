@@ -30,7 +30,6 @@
                                 <input type="text" name="name" value="{{ @$class->name }}" class="text-dark">
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>Админ</span>
@@ -39,7 +38,6 @@
                                 @endif
                             </td>
                             <td>
-
                                 <select name="admin_id">
                                     @foreach($admins as $admin)
                                         @if(@$admin->id == @$class->admin_id)
@@ -53,7 +51,6 @@
                                 </select>
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>Школа</span>
@@ -75,8 +72,6 @@
                                 </select>
                             </td>
                         </tr>
-
-
                         </tbody>
                     </table>
                     <input type="submit" class="btn btn-primary" value="Сохранить">

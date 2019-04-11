@@ -18,11 +18,12 @@ class ChildrenController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = "%" . $request->get('search') . "%";
+            $pattern = '%' . $request->get('search') . '%';
             $children = Child::join('profiles', 'profiles.id', '=', 'children.profile_id')
                 ->Orwhere('name', 'LIKE', $pattern)
                 ->OrWhere('surname', 'LIKE', $pattern)
                 ->OrWhere('patronymic', 'LIKE', $pattern)
+                ->Orwhere('children.id', $request->get('search'))
                 ->paginate(10);
         } else {
             $children = Child::paginate(10);

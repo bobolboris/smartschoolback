@@ -33,7 +33,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>Короткий codekey</span>
+                                <span>Короткий CodeKey</span>
                                 @if ($errors->has('short_codekey'))
                                     <br><strong class="text-danger">{{ $errors->first('short_codekey') }}</strong>
                                 @endif
@@ -67,8 +67,6 @@
                                        class="text-dark">
                             </td>
                         </tr>
-
-
                         <tr>
                             <td>
                                 <span>Включен</span>
@@ -88,8 +86,6 @@
                                 </select>
                             </td>
                         </tr>
-
-
                         <tr>
                             <td>
                                 <span>Ученик</span>
@@ -111,7 +107,6 @@
                                 </select>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                     <input type="submit" class="btn btn-primary" value="Сохранить">

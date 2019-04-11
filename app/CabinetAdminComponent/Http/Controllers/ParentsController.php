@@ -16,18 +16,18 @@ class ParentsController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = "%" . $request->get('search') . "%";
+            $pattern = '%' . $request->get('search') . '%';
             $parents = ParentModel::join('profiles', 'profiles.id', '=', 'parents.profile_id')
                 ->Orwhere('name', 'LIKE', $pattern)
-                ->OrWhere('surname', 'LIKE', $pattern)
-                ->OrWhere('patronymic', 'LIKE', $pattern)
+                ->Orwhere('surname', 'LIKE', $pattern)
+                ->Orwhere('patronymic', 'LIKE', $pattern)
+                ->Orwhere('parents.id', $request->get('search'))
                 ->paginate(10);
         } else {
             $parents = ParentModel::paginate(10);
         }
 
-        $users = collect([new User(['email' => 'NULL'])]);
-        $users = $users->concat(User::all())->all();
+        $users = collect([new User(['email' => 'NULL'])])->concat(User::all());
 
         $children_ids = Child::select('id')->get();
 

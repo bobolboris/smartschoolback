@@ -14,42 +14,50 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Название</th>
-                    <th scope="col">ZoneA</th>
-                    <th scope="col">ZoneB</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">E-mail</th>
                     <th scope="col">Адрес - Школа</th>
-                    <th scope="col">System ID</th>
+                    <th scope="col">Местоположение</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                @foreach($access_points as $access_point)
+                @foreach($admins as $admin)
                     <tr>
                         <td>
-                            {{ $access_point->id }}
+                            {{ $admin->id }}
                         </td>
                         <td>
-                            {{ $access_point->name }}
+                            {{ $admin->profile->surname ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $access_point->zonea }}
+                            {{ $admin->profile->name ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $access_point->zoneb }}
+                            {{ $admin->profile->patronymic ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $access_point->school->address . ' - ' . $access_point->school->name }}
+                            {{ $admin->user->email ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $access_point->system_id }}
+                            @if ($admin->school_id == null)
+                                {{ $admin->school->address . ' - ' . $admin->school->name }}
+                            @else
+                                {{ 'NULL' }}
+                            @endif
+                        </td>
+                        <td>
+                            {{ $admin->locality->name ?? 'NULL' }}
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.access_points.editForm', ['id' => $access_point->id]) }}">
+                                <a href="{{ route('admin.access_points.editForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.access_points.removeForm', ['id' => $access_point->id]) }}">
+                                <a href="{{ route('admin.access_points.removeForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>

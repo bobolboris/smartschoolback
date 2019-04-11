@@ -12,9 +12,10 @@ class UsersController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = "%" . $request->get('search') . "%";
+            $pattern = '%' . $request->get('search') . '%';
             $users = User::Orwhere('email', 'LIKE', $pattern)
                 ->OrWhere('phone', 'LIKE', $pattern)
+                ->Orwhere('id', $request->get('search'))
                 ->paginate(10);
         } else {
             $users = User::paginate(10);
@@ -29,7 +30,6 @@ class UsersController extends BaseController
 
     public function showEditFormAction(Request $request)
     {
-
         $user = User::findOrFail($request->get('id'));
 
         $data = [
@@ -69,8 +69,8 @@ class UsersController extends BaseController
     {
         $rules = [
             'roles' => ['nullable', 'array'],
-            'email' => ['required'],
-            'phone' => ['required'],
+            'email' => ['required', 'max:255'],
+            'phone' => ['required', 'max:255'],
             'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
             'enabled' => ['required', 'in:0,1'],
             'remember_token' => ['nullable', 'string', 'max:100'],
@@ -118,8 +118,8 @@ class UsersController extends BaseController
         $rules = [
             'id' => ['required', 'exists:users'],
             'roles' => ['nullable', 'array'],
-            'email' => ['required'],
-            'phone' => ['required'],
+            'email' => ['required', 'max:255'],
+            'phone' => ['required', 'max:255'],
             'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
             'enabled' => ['required', 'in:0,1'],
             'remember_token' => ['nullable', 'string', 'max:100'],

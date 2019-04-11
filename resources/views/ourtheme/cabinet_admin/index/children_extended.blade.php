@@ -20,7 +20,7 @@
                     <th scope="col">photo_id</th>
                     <th scope="col">user_id</th>
                     <th scope="col">system_id</th>
-                    <th scope="col">Управление учеткой</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,6 @@
                         <td>
                             {{ $child->system_id ?? 'NULL' }}
                         </td>
-
                         <td>
                             <div class="icons">
                                 <a href="{{ route('admin.children_extended.editForm', ['id' => $child->id]) }}">
@@ -58,6 +57,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

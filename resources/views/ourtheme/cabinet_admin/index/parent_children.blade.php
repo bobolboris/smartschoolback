@@ -23,6 +23,7 @@
                 </tr>
                 </thead>
                 <tbody id="childBody">
+
                 @foreach($children as $child)
                     <tr>
                         <td>{{ $child->id }}</td>
@@ -43,6 +44,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

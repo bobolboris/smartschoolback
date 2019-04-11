@@ -15,22 +15,12 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                    </th>
-                    <th scope="col">
-                        Фамилия
-                    </th>
-                    <th scope="col">
-                        Имя
-                    </th>
-                    <th scope="col">
-                        Отчество
-                    </th>
-                    <th scope="col">
-                        Пользователь<br>(id - email)
-                    </th>
-                    <th scope="col" width="20%">Управление учеткой</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
+                    <th scope="col">Пользователь<br>(id - email)</th>
+                    <th scope="col" width="20%">Действия</th>
                     <th scope="col" width="25%">Дети</th>
                 </tr>
                 </thead>
@@ -63,7 +53,6 @@
                                 </a>
                             </div>
                         </td>
-
                         <td>
                             <a href="{{route('admin.parent_children', ['id' => $parent->id])}}" class="btn btn-primary">Просмотр</a>
                         </td>

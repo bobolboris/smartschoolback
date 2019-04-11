@@ -77,7 +77,7 @@
                         </tr>
                         <tr class="class">
                             <td>
-                                System ID
+                                <span>System ID</span>
                                 @if ($errors->has('system_id'))
                                     <br><strong class="text-danger">{{ $errors->first('system_id') }}</strong>
                                 @endif
@@ -93,4 +93,3 @@
         </div>
     </div>
 @endsection
-

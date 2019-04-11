@@ -23,6 +23,7 @@ class AdminsExtendedController extends BaseController
             'admins' => $admins,
             'showNULL' => $this->showNULL
         ];
+
         return view('cabinet_admin.index.admins_extended', $data);
     }
 

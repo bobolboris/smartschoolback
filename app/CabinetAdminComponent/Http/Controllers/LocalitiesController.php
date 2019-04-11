@@ -10,7 +10,9 @@ class LocalitiesController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $localities = Locality::where('name', 'LIKE', "%" . $request->get('search') . "%")->paginate(10);
+            $localities = Locality::where('name', 'LIKE', '%' . $request->get('search') . '%')
+                ->Orwhere('id', $request->get('search'))
+                ->paginate(10);
         } else {
             $localities = Locality::paginate(10);
         }

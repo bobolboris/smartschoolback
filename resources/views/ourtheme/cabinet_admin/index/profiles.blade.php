@@ -13,34 +13,10 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                        @if ($errors->has('id'))
-                            <br><strong class="text-danger">{{ $errors->first('id') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Фамилия
-                        @if ($errors->has('surname'))
-                            <br><strong class="text-danger">{{ $errors->first('surname') }}</strong>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Имя
-                        @if ($errors->has('name'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('name') }}</strong>
-                            </span>
-                        @endif
-                    </th>
-                    <th scope="col">
-                        Отчество
-                        @if ($errors->has('patronymic'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('patronymic') }}</strong>
-                            </span>
-                        @endif
-                    </th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Отчество</th>
                     <th scope="col">Управление учеткой</th>
                 </tr>
                 </thead>
@@ -72,6 +48,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>

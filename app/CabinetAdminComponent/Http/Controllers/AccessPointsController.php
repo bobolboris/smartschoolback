@@ -24,14 +24,13 @@ class AccessPointsController extends BaseController
             'access_points' => $access_points,
             'schools' => $schools
         ];
+
         return view('cabinet_admin.index.access_points', $data);
     }
 
     public function showEditFormAction(Request $request)
     {
-        $id = $request->get('id');
-
-        $access_point = AccessPoint::find($id);
+        $access_point = AccessPoint::findOrFail($request->get('id'));
 
         $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
@@ -78,7 +77,9 @@ class AccessPointsController extends BaseController
             'school_id' => ['required', 'exists:schools,id'],
             'system_id' => ['required', 'integer'],
         ]);
+
         AccessPoint::create($request->all());
+
         return redirect(route('admin.access_points'));
     }
 
@@ -91,7 +92,9 @@ class AccessPointsController extends BaseController
             'school_id' => ['required', 'exists:schools,id'],
             'system_id' => ['required', 'integer'],
         ]);
+
         AccessPoint::findOrFail($request->get('id'))->fill($request->all())->save();
+
         return redirect(route('admin.access_points'));
     }
 

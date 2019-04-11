@@ -12,7 +12,11 @@ class ChildrenKeysController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $children_keys = ChildKey::where('codekey', 'LIKE', "%" . $request->get('search') . "%")->paginate(10);
+            $pattern = '%' . $request->get('search') . '%';
+            $children_keys = ChildKey::where('codekey', 'LIKE', $pattern)
+                ->Orwhere('short_codekey', 'LIKE', $pattern)
+                ->Orwhere('id', $request->get('search'))
+                ->paginate(10);
         } else {
             $children_keys = ChildKey::paginate(10);
         }

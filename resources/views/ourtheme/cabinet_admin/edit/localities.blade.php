@@ -19,7 +19,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         <tr>
                             <td>
                                 <span>Тип</span>
@@ -39,7 +38,6 @@
                                 </select>
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>Название</span>
@@ -51,7 +49,6 @@
                                 <input type="text" name="name" value="{{ $locality->name }}" class="text-dark">
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>Насленный пункт</span>
@@ -71,8 +68,6 @@
                                 </select>
                             </td>
                         </tr>
-
-
                         </tbody>
                     </table>
                     <input type="submit" class="btn btn-primary" value="Сохранить">

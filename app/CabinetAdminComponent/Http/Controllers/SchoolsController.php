@@ -11,9 +11,10 @@ class SchoolsController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $pattern = "%" . $request->get('search') . "%";
+            $pattern = '%' . $request->get('search') . '%';
             $schools = School::Orwhere('name', 'LIKE', $pattern)
-                ->OrWhere('address', 'LIKE', $pattern)
+                ->Orwhere('address', 'LIKE', $pattern)
+                ->Orwhere('id', $request->get('search'))
                 ->paginate(10);
         } else {
             $schools = School::paginate(10);
@@ -30,8 +31,7 @@ class SchoolsController extends BaseController
     {
         $school = School::findOrFail($request->get('id'));
 
-        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
-        $localities = $localities->concat(Locality::all());
+        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
             'school' => $school,
@@ -46,8 +46,7 @@ class SchoolsController extends BaseController
     {
         $school = new School();
 
-        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])]);
-        $localities = $localities->concat(Locality::all());
+        $localities = collect([new Locality(['id' => null, 'name' => 'NULL'])])->concat(Locality::all());
 
         $data = [
             'school' => $school,
@@ -89,7 +88,7 @@ class SchoolsController extends BaseController
             'name' => ['required', 'max:255'],
         ]);
 
-        School::find($request->get('id'))->fill($request->all())->save();
+        School::findOrFail($request->get('id'))->fill($request->all())->save();
 
         return redirect(route('admin.schools'));
     }

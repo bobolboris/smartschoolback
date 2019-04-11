@@ -13,6 +13,7 @@ class ChildParentController extends BaseController
     public function indexAction(Request $request)
     {
         $id = $request->get('id');
+
         $parent = ParentModel::findOrFail($id);
 
         $children = $parent->children;
@@ -45,12 +46,10 @@ class ChildParentController extends BaseController
 
     public function showAddChildFormAction(Request $request)
     {
-        $parent_id = $request->get('id');
-
         $children = Child::all();
 
         $data = [
-            'parent_id' => $parent_id,
+            'parent_id' => $request->get('id'),
             'children' => $children
         ];
 

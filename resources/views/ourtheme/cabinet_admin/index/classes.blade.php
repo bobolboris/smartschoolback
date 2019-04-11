@@ -13,19 +13,11 @@
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">
-                        ID
-                    </th>
-                    <th scope="col">
-                        Название
-                    </th>
-                    <th scope="col">
-                        Админ
-                    </th>
-                    <th scope="col">
-                        Школа
-                    </th>
-                    <th scope="col">Управление учеткой</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Название</th>
+                    <th scope="col">Админ</th>
+                    <th scope="col">Школа</th>
+                    <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -35,11 +27,11 @@
                         <td>
                             {{ $class->id }}
                         </td>
-                        <td class="name">
+                        <td>
                             {{ $class->name }}
                         </td>
                         <td>
-                            {{ ($class->admin == null) ? 'NULL' : $class->admin->user->email }}
+                            {{ $class->admin->user->email ?? 'NULL' }}
                         </td>
                         <td>
                             {{ $class->school->name }}
@@ -59,6 +51,7 @@
                         </td>
                     </tr>
                 @endforeach
+
                 </tbody>
             </table>
         </div>
