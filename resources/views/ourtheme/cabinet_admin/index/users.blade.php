@@ -28,6 +28,7 @@
                     <th scope="col">E-mail</th>
                     <th scope="col">Телефон</th>
                     <th scope="col">Включен</th>
+                    <th scope="col">Настройки</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -53,6 +54,9 @@
                             @else
                                 Да
                             @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.settings', ['id' => $user->id]) }}" class="btn btn-primary">Просмотр</a>
                         </td>
                         <td>
                             <div class="icons">

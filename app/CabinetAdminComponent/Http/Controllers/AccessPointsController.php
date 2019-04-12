@@ -11,14 +11,14 @@ class AccessPointsController extends BaseController
     public function indexAction(Request $request)
     {
         if ($request->exists('search')) {
-            $access_points = AccessPoint::where('name', 'LIKE', "%" . $request->get('search') . "%")
+            $access_points = AccessPoint::where('name', 'LIKE', '%' . $request->get('search') . '%')
                 ->Orwhere('id', $request->get('search'))
                 ->paginate(10);
         } else {
             $access_points = AccessPoint::paginate(10);
         }
 
-        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all())->all();
+        $schools = collect([new School(['name' => 'NULL'])])->concat(School::all());
 
         $data = [
             'access_points' => $access_points,

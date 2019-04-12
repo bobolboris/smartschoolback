@@ -54,13 +54,15 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.parents') }}">
-                        Родители
-                    </a>
+                    <a href="{{ route('admin.parents') }}">Родители</a>
                 </li>
 
                 <li>
                     <a href="{{ route('admin.profiles') }}">Профили</a>
+                </li>
+
+                <li>
+                    <a href="{{ route('admin.admins') }}">Администраторы</a>
                 </li>
 
                 <li>
@@ -76,18 +78,18 @@
             <div class="col-3"></div>
             <div class="col-6">
                 {{--<div class="d-flex justify-content-center">--}}
-                    {{--<form class="text-center" method="POST">--}}
-                        {{--<select>--}}
-                            {{--<option>Выберите населенный пункт</option>--}}
-                        {{--</select>--}}
-                        {{--<select>--}}
-                            {{--<option>Выберите УЗ</option>--}}
-                        {{--</select>--}}
-                        {{--<select>--}}
-                            {{--<option>Выберите Класс</option>--}}
-                        {{--</select>--}}
-                        {{--<input type="submit" value="Сохранить">--}}
-                    {{--</form>--}}
+                {{--<form class="text-center" method="POST">--}}
+                {{--<select>--}}
+                {{--<option>Выберите населенный пункт</option>--}}
+                {{--</select>--}}
+                {{--<select>--}}
+                {{--<option>Выберите УЗ</option>--}}
+                {{--</select>--}}
+                {{--<select>--}}
+                {{--<option>Выберите Класс</option>--}}
+                {{--</select>--}}
+                {{--<input type="submit" value="Сохранить">--}}
+                {{--</form>--}}
                 {{--</div>--}}
             </div>
 
@@ -100,7 +102,8 @@
 
                     <div>
                         <form class="form-inline admin_search" method="GET" action="{{ url()->full() }}">
-                            <input class="form-control mr-sm-2 w-50" type="search" name="search" value="{{ request('search') }}">
+                            <input class="form-control mr-sm-2 w-50" type="search" name="search"
+                                   value="{{ request('search') }}">
                             <button type="submit" class="btn text-white bg-dark">Найти</button>
                         </form>
                     </div>

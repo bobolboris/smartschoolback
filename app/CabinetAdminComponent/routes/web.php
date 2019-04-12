@@ -159,4 +159,25 @@ Route::prefix('admin')->group(function () {
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\ChildrenKeysController@childrenKeysAddAction')->name('admin.children_keys.add');
     });
 
+    Route::prefix('admins')->group(function () {
+        Route::get('/', 'CabinetAdminComponent\Http\Controllers\AdminsController@indexAction')->name('admin.admins');
+        Route::get('remove_form', 'CabinetAdminComponent\Http\Controllers\AdminsController@showRemoveFormAction')->name('admin.admins.removeForm');
+        Route::get('add_form', 'CabinetAdminComponent\Http\Controllers\AdminsController@showAddFormAction')->name('admin.admins.addForm');
+        Route::get('edit_form', 'CabinetAdminComponent\Http\Controllers\AdminsController@showEditFormAction')->name('admin.admins.editForm');
+
+        Route::post('save', 'CabinetAdminComponent\Http\Controllers\AdminsController@adminsSaveAction')->name('admin.admins.save');
+        Route::post('remove', 'CabinetAdminComponent\Http\Controllers\AdminsController@adminsRemoveAction')->name('admin.admins.remove');
+        Route::post('add', 'CabinetAdminComponent\Http\Controllers\AdminsController@adminsAddAction')->name('admin.admins.add');
+    });
+
+    Route::prefix('settings')->group(function () {
+        Route::get('/', 'CabinetAdminComponent\Http\Controllers\SettingsController@indexAction')->name('admin.settings');
+        Route::get('remove_form', 'CabinetAdminComponent\Http\Controllers\SettingsController@showRemoveFormAction')->name('admin.settings.removeForm');
+
+        Route::post('add', 'CabinetAdminComponent\Http\Controllers\SettingsController@addAction')->name('admin.settings.add');
+        Route::get('remove', 'CabinetAdminComponent\Http\Controllers\SettingsController@removeAction');
+        Route::post('remove', 'CabinetAdminComponent\Http\Controllers\SettingsController@removeAction')->name('admin.settings.remove');
+        Route::post('save', 'CabinetAdminComponent\Http\Controllers\SettingsController@saveAction')->name('admin.settings.save');
+    });
+
 });

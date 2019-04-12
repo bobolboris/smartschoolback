@@ -53,7 +53,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <span>email</span>
+                                <span>E-mail</span>
                                 @if ($errors->has('email'))
                                     <br><strong class="text-danger">{{ $errors->first('email') }}</strong>
                                 @endif
@@ -84,7 +84,6 @@
                                 <input type="text" name="password" class="text-dark">
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>*email_verified_at</span>
@@ -97,7 +96,6 @@
                                        value="{{ str_replace(' ', 'T', @$user->email_verified_at) }}">
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>Включен</span>
@@ -117,7 +115,6 @@
                                 </select>
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>*remember_token</span>
@@ -129,7 +126,6 @@
                                 <textarea name="remember_token">{{ @$user->remember_token }}</textarea>
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>*created_at</span>
@@ -142,7 +138,6 @@
                                        value="{{ str_replace(' ', 'T', @$user->created_at) }}">
                             </td>
                         </tr>
-
                         <tr>
                             <td>
                                 <span>*update_at</span>
@@ -155,7 +150,6 @@
                                        value="{{ str_replace(' ', 'T', @$user->updated_at) }}">
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                     <input type="submit" class="btn btn-primary" value="Сохранить">

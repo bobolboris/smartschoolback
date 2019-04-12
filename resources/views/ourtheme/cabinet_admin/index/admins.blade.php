@@ -3,8 +3,8 @@
 @section('content')
     <div class="container content">
         <div class="row justify-content-center">
-            <h1>Точки доступа</h1>
-            <a href="{{ route('admin.access_points.addForm') }}" class="btn" style="padding-top: 8px;">
+            <h1>Администраторы</h1>
+            <a href="{{ route('admin.admins.addForm') }}" class="btn" style="padding-top: 8px;">
                 <i class="fas fa-plus" style="font-size: 30px;"></i>
             </a>
         </div>
@@ -44,9 +44,9 @@
                         </td>
                         <td>
                             @if ($admin->school_id == null)
-                                {{ $admin->school->address . ' - ' . $admin->school->name }}
-                            @else
                                 {{ 'NULL' }}
+                            @else
+                                {{ $admin->school->address . ' - ' . $admin->school->name }}
                             @endif
                         </td>
                         <td>
@@ -54,10 +54,10 @@
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.access_points.editForm', ['id' => $admin->id]) }}">
+                                <a href="{{ route('admin.admins.editForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.access_points.removeForm', ['id' => $admin->id]) }}">
+                                <a href="{{ route('admin.admins.removeForm', ['id' => $admin->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -68,6 +68,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $access_points->links() }}
+        {{ $admins->links() }}
     </div>
 @endsection
