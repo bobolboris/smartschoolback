@@ -64,6 +64,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $children_keys->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $children_keys->links() }}
+        </div>
     </div>
 @endsection

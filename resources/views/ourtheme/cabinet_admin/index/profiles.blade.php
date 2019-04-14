@@ -52,7 +52,9 @@
                 </tbody>
             </table>
         </div>
-        {{ $profiles->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $profiles->links() }}
+        </div>
     </div>
 @endsection
 

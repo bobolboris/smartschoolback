@@ -56,6 +56,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $admins->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $admins->links() }}
+        </div>
     </div>
 @endsection

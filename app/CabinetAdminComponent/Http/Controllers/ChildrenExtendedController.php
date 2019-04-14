@@ -47,35 +47,6 @@ class ChildrenExtendedController extends BaseController
         return view('cabinet_admin.edit.children_extended', $data);
     }
 
-    public function childrenAddAction(Request $request)
-    {
-        $this->validate($request, [
-            'profile_id' => ['nullable', 'exists:profiles,id'],
-            'class_id' => ['nullable', 'exists:classes,id'],
-            'photo_id' => ['nullable', 'exists:photos,id'],
-            'user_id' => ['nullable', 'exists:users,id'],
-        ]);
-
-        Child::create($request->all());
-
-        return redirect(route('admin.children_extended'));
-    }
-
-    public function childrenSaveAction(Request $request)
-    {
-        $this->validate($request, [
-            'id' => ['required', 'exists:children'],
-            'profile_id' => ['nullable', 'exists:profiles,id'],
-            'class_id' => ['nullable', 'exists:classes,id'],
-            'photo_id' => ['nullable', 'exists:photos,id'],
-            'user_id' => ['nullable', 'exists:users,id'],
-        ]);
-
-        Child::findOrFail($request->get('id'))->fill($request->all())->save();
-
-        return redirect(route('admin.children_extended'));
-    }
-
     public function showAddFormAction()
     {
         $child = new Child();
@@ -108,7 +79,36 @@ class ChildrenExtendedController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function childrenRemoveAction(Request $request)
+    public function addAction(Request $request)
+    {
+        $this->validate($request, [
+            'profile_id' => ['nullable', 'exists:profiles,id'],
+            'class_id' => ['nullable', 'exists:classes,id'],
+            'photo_id' => ['nullable', 'exists:photos,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
+        ]);
+
+        Child::create($request->all());
+
+        return redirect(route('admin.children_extended'));
+    }
+
+    public function saveAction(Request $request)
+    {
+        $this->validate($request, [
+            'id' => ['required', 'exists:children'],
+            'profile_id' => ['nullable', 'exists:profiles,id'],
+            'class_id' => ['nullable', 'exists:classes,id'],
+            'photo_id' => ['nullable', 'exists:photos,id'],
+            'user_id' => ['nullable', 'exists:users,id'],
+        ]);
+
+        Child::findOrFail($request->get('id'))->fill($request->all())->save();
+
+        return redirect(route('admin.children_extended'));
+    }
+
+    public function removeAction(Request $request)
     {
         Child::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.children_extended'));

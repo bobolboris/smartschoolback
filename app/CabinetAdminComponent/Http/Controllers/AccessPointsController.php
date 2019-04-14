@@ -69,7 +69,7 @@ class AccessPointsController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function accessPointsAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'zonea' => ['required', 'integer'],
@@ -83,7 +83,7 @@ class AccessPointsController extends BaseController
         return redirect(route('admin.access_points'));
     }
 
-    public function accessPointsSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'exists:access_points'],
@@ -98,7 +98,7 @@ class AccessPointsController extends BaseController
         return redirect(route('admin.access_points'));
     }
 
-    public function accessPointRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         AccessPoint::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.access_points'));

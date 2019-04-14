@@ -66,7 +66,7 @@ class LocalitiesController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function localityAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'type' => ['required', 'in:0,1,2'],
@@ -79,7 +79,7 @@ class LocalitiesController extends BaseController
         return redirect(route('admin.localities'));
     }
 
-    public function localitySaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'type' => ['required', 'in:0,1,2'],
@@ -92,7 +92,7 @@ class LocalitiesController extends BaseController
         return redirect(route('admin.localities'));
     }
 
-    public function localityRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         Locality::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.localities'));

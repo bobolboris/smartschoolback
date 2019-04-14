@@ -79,7 +79,7 @@ class ParentsController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function parentsAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'surname' => ['required', 'max:255'],
@@ -95,7 +95,7 @@ class ParentsController extends BaseController
         return redirect(route('admin.parents'));
     }
 
-    public function parentsSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $id = $request->get('id');
 
@@ -117,7 +117,7 @@ class ParentsController extends BaseController
         return redirect(route('admin.parents'));
     }
 
-    public function childrenRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         $id = $request->get('id');
 

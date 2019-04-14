@@ -80,7 +80,7 @@ class AdminsExtendedController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function adminExtendedAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'profile_id' => ['nullable', 'exists:profiles,id'],
@@ -94,7 +94,7 @@ class AdminsExtendedController extends BaseController
         return redirect(route('admin.admins_extended'));
     }
 
-    public function adminExtendedSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'profile_id' => ['nullable', 'exists:profiles,id'],
@@ -108,7 +108,7 @@ class AdminsExtendedController extends BaseController
         return redirect(route('admin.admins_extended'));
     }
 
-    public function adminExtendedRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         Admin::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.admins_extended'));

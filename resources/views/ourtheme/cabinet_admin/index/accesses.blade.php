@@ -3,8 +3,8 @@
 @section('content')
     <div class="container content">
         <div class="row justify-content-center">
-            <h1>Администраторы</h1>
-            <a href="{{ route('admin.admins.addForm') }}" class="btn" style="padding-top: 8px;">
+            <h1>Проходы</h1>
+            <a href="{{ route('admin.accesses.addForm') }}" class="btn" style="padding-top: 8px;">
                 <i class="fas fa-plus" style="font-size: 30px;"></i>
             </a>
         </div>
@@ -14,50 +14,50 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Отчество</th>
-                    <th scope="col">E-mail</th>
-                    <th scope="col">Адрес - Школа</th>
-                    <th scope="col">Местоположение</th>
+                    <th scope="col">Время</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Направление</th>
+                    <th scope="col">Причина</th>
+                    <th scope="col">Ребенок</th>
+                    <th scope="col">Пропускной пункт</th>
+                    <th scope="col">System ID</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                @foreach($admins as $admin)
+                @foreach($accesses as $access)
                     <tr>
                         <td>
-                            {{ $admin->id }}
+                            {{ $access->id }}
                         </td>
                         <td>
-                            {{ $admin->profile->surname ?? 'NULL' }}
+                            {{ $access->time }}
                         </td>
                         <td>
-                            {{ $admin->profile->name ?? 'NULL' }}
+                            {{ $access->date }}
                         </td>
                         <td>
-                            {{ $admin->profile->patronymic ?? 'NULL' }}
+                            {{ $directionsArray[$access->direction] }}
                         </td>
                         <td>
-                            {{ $admin->user->email ?? 'NULL' }}
+                            {{ $access->cause }}
                         </td>
                         <td>
-                            @if ($admin->school_id == null)
-                                {{ 'NULL' }}
-                            @else
-                                {{ $admin->school->address . ' - ' . $admin->school->name }}
-                            @endif
+                            {{ $access->child->profile->full_name ?? 'NULL' }}
                         </td>
                         <td>
-                            {{ $admin->locality->name ?? 'NULL' }}
+                            {{ $access->access_point->name ?? 'NULL' }}
+                        </td>
+                        <td>
+                            {{ $access->system_id }}
                         </td>
                         <td>
                             <div class="icons">
-                                <a href="{{ route('admin.admins.editForm', ['id' => $admin->id]) }}">
+                                <a href="{{ route('admin.accesses.editForm', ['id' => $access->id]) }}">
                                     <i class="fas fa-user-edit"></i>
                                 </a>
-                                <a href="{{ route('admin.admins.removeForm', ['id' => $admin->id]) }}">
+                                <a href="{{ route('admin.accesses.removeForm', ['id' => $access->id]) }}">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -69,7 +69,7 @@
             </table>
         </div>
         <div class="row justify-content-center" style="margin-top: 20px;">
-            {{ $admins->links() }}
+            {{ $accesses->links() }}
         </div>
     </div>
 @endsection

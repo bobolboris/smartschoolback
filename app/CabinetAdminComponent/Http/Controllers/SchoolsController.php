@@ -68,7 +68,7 @@ class SchoolsController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function schoolsAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'address' => ['required', 'max:255'],
@@ -80,7 +80,7 @@ class SchoolsController extends BaseController
         return redirect(route('admin.schools'));
     }
 
-    public function schoolsSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'schools'],
@@ -93,7 +93,7 @@ class SchoolsController extends BaseController
         return redirect(route('admin.schools'));
     }
 
-    public function schoolsRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         School::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.schools'));

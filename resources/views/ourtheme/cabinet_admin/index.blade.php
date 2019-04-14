@@ -72,6 +72,10 @@
                 <li>
                     <a href="{{ route('admin.children_keys') }}">Пропуска</a>
                 </li>
+
+                <li>
+                    <a href="{{ route('admin.accesses') }}">Проходы</a>
+                </li>
             </ul>
         </div>
         <div class="row">

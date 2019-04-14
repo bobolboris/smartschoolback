@@ -55,6 +55,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $localities->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $localities->links() }}
+        </div>
     </div>
 @endsection

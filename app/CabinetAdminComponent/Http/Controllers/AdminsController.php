@@ -40,7 +40,7 @@ class AdminsController extends BaseController
     public function showRemoveFormAction(Request $request)
     {
         $data = [
-            'action' => route('admin.access_points.remove'),
+            'action' => route('admin.admins.remove'),
             'backurl' => $request->server('HTTP_REFERER', '/'),
             'id' => $request->get('id')
         ];
@@ -81,7 +81,7 @@ class AdminsController extends BaseController
         return view('cabinet_admin.edit.admins', $data);
     }
 
-    public function adminsSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $rules = [
             'id' => ['required', 'exists:admins'],
@@ -139,7 +139,7 @@ class AdminsController extends BaseController
         return redirect(route('admin.admins'));
     }
 
-    public function adminsAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'roles' => ['nullable', 'array'],
@@ -168,6 +168,12 @@ class AdminsController extends BaseController
             'locality_id' => $request->get('locality_id'),
         ]);
 
+        return redirect(route('admin.admins'));
+    }
+
+    public function removeAction(Request $request)
+    {
+        Admin::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.admins'));
     }
 }

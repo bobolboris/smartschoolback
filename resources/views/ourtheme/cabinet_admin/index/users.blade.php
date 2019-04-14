@@ -74,6 +74,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $users->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $users->links() }}
+        </div>
     </div>
 @endsection

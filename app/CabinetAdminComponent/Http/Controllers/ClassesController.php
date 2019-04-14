@@ -74,7 +74,7 @@ class ClassesController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function classesAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'name' => ['required', 'max:255'],
@@ -86,7 +86,7 @@ class ClassesController extends BaseController
         return redirect(route('admin.classes'));
     }
 
-    public function classesSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'exists:classes'],
@@ -99,7 +99,7 @@ class ClassesController extends BaseController
         return redirect(route('admin.classes'));
     }
 
-    public function childrenRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         ClassModel::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.classes'));

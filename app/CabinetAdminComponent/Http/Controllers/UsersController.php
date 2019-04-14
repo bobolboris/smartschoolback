@@ -65,7 +65,7 @@ class UsersController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function usersAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $rules = [
             'roles' => ['nullable', 'array'],
@@ -113,7 +113,7 @@ class UsersController extends BaseController
         return redirect(route('admin.users'));
     }
 
-    public function usersSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $rules = [
             'id' => ['required', 'exists:users'],
@@ -169,7 +169,7 @@ class UsersController extends BaseController
         return redirect(route('admin.users'));
     }
 
-    public function usersRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         User::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.users'));

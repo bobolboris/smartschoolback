@@ -55,6 +55,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $classes->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $classes->links() }}
+        </div>
     </div>
 @endsection

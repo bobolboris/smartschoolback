@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccess extends Migration
+class CreateAccesses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAccess extends Migration
      */
     public function up()
     {
-        Schema::create('access', function (Blueprint $table) {
+        Schema::create('accesses', function (Blueprint $table) {
             $table->increments('id');
             $table->time('time');
             $table->date('date');
@@ -37,6 +37,6 @@ class CreateAccess extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('access');
+        Schema::dropIfExists('accesses');
     }
 }

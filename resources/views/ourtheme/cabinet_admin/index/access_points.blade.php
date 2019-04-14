@@ -60,6 +60,8 @@
                 </tbody>
             </table>
         </div>
-        {{ $access_points->links() }}
+        <div class="row justify-content-center" style="margin-top: 20px;">
+            {{ $access_points->links() }}
+        </div>
     </div>
 @endsection

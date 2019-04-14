@@ -59,7 +59,7 @@ class ProfilesController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function profileAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'surname' => ['required', 'max:255'],
@@ -72,7 +72,7 @@ class ProfilesController extends BaseController
         return redirect(route('admin.profiles'));
     }
 
-    public function profileSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'exists:profiles'],
@@ -86,7 +86,7 @@ class ProfilesController extends BaseController
         return redirect(route('admin.profiles'));
     }
 
-    public function profileRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         Profile::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.profiles'));

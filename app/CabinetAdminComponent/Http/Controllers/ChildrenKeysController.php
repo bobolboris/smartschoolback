@@ -77,7 +77,7 @@ class ChildrenKeysController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function childrenKeysAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'codekey' => ['nullable', 'max:16'],
@@ -103,7 +103,7 @@ class ChildrenKeysController extends BaseController
         return redirect(route('admin.children_keys'));
     }
 
-    public function childrenSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'exists:children_keys'],
@@ -134,7 +134,7 @@ class ChildrenKeysController extends BaseController
         return redirect(route('admin.children_keys'));
     }
 
-    public function childrenRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         ChildKey::findOrFail($request->get('id'))->delete();
         return redirect(route('admin.access_points'));

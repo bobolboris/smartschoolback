@@ -77,7 +77,7 @@ class ChildrenController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function childrenAddAction(Request $request)
+    public function addAction(Request $request)
     {
         $this->validate($request, [
             'surname' => ['required', 'max:255'],
@@ -96,7 +96,7 @@ class ChildrenController extends BaseController
         return redirect(route('admin.children'));
     }
 
-    public function childrenSaveAction(Request $request)
+    public function saveAction(Request $request)
     {
         $this->validate($request, [
             'id' => ['required', 'exists:children'],
@@ -123,7 +123,7 @@ class ChildrenController extends BaseController
         return redirect(route('admin.children'));
     }
 
-    public function childrenRemoveAction(Request $request)
+    public function removeAction(Request $request)
     {
         $id = $request->get('id');
         $child = Child::findOrFail($id);

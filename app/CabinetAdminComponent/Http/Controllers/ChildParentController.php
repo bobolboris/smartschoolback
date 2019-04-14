@@ -38,13 +38,7 @@ class ChildParentController extends BaseController
         return view('cabinet_admin.remove.remove', $data);
     }
 
-    public function parentChildrenRemoveAction(Request $request)
-    {
-        ChildParent::findOrFail($request->get('id'))->delete();
-        return redirect(route('admin.parents'));
-    }
-
-    public function showAddChildFormAction(Request $request)
+    public function showAddFormAction(Request $request)
     {
         $children = Child::all();
 
@@ -56,7 +50,7 @@ class ChildParentController extends BaseController
         return view('cabinet_admin.edit.parent_children', $data);
     }
 
-    public function addChildAction(Request $request)
+    public function addAction(Request $request)
     {
         $child_id = $request->get('child_id');
         $parent_id = $request->get('parent_id');
@@ -69,5 +63,11 @@ class ChildParentController extends BaseController
         ChildParent::create(['child_id' => $child_id, 'parent_id' => $parent_id]);
 
         return redirect(route('admin.parent_children', ['id' => $parent_id]));
+    }
+
+    public function removeAction(Request $request)
+    {
+        ChildParent::findOrFail($request->get('id'))->delete();
+        return redirect(route('admin.parents'));
     }
 }

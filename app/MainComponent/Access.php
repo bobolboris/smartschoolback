@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
 class Access extends Model
 {
     public $timestamps = false;
-    protected $table = 'access';
+    protected $table = 'accesses';
     protected $fillable = ['direction', 'time', 'date', 'cause', 'child_id', 'access_point_id', 'system_id'];
 
     public function child()
