@@ -2,13 +2,20 @@
 
 namespace App\MainComponent\Http\Controllers;
 
-use App\CabinetAdminComponent\Locality;
+use App\CabinetAdminComponent\Jobs\LoadChildrenJob;
 
-class TestController
+class TestController extends Controller
 {
     public function testAction()
     {
-        dd(Locality::find(2));
+        $data = [
+            'path' => '/tmp/book.xlsx',
+            'extension' => 'xlsx',
+            'start' => 'A1',
+            'finish' => 'L20',
+        ];
+
+        $this->dispatch(new LoadChildrenJob($data));
         return response('111');
     }
 }

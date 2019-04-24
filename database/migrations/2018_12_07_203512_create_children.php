@@ -28,6 +28,8 @@ class CreateChildren extends Migration
             $table->integer('user_id', false, true)->nullable()->unique();
             $table->foreign('user_id')->references('id')->on('users');
 
+            $table->string('inn', 10)->unique();
+
             $table->integer('system_id', false, true)->nullable();
         });
     }

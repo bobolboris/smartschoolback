@@ -13,6 +13,7 @@
     <script type="text/javascript" src="{{ asset('themes/cabinet_admin/js/jQuery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('themes/cabinet_admin/js/popper.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('themes/cabinet_admin/js/adminPopup.js') }}"></script>
+    @yield('scripts')
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
           integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
@@ -76,6 +77,10 @@
                 <li>
                     <a href="{{ route('admin.accesses') }}">Проходы</a>
                 </li>
+
+                <li>
+                    <a href="{{ route('admin.db.index') }}">Специальные возможности</a>
+                </li>
             </ul>
         </div>
         <div class="row">
@@ -124,6 +129,6 @@
 </nav>
 
 @yield('content')
-
+@yield('script')
 
 </html>

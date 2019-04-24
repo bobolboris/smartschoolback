@@ -71,7 +71,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="text" name="password" class="text-dark">
+                                <input type="password" name="password" class="text-dark">
                             </td>
                         </tr>
                         <tr>

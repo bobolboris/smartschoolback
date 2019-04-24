@@ -54,6 +54,17 @@
                                        class="text-dark">
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <span>ИНН</span>
+                                @if ($errors->has('inn'))
+                                    <br><strong class="text-danger">{{ $errors->first('inn') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <input type="text" name="inn" value="{{ @$parent->inn }}" class="text-dark">
+                            </td>
+                        </tr>
                         <tr class="class">
                             <td>
                                 <span>Пользователь</span>

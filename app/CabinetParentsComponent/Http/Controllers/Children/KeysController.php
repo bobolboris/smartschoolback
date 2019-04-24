@@ -2,8 +2,8 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
-use App\MainComponent\Child;
-use App\MainComponent\ChildParent;
+use App\CabinetParentsComponent\Child;
+use App\CabinetParentsComponent\ChildParent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Kozz\Laravel\Facades\Guzzle;

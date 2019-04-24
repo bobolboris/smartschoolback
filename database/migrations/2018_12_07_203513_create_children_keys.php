@@ -16,7 +16,7 @@ class CreateChildrenKeys extends Migration
     {
         Schema::create('children_keys', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('short_codekey', 10);
+            $table->string('short_codekey', 10)->unique();
             $table->dateTime('codekeytime');
             $table->dateTime('expires')->nullable();
             $table->tinyInteger('status');

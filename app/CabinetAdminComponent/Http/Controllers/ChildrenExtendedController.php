@@ -8,6 +8,7 @@ use App\CabinetAdminComponent\Photo;
 use App\CabinetAdminComponent\Profile;
 use App\CabinetAdminComponent\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ChildrenExtendedController extends BaseController
 {
@@ -85,6 +86,7 @@ class ChildrenExtendedController extends BaseController
             'profile_id' => ['nullable', 'exists:profiles,id'],
             'class_id' => ['nullable', 'exists:classes,id'],
             'photo_id' => ['nullable', 'exists:photos,id'],
+            'inn' => ['required', 'size:10', 'unique:parents'],
             'user_id' => ['nullable', 'exists:users,id'],
         ]);
 
@@ -95,15 +97,17 @@ class ChildrenExtendedController extends BaseController
 
     public function saveAction(Request $request)
     {
+        $id = $request->get('id');
         $this->validate($request, [
             'id' => ['required', 'exists:children'],
             'profile_id' => ['nullable', 'exists:profiles,id'],
             'class_id' => ['nullable', 'exists:classes,id'],
             'photo_id' => ['nullable', 'exists:photos,id'],
+            'inn' => ['required', 'size:10', Rule::unique('parents', 'inn')->ignore($id, 'id')],
             'user_id' => ['nullable', 'exists:users,id'],
         ]);
 
-        Child::findOrFail($request->get('id'))->fill($request->all())->save();
+        Child::findOrFail($id)->fill($request->all())->save();
 
         return redirect(route('admin.children_extended'));
     }

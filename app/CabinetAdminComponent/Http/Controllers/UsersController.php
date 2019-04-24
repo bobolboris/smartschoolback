@@ -71,11 +71,11 @@ class UsersController extends BaseController
             'roles' => ['nullable', 'array'],
             'email' => ['required', 'max:255'],
             'phone' => ['required', 'max:255'],
-            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
             'enabled' => ['required', 'in:0,1'],
             'remember_token' => ['nullable', 'string', 'max:100'],
-            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
-            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
+            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
             'password' => ['required', 'min:6'],
         ];
 
@@ -86,7 +86,7 @@ class UsersController extends BaseController
         $attributes = $request->only($only);
 
         if (isset($attributes['email_verified_at'])) {
-            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i', $attributes['email_verified_at']);
+            $attributes['email_verified_at'] = DateTime::createFromFormat('Y-m-d\TH:i:s', $attributes['email_verified_at']);
             $attributes['email_verified_at'] = $attributes['email_verified_at']->format('Y-m-d H:i:s');
         }
 
@@ -120,11 +120,11 @@ class UsersController extends BaseController
             'roles' => ['nullable', 'array'],
             'email' => ['required', 'max:255'],
             'phone' => ['required', 'max:255'],
-            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'email_verified_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
             'enabled' => ['required', 'in:0,1'],
             'remember_token' => ['nullable', 'string', 'max:100'],
-            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
-            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'created_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
+            'updated_at' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
         ];
 
         if ($request->get('password') != "") {

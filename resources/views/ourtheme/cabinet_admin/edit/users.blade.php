@@ -92,7 +92,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="datetime-local" name="email_verified_at"
+                                <input type="datetime-local" name="email_verified_at" step="1"
                                        value="{{ str_replace(' ', 'T', @$user->email_verified_at) }}">
                             </td>
                         </tr>
@@ -134,7 +134,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="datetime-local" name="created_at"
+                                <input type="datetime-local" name="created_at" step="1"
                                        value="{{ str_replace(' ', 'T', @$user->created_at) }}">
                             </td>
                         </tr>
@@ -146,7 +146,7 @@
                                 @endif
                             </td>
                             <td>
-                                <input type="datetime-local" name="updated_at"
+                                <input type="datetime-local" name="updated_at" step="1"
                                        value="{{ str_replace(' ', 'T', @$user->updated_at) }}">
                             </td>
                         </tr>

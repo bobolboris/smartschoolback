@@ -19,6 +19,7 @@
                     <th scope="col">Имя</th>
                     <th scope="col">Отчество</th>
                     <th scope="col">Класс</th>
+                    <th scope="col">ИНН</th>
                     <th scope="col">Действия</th>
                 </tr>
                 </thead>
@@ -29,17 +30,20 @@
                         <td>
                             {{ $child->id }}
                         </td>
-                        <td class="surname">
+                        <td>
                             {{ $child->profile->surname ?? 'NULL' }}
                         </td>
-                        <td class="name">
+                        <td>
                             {{ $child->profile->name ?? 'NULL' }}
                         </td>
-                        <td class="patronymic">
+                        <td>
                             {{ $child->profile->patronymic ?? 'NULL' }}
                         </td>
-                        <td class="class">
+                        <td>
                             {{ $child->class->name ?? 'NULL' }}
+                        </td>
+                        <td>
+                            {{ $child->inn ?? 'NULL' }}
                         </td>
                         <td>
                             <div class="icons">

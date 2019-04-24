@@ -19,7 +19,6 @@ class LocalitiesController extends BaseController
 
         $data = [
             'localities' => $localities,
-            'showNULL' => $this->showNULL
         ];
 
         return view('cabinet_admin.index.localities', $data);

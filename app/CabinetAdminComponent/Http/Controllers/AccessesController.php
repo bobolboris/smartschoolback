@@ -14,7 +14,7 @@ class AccessesController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->directionsArray = [0 => 'Неизвестно', 1 => 'Вход', 2 => 'Выход'];
+        $this->directionsArray = ['0' => 'Неизвестно', '1' => 'Вход', '2' => 'Выход'];
     }
 
     public function indexAction(Request $request)

@@ -17,7 +17,6 @@ class AccessPoint extends Model
     public $timestamps = false;
     protected $table = 'access_points';
     protected $fillable = ['name', 'zonea', 'zoneb', 'school_id', 'system_id'];
-    protected $with = ['school'];
 
     public function school()
     {

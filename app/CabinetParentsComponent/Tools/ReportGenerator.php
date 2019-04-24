@@ -3,9 +3,9 @@
 namespace App\CabinetParentsComponent\Tools;
 
 use Alexusmai\Ruslug\RuslugFacade;
-use App\MainComponent\Access;
-use App\MainComponent\Child;
-use App\MainComponent\ParentModel;
+use App\CabinetParentsComponent\Access;
+use App\CabinetParentsComponent\Child;
+use App\CabinetParentsComponent\ParentModel;
 use Dompdf\Dompdf;
 
 class ReportGenerator
@@ -45,9 +45,9 @@ class ReportGenerator
 
         $previousDate = null;
 
-        $day = "01";
-        $month = "01";
-        $year = "1991";
+        $day = '01';
+        $month = '01';
+        $year = '1991';
 
         foreach ($accesses as $access) {
             if ($previousDate != $access->date) {
@@ -87,7 +87,7 @@ class ReportGenerator
             'title' => $title,
             'startDate' => $startDate,
             'finishDate' => $finishDate,
-            'dateFormation' => date("Y-m-d"),
+            'dateFormation' => date('Y-m-d'),
             'class' => $child->class->name,
             'school' => $child->class->school->name,
             'address' => $child->class->school->address,

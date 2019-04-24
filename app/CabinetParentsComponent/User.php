@@ -2,7 +2,7 @@
 
 namespace App\CabinetParentsComponent;
 
-use App\MainComponent\User as Base;
+use App\AuthComponent\User as Base;
 
 class User extends Base
 {

@@ -19,6 +19,7 @@
                     <th scope="col">Фамилия</th>
                     <th scope="col">Имя</th>
                     <th scope="col">Отчество</th>
+                    <th scope="col">ИНН</th>
                     <th scope="col">Пользователь<br>(id - email)</th>
                     <th scope="col" width="20%">Действия</th>
                     <th scope="col" width="25%">Дети</th>
@@ -39,6 +40,9 @@
                         </td>
                         <td>
                             {{$parent->profile->patronymic }}
+                        </td>
+                        <td>
+                            {{$parent->inn }}
                         </td>
                         <td>
                             {{ $parent->user->id . " - " . $parent->user->email }}

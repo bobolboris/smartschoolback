@@ -19,6 +19,7 @@
                     <th scope="col">class_id</th>
                     <th scope="col">photo_id</th>
                     <th scope="col">user_id</th>
+                    <th scope="col">ИНН</th>
                     <th scope="col">system_id</th>
                     <th scope="col">Действия</th>
                 </tr>
@@ -41,6 +42,9 @@
                         </td>
                         <td>
                             {{ $child->user_id ?? 'NULL' }}
+                        </td>
+                        <td>
+                            {{ $child->inn ?? 'NULL' }}
                         </td>
                         <td>
                             {{ $child->system_id ?? 'NULL' }}

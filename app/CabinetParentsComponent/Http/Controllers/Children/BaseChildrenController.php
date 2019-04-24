@@ -3,8 +3,8 @@
 namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
 use App\CabinetParentsComponent\Http\Controllers\BaseController;
-use App\MainComponent\Access;
-use App\MainComponent\Child;
+use App\CabinetParentsComponent\Access;
+use App\CabinetParentsComponent\Child;
 
 class BaseChildrenController extends BaseController
 {
@@ -16,7 +16,6 @@ class BaseChildrenController extends BaseController
             return response()->json(['ok' => false, 'code' => 404, 'errors' => ['Child not found']]);
         }
 
-        $child->key;
         $child->key->codekey = base64_encode($child->key->codekey);
 
         if ($child->key->expires == null) {

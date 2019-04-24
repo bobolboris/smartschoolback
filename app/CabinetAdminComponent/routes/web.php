@@ -190,4 +190,14 @@ Route::prefix('admin')->group(function () {
         Route::post('remove', 'CabinetAdminComponent\Http\Controllers\AccessesController@removeAction')->name('admin.accesses.remove');
         Route::post('add', 'CabinetAdminComponent\Http\Controllers\AccessesController@addAction')->name('admin.accesses.add');
     });
+
+    Route::prefix('db')->group(function () {
+        Route::get('/', 'CabinetAdminComponent\Http\Controllers\SpecialAbilitiesController@indexAction')->name('admin.db.index');
+        Route::post('recreate', 'CabinetAdminComponent\Http\Controllers\SpecialAbilitiesController@recreateAction')->name('admin.db.recreate');
+
+        Route::post('load-children', 'CabinetAdminComponent\Http\Controllers\SpecialAbilitiesController@loadAction')->name('admin.db.load_children');
+        Route::get('load-children', 'CabinetAdminComponent\Http\Controllers\SpecialAbilitiesController@loadChildrenAction');
+        Route::post('get-last-event', 'CabinetAdminComponent\Http\Controllers\SpecialAbilitiesController@getLastEvent')->name('admin.db.get_last_event');
+    });
+
 });

@@ -2,7 +2,7 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers;
 
-use App\MainComponent\Setting;
+use App\CabinetParentsComponent\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;

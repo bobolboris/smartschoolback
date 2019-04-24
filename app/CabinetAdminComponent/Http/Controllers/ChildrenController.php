@@ -11,6 +11,7 @@ use App\CabinetAdminComponent\Profile;
 use App\CabinetAdminComponent\Setting;
 use App\CabinetAdminComponent\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ChildrenController extends BaseController
 {
@@ -83,6 +84,7 @@ class ChildrenController extends BaseController
             'surname' => ['required', 'max:255'],
             'name' => ['required', 'max:255'],
             'patronymic' => ['required', 'max:255'],
+            'inn' => ['required', 'size:10', 'unique:children'],
             'class_id' => ['nullable', 'exists:classes,id'],
         ]);
 
@@ -91,6 +93,7 @@ class ChildrenController extends BaseController
         Child::create([
             'class_id' => $request->get('class_id'),
             'profile_id' => $profile->id,
+            'inn' => $request->get('inn')
         ]);
 
         return redirect(route('admin.children'));
@@ -98,15 +101,17 @@ class ChildrenController extends BaseController
 
     public function saveAction(Request $request)
     {
+        $id = $request->get('id');
         $this->validate($request, [
             'id' => ['required', 'exists:children'],
             'surname' => ['required', 'max:255'],
             'name' => ['required', 'max:255'],
             'patronymic' => ['required', 'max:255'],
+            'inn' => ['required', 'size:10', Rule::unique('parents', 'inn')->ignore($id, 'id')],
             'class_id' => ['nullable', 'exists:classes,id'],
         ]);
 
-        $child = Child::findOrFail($request->get('id'));
+        $child = Child::findOrFail($id);
 
         $profile = Profile::find($child->profile_id);
 
@@ -118,6 +123,7 @@ class ChildrenController extends BaseController
 
         $child->class_id = $request->get('class_id');
         $child->profile_id = $profile->id;
+        $child->inn = $request->get('inn');
         $child->save();
 
         return redirect(route('admin.children'));

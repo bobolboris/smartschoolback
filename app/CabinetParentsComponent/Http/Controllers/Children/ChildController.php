@@ -2,7 +2,7 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers\Children;
 
-use App\MainComponent\Access;
+use App\CabinetParentsComponent\Access;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 

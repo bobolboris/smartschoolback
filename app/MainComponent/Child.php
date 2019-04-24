@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed class_id
  * @property mixed photo_id
  * @property mixed user_id
+ * @property mixed inn
  * @property mixed system_id
  * @property mixed profile
  * @property mixed parents
@@ -22,8 +23,7 @@ class Child extends Model
 {
     public $timestamps = false;
     protected $table = 'children';
-    protected $fillable = ['profile_id', 'class_id', 'photo_id', 'user_id', 'system_id'];
-    protected $with = ['profile', 'user', 'photo', 'class'];
+    protected $fillable = ['profile_id', 'class_id', 'photo_id', 'user_id', 'inn', 'system_id'];
 
     public function profile()
     {

@@ -2,6 +2,10 @@
 
 namespace App\MainComponent;
 
+use App\MainComponent\Traits\RolesTrait;
+use Illuminate\Notifications\Notifiable;
+
+use Illuminate\Foundation\Auth\User as Base;
 /**
  * @property mixed id
  * @property mixed roles
@@ -16,9 +20,9 @@ namespace App\MainComponent;
  * @property mixed admin
  * @property mixed settings
  */
-class User extends UserJWT
+class User extends Base
 {
-
+    use Notifiable, RolesTrait;
     /**
      * The attributes that are mass assignable.
      *

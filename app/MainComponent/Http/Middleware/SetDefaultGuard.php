@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CabinetAdminComponent\Http\Middleware;
+namespace App\MainComponent\Http\Middleware;
 
 use Closure;
 

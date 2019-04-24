@@ -45,11 +45,6 @@ class Kernel extends HttpKernel
         'jwt.verify' => [
             \App\AuthComponent\Http\Middleware\JwtMiddleware::class,
         ],
-
-        'identification' => [
-            \App\MainComponent\Http\Middleware\CheckCustomerAgent::class,
-            \App\MainComponent\Http\Middleware\CheckCustomerIP::class,
-        ],
     ];
 
     /**
@@ -72,7 +67,7 @@ class Kernel extends HttpKernel
 
         'check.role' => \App\CabinetParentsComponent\Http\Middleware\CheckRole::class,
         'check.roles' => \App\CabinetParentsComponent\Http\Middleware\CheckRoles::class,
-        'set.default.guard' => \App\CabinetAdminComponent\Http\Middleware\SetDefaultGuard::class,
+        'set.default.guard' => \App\MainComponent\Http\Middleware\SetDefaultGuard::class,
         'determination.position' => \App\CabinetAdminComponent\Http\Middleware\DeterminationPosition::class,
     ];
 

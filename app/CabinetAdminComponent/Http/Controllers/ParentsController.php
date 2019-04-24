@@ -85,6 +85,7 @@ class ParentsController extends BaseController
             'surname' => ['required', 'max:255'],
             'name' => ['required', 'max:255'],
             'patronymic' => ['required', 'max:255'],
+            'inn' => ['required', 'size:10', 'unique:parents'],
             'user_id' => ['nullable', 'exists:users,id', 'unique:parents', 'unique:children'],
         ]);
 
@@ -104,7 +105,8 @@ class ParentsController extends BaseController
             'surname' => ['required', 'max:255'],
             'name' => ['required', 'max:255'],
             'patronymic' => ['required', 'max:255'],
-            'user_id' => ['nullable', 'exists:users,id', Rule::unique('parents', 'user_id')->ignore($id, 'id'), 'unique:children'],
+            'inn' => ['required', 'size:10', Rule::unique('parents', 'inn')->ignore($id, 'id')],
+            'user_id' => ['nullable', 'exists:users,id', 'unique:children'],
         ]);
 
         $parent = ParentModel::find($id);

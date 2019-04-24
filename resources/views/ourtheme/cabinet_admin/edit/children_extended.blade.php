@@ -106,6 +106,18 @@
 
                         <tr>
                             <td>
+                                <span>ИНН</span>
+                                @if ($errors->has('inn'))
+                                    <br><strong class="text-danger">{{ $errors->first('inn') }}</strong>
+                                @endif
+                            </td>
+                            <td>
+                                <input type="text" name="inn" value="{{ @$child->inn }}" class="text-dark">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
                                 <span>system_id</span>
                                 @if ($errors->has('system_id'))
                                     <br><strong class="text-danger">{{ $errors->first('system_id') }}</strong>

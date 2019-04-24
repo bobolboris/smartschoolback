@@ -2,11 +2,11 @@
 
 namespace App\CabinetParentsComponent\Http\Controllers;
 
-use App\MainComponent\ChildParent;
-use App\MainComponent\ParentModel;
-use App\MainComponent\Profile;
-use App\MainComponent\Setting;
-use App\MainComponent\User;
+use App\CabinetParentsComponent\ChildParent;
+use App\CabinetParentsComponent\ParentModel;
+use App\CabinetParentsComponent\Profile;
+use App\CabinetParentsComponent\Setting;
+use App\CabinetParentsComponent\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

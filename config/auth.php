@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'api',
+        'guard' => 'jwt',
         'passwords' => 'users',
     ],
 
@@ -41,9 +41,14 @@ return [
             'provider' => 'users',
         ],
 
-        'api' => [
+        'jwt' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'jwt',
+        ],
+
+        'cabinet_parents' => [
+            'driver' => 'jwt',
+            'provider' => 'cabinet_parents',
         ],
     ],
 
@@ -70,10 +75,15 @@ return [
             'model' => App\MainComponent\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'jwt' => [
+            'driver' => 'eloquent',
+            'model' => App\AuthComponent\User::class,
+        ],
+
+        'cabinet_parents' => [
+            'driver' => 'eloquent',
+            'model' => App\CabinetParentsComponent\User::class,
+        ]
     ],
 
     /*

@@ -35,11 +35,11 @@ class ChildrenKeysController extends BaseController
         $children = collect([new Child()])->concat(Child::all());
 
         $children_key->codekeytime = Carbon::createFromFormat('Y-m-d H:i:s', $children_key->codekeytime);
-        $children_key->codekeytime = $children_key->codekeytime->format('Y-m-d\TH:i');
+        $children_key->codekeytime = $children_key->codekeytime->format('Y-m-d\TH:i:s');
 
         if (isset($children_key->expires)) {
             $children_key->expires = Carbon::createFromFormat('Y-m-d H:i:s', $children_key->expires);
-            $children_key->expires = $children_key->expires->format('Y-m-d\TH:i');
+            $children_key->expires = $children_key->expires->format('Y-m-d\TH:i:s');
         }
 
         $data = [
@@ -82,8 +82,8 @@ class ChildrenKeysController extends BaseController
         $this->validate($request, [
             'codekey' => ['nullable', 'max:16'],
             'short_codekey' => ['required', 'size:5'],
-            'codekeytime' => ['required', 'date_format:Y-m-d\TH:i'],
-            'expires' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'codekeytime' => ['required', 'date_format:Y-m-d\TH:i:s'],
+            'expires' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
             'status' => ['required', 'in:0,1'],
             'child_id' => ['nullable', 'exists:children,id'],
         ]);
@@ -109,8 +109,8 @@ class ChildrenKeysController extends BaseController
             'id' => ['required', 'exists:children_keys'],
             'codekey' => ['nullable', 'max:16'],
             'short_codekey' => ['required', 'size:5'],
-            'codekeytime' => ['required', 'date_format:Y-m-d\TH:i'],
-            'expires' => ['nullable', 'date_format:Y-m-d\TH:i'],
+            'codekeytime' => ['required', 'date_format:Y-m-d\TH:i:s'],
+            'expires' => ['nullable', 'date_format:Y-m-d\TH:i:s'],
             'status' => ['required', 'in:0,1'],
             'child_id' => ['nullable', 'exists:children,id'],
         ]);

@@ -52,7 +52,7 @@
                             </td>
                             <td>
                                 <input type="datetime-local" name="codekeytime" value="{{ @$children_key->codekeytime }}"
-                                       class="text-dark">
+                                       step="1" class="text-dark">
                             </td>
                         </tr>
                         <tr>
@@ -64,7 +64,7 @@
                             </td>
                             <td>
                                 <input type="datetime-local" name="expires" value="{{ @$children_key->expires }}"
-                                       class="text-dark">
+                                       step="1" class="text-dark">
                             </td>
                         </tr>
                         <tr>

@@ -16,7 +16,7 @@ class ChildParentController extends BaseController
 
         $parent = ParentModel::findOrFail($id);
 
-        $children = $parent->children;
+        $children = $parent->children()->paginate(10);
 
         $data = [
             'children' => $children,
