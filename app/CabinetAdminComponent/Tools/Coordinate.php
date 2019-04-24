@@ -7,6 +7,7 @@ class Coordinate
     protected $x;
     protected $y;
     protected $alphabet;
+    protected $valueCache;
 
     protected function divideLettersAndNumbers($coordinates)
     {
@@ -22,16 +23,12 @@ class Coordinate
         return null;
     }
 
-    protected function parseX($x)
+    public function setCoordinate($coordinate)
     {
-        $xArr = [];
-
-        for ($i = 0; $i < mb_strlen($x); $i++) {
-            $symbol = mb_substr($x, $i, 1);
-            $xArr[] = array_search($symbol, $this->alphabet);
-        }
-
-        return $xArr;
+        $coordinates = $this->parseCoordinate($coordinate);
+        $this->x = $coordinates->x;
+        $this->y = $coordinates->y;
+        $this->valueCache->isChanged = true;
     }
 
     protected function parseCoordinate($coordinate)
@@ -45,6 +42,91 @@ class Coordinate
         return $coordinates;
     }
 
+    protected function parseX($x)
+    {
+        $value = 0;
+        for ($i = 0; $i < mb_strlen($x); $i++) {
+            $symbol = mb_substr($x, $i, 1);
+            $index = array_search($symbol, $this->alphabet) + 1;
+            $factor = pow(count($this->alphabet), mb_strlen($x) - $i - 1);
+            $value += $index * $factor;
+        }
+        return $value;
+    }
+
+    public function getY()
+    {
+        return $this->y;
+    }
+
+    public function getX()
+    {
+        if (!$this->valueCache->isChanged) {
+            return $this->valueCache->value;
+        }
+        $value = $this->x;
+        $string = '';
+
+        while ($value > count($this->alphabet)) {
+            $newValue = intdiv($value - 1, count($this->alphabet));
+            $remainder = $value - $newValue * count($this->alphabet);
+            $string = $this->alphabet[$remainder - 1] . $string;
+            $value = $newValue;
+        }
+
+        if ($value >= 0) {
+            $string = $this->alphabet[$value - 1] . $string;
+        }
+
+        return $string;
+    }
+
+    public function __toString()
+    {
+        if ($this->x == null || $this->y == null) {
+            return '';
+        }
+
+        if (!$this->valueCache->isChanged) {
+            return $this->valueCache->value;
+        }
+
+        $this->valueCache->value = $this->getX() . $this->getY();
+        $this->valueCache->isChanged = true;
+
+        return $this->valueCache->value;
+    }
+
+    public function addToX($value)
+    {
+        $this->valueCache->isChanged = true;
+        $this->x += $value;
+    }
+
+    public function subToX($value)
+    {
+        $this->valueCache->isChanged = true;
+        if ($this->x > 0) {
+            $this->x -= $value;
+        }
+    }
+
+    public function addToY($value)
+    {
+        $this->valueCache->isChanged = true;
+        $this->y += $value;
+    }
+
+    public function subToY($value)
+    {
+        $this->valueCache->isChanged = true;
+        $this->y -= $value;
+
+        if ($this->y < 1) {
+            $this->y = 1;
+        }
+    }
+
     public function nextX()
     {
         $this->addToX(1);
@@ -55,130 +137,20 @@ class Coordinate
         $this->addToY(1);
     }
 
-//    public function previousX()
-//    {
-//        $this->subToX(1);
-//    }
-
-//    public function previousY()
-//    {
-//        $this->subToY(1);
-//    }
-
-    public function addToY($value)
+    public function previousX()
     {
-        $this->y += $value;
+        $this->subToX(1);
     }
 
-    public function subToY($value)
+    public function previousY()
     {
-        $this->y -= $value;
-
-        if ($this->y < 1) {
-            $this->y = 1;
-        }
-    }
-
-    public function addToX($value)
-    {
-        $index = count($this->x) - 1;
-        $alphabetLastIndex = count($this->alphabet) - 1;
-
-        $remainder = $value;
-
-        while (true) {
-            $sum = $this->x[$index] + $remainder;
-            if ($sum > $alphabetLastIndex) {
-                $coefficient = intdiv($sum, $alphabetLastIndex);
-                $this->x[$index] = $sum - $coefficient * $alphabetLastIndex - $coefficient;
-                $remainder = $coefficient - 1;
-                $index--;
-
-                if ($index == -1) {
-                    array_unshift($this->x, 0);
-                    $index = 0;
-                }
-            } else {
-                $this->x[$index] = $sum;
-                break;
-            }
-        }
-    }
-
-//    public function subToX($value)
-//    {
-//        $index = count($this->x) - 1;
-//        $alphabetLastIndex = count($this->alphabet) - 1;
-//
-//        $remainder = $value;
-//
-//        while (true) {
-//            $diff = $this->x[$index] - $remainder;
-//            if ($diff < 0) {
-//                $coefficient = intdiv(-$diff, $alphabetLastIndex);
-//                $tmp = $coefficient * $alphabetLastIndex;
-//                $this->x[$index] = ($alphabetLastIndex + $this->x[$index]) - $tmp;
-//                $remainder -= $tmp;
-//                $index--;
-//
-//                if ($index == -1) {
-//                    //error
-//                    break;
-//                }
-//
-//            } else {
-//                $this->x[$index] = $diff;
-//                break;
-//            }
-//        }
-//    }
-
-    public function __toString()
-    {
-        if (!is_array($this->x) || $this->y == null) {
-            return '';
-        }
-
-        return $this->getX() . $this->getY();
+        $this->subToY(1);
     }
 
     public function __construct($coordinate)
     {
         $this->alphabet = range('A', 'Z');
+        $this->valueCache = (object)['isChanged' => true, 'value' => ''];
         $this->setCoordinate($coordinate);
     }
-
-    public function setCoordinate($coordinate)
-    {
-        $coordinates = $this->parseCoordinate($coordinate);
-        $this->x = $coordinates->x;
-        $this->y = $coordinates->y;
-    }
-
-    public function setX($x)
-    {
-        $this->x = $this->parseX($x);
-    }
-
-    public function setY($y)
-    {
-        $this->y = $y;
-    }
-
-    public function getX()
-    {
-        $value = '';
-
-        foreach ($this->x as $x) {
-            $value .= $this->alphabet[$x];
-        }
-
-        return $value;
-    }
-
-    public function getY()
-    {
-        return $this->y;
-    }
-
 }

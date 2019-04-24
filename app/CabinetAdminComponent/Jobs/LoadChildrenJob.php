@@ -254,7 +254,11 @@ class LoadChildrenJob extends Job
                     'parent_id' => $parent->id
                 ]);
 
-                $this->pushToRedis('Line: ' . $start->getY() . ' added');
+                $this->pushToRedis(json_encode([
+                    'ok' => true,
+                    'finish' => false,
+                    'data' => ['Line: ' . $start->getY() . ' added']
+                ]));
 
                 $start->nextY();
             } catch (Exception $e) {
@@ -270,7 +274,7 @@ class LoadChildrenJob extends Job
         $this->pushToRedis(json_encode([
             'ok' => true,
             'finish' => true,
-            'data' => []
+            'data' => ['Finish']
         ]));
     }
 }
